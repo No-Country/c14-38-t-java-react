@@ -17,13 +17,14 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
 @Entity
 @Table(name = "inputs")
+@Data
 public class Input {
 
 	@Id
-	@NotNull
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
@@ -39,7 +40,7 @@ public class Input {
 	@JoinColumn(name = "brach_id")
 	private Branch branch;
 
-	@OneToMany(mappedBy = "entry", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "input", cascade = CascadeType.ALL)
 	private List<Product> products = new ArrayList<>();
 
 }
