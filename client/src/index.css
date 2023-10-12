@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .gradient-main-bottom {
+      background-image: linear-gradient(to bottom, #3058BF, #6F30B3D9);
+    }
+  }
+
+@layer base {
+    html {
+      font-family: "Roboto", system-ui, sans-serif;
+      font-weight: 300;
+    }
+  }
