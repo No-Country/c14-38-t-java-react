@@ -24,7 +24,6 @@ public class Dispatch {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NotNull
 	private Long id;
 	
 	@Temporal(TemporalType.DATE)
