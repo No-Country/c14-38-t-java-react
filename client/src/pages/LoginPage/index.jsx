@@ -1,4 +1,4 @@
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
   return (
@@ -17,7 +17,12 @@ const LoginPage = () => {
         <div className="flex w-full items-center justify-center">
           <div className="w-full max-w-sm bg-white px-10 py-10 rounded shadow-md">
             <h1 className="text-3xl font-normal">Inicia Sesión</h1>
-            <p className="text-xs mt-2 mb-3">¿Eres un usuario nuevo? <span className='text-[#3E43C7] text-left mb-2 cursor-pointer underline'>Crear una cuenta</span></p>
+            <p className="text-xs mt-2 mb-3">
+              ¿Eres un usuario nuevo?{' '}
+              <span className="text-[#3E43C7] text-left mb-2 cursor-pointer underline">
+                <Link to='/signup'>Crear una cuenta</Link>
+              </span>
+            </p>
             <div>
               <div className="mt-2.5 mb-2.5 flex rounded-lg shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                 <input
@@ -34,7 +39,9 @@ const LoginPage = () => {
                 />
               </div>
             </div>
-            <p className="mb-2.5 text-xs text-right text-[#5D5D5D] cursor-pointer underline">¿Has olvidado tu contraseña?</p>
+            <p className="mb-2.5 text-xs text-right text-[#5D5D5D] cursor-pointer underline">
+              ¿Has olvidado tu contraseña?
+            </p>
             <button className="mt-3 w-full gradient-main-bottom rounded-full text-white text-sm py-2 px-4 font-normal">
               Ingresar
             </button>

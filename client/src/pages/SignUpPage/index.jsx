@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 
 const SignUpPage = () => {
   return (
@@ -17,7 +18,7 @@ const SignUpPage = () => {
           <div className="w-full max-w-sm bg-white px-10 py-10 rounded shadow-md">
             <p className="text-xs">Paso 1/2</p>
             <h1 className="text-3xl font-normal">Crea tu cuenta</h1>
-            <p className="text-xs">¿Ya sos usuario? <span className='text-[#3E43C7] text-left mb-2 cursor-pointer underline'>Inicia Sesión</span></p>
+            <p className="text-xs">¿Ya sos usuario? <span className='text-[#3E43C7] text-left mb-2 cursor-pointer underline'><Link to='/login'>Inicia Sesión</Link></span></p>
             <div>
               <div className="mt-2.5 mb-2.5 flex rounded-lg shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                 <input
