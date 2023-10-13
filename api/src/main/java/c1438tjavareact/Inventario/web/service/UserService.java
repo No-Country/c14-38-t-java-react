@@ -1,4 +1,4 @@
-package c1438tjavareact.Inventario.model.domain.services;
+package c1438tjavareact.Inventario.web.service;
 
 import java.util.List;
 

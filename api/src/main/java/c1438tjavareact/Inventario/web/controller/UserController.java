@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import c1438tjavareact.Inventario.model.domain.services.UserService;
 import c1438tjavareact.Inventario.model.persistence.entity.User;
+import c1438tjavareact.Inventario.web.service.UserService;
 
 @RestController
 @RequestMapping("/user")
