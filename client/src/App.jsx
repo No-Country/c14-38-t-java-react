@@ -1,8 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-} from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -15,20 +11,18 @@ import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   return (
-    <Router>
-      <main>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/branches" element={<BranchesPage />} />
-          <Route path="/branches/:id" element={<BranchProfilePage />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/profile" element={<UserProfilePage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </main>
-    </Router>
+    <div>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/branches" element={<BranchesPage />} />
+        <Route path="/branches/:id" element={<BranchProfilePage />} />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/profile" element={<UserProfilePage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </div>
   );
 }
 
