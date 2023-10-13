@@ -3,45 +3,53 @@ import { Link } from 'react-router-dom';
 const LoginPage = () => {
   return (
     <>
-      <div className='flex w-full h-screen'>
-
-        <div className="hidden sm:flex w-full bg-gradient-to-b from-[#3058BF] to-[#6F30B3] items-center justify-center flex-col">
-          <h1 className="text-4xl font-bold text-white mt-3">Bienvenido a Stockwise</h1>
-          <p className="text-lg text-white mt-4">Una plataforma creada para optimizar tu negocio</p>
+      <div className="flex w-full h-screen">
+        <div className="hidden px-2 sm:flex w-full bg-blue-gradient items-center justify-center flex-col">
+          <h1 className="text-center font-['Poppins'] text-5xl font-bold text-custom-white mt-3">
+            Bienvenido a Stockwise
+          </h1>
+          <p className="text-2xl text-center text-custom-white mt-4 w-80 font-medium">
+            Una plataforma creada para optimizar tu negocio
+          </p>
           <img className="mt-4" src="/images/login-image.svg" alt="Imagen" />
         </div>
 
-        <div className='flex w-full items-center justify-center lg:w-1/2'>
-          <div className='bg-white px-10 py-10 rounded-3xl shadow-md'> 
-            <h1 className='text-2xl bg-clip-text text-transparent bg-gradient-to-t  from-[#3058BF] to-85% to-[#6F30B3] font-bold mt-2'>
+        <div className="flex w-full items-center justify-center">
+          <div className="w-full max-w-sm m-4 sm:bg-[white] px-10 py-10 rounded sm:shadow-md">
+            <h1 className="flex sm:hidden text-3xl bg-clip-text text-transparent bg-blue-gradient font-bold mt-2">
               Stockwise
             </h1>
-            <h4>Bienvenido. Inicia Sesión</h4>
-            <p>¿Eres un nuevo usuario? Crear una cuenta</p>
-
-            <div className='mt-3'>
-                <div>
-                    <input className='w-full border-2 border-gray-100 rounded-xl p-2 mt-6 bg-transparent focus:border-bg-gradient-to-b from-[#3058BF] to-[#6F30B3]' placeholder='Correo Electrónico'></input>
-                </div>
-                <div>
-                    <input className='w-full border-2 border-gray-100 rounded-xl p-2 mt-6 bg-transparent  focus:border-bg-gradient-to-b from-[#3058BF] to-[#6F30B3]' placeholder='Contraseña' type='password'></input>
-                </div>
-
-                <div className='flex justify-end'>
-                    <label className='text-[#5D5D5D] text-left mb-2 cursor-pointer underline '>¿Haz olvidado tu contraseña?</label>
-                </div>
-                
-                <Link
-                  to="/products"
-                  className="flex justify-center items-center border border-[#6C63FF] font-semibold text-[#3058BF] rounded-[100px] px-6 py-2"
-                >
-                  Ingresar
-                </Link>
-
+            <h1 className="sm:text-3xl text-lg font-normal">Inicia Sesión</h1>
+            <p className="text-xs mt-2 mb-3">
+              ¿Eres un usuario nuevo?{' '}
+              <span className="text-custom-blue text-left mb-2 cursor-pointer underline">
+                <Link to="/signup">Crear una cuenta</Link>
+              </span>
+            </p>
+            <div>
+              <div className="mt-2.5 mb-2.5 flex rounded-lg shadow-sm ring-1 ring-inset ring-custom-gray focus-within:ring-2 focus-within:ring-inset focus-within:ring-custom-blue sm:max-w-md">
+                <input
+                  type="email"
+                  className="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6"
+                  placeholder="usuario@mail.com"
+                />
+              </div>
+              <div className="mt-2.5 mb-1 flex rounded-lg shadow-sm ring-1 ring-inset ring-custom-gray focus-within:ring-2 focus-within:ring-inset focus-within:ring-custom-blue sm:max-w-md">
+                <input
+                  type="password"
+                  className="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6"
+                  placeholder="Contraseña"
+                />
+              </div>
             </div>
+            <p className="mb-2.5 text-xs text-right text-custom-dark-gray cursor-pointer underline">
+              ¿Has olvidado tu contraseña?
+            </p>
+            <button className="mt-3 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white text-sm py-2 px-4 font-normal border border-custom-blue text-custom-blue">
+              Ingresar
+            </button>
+          </div>
         </div>
-        </div>
-
       </div>
     </>
   );
