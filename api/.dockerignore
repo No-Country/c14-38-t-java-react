@@ -1,0 +1,21 @@
+# Excluye archivos y directorios generados durante la compilación y desarrollo
+target/
+mvnw
+mvnw.cmd
+.gradle/
+build/
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+out/
+logs/
+
+# Excluye archivos y directorios específicos de control de versiones (por ejemplo, Git)
+.git/
+.gitignore
+
+# Excluye archivos específicos que no se necesitan en la imagen final
+Dockerfile
+.dockerignore

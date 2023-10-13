@@ -1,6 +1,36 @@
 version: "3.8"
 
 services:
+  db:
+    image: mysql:8.1.0
+    volumes:
+      - ./database:/var/lib/mysql
+    restart: unless-stopped
+    ports:
+      - "3310:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "3001:8080"
+    # networks:
+    #   - internal_network
+    #   - external_network
+    environment:
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_USER: ${DB_USER}
+      DB_NAME: ${DB_NAME}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+    restart: unless-stopped
+
   client:
     build:
       context: ./client
@@ -9,13 +39,13 @@ services:
         - VITE_BACKEND_URL=${VITE_BACKEND_URL}
     ports:
       - "3000:80"
-    networks:
-      - internal_network
-      - external_network
+    # networks:
+    #   - internal_network
+    #   - external_network
     restart: unless-stopped
 
-networks:
-  internal_network:
-    driver: bridge
-  external_network:
-    external: true
+# networks:
+#   internal_network:
+#     driver: bridge
+#   external_network:
+#     external: true
