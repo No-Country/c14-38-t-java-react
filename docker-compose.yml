@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      args:
+        - VITE_BACKEND_URL=${VITE_BACKEND_URL}
+    ports:
+      - "3000:80"
+    networks:
+      - internal_network
+      - external_network
+    restart: unless-stopped
+
+networks:
+  internal_network:
+    driver: bridge
+  external_network:
+    external: true
