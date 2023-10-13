@@ -1,6 +1,38 @@
 import { Link } from 'react-router-dom';
+import { authenticateUser } from '../../utils/auth';
+import { useState } from 'react';
 
 const LoginPage = () => {
+  const [loginForm, setLoginForm] = useState({
+    email: '',
+    password: '',
+  });
+
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleOnChange = (e) => {
+    setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
+  };
+
+  const login = async (e) => {
+    e.preventDefault();
+
+    setIsError(false);
+    setIsLoading(true);
+
+    try {
+      const { email, password } = loginForm;
+      const { token } = await authenticateUser(email, password);
+      localStorage.setItem('token', token);
+    } catch (error) {
+      setIsError(true);
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="flex w-full h-screen">
@@ -26,28 +58,37 @@ const LoginPage = () => {
                 <Link to="/signup">Crear una cuenta</Link>
               </span>
             </p>
-            <div>
+            <form onSubmit={login}>
               <div className="mt-2.5 mb-2.5 flex rounded-lg shadow-sm ring-1 ring-inset ring-custom-gray focus-within:ring-2 focus-within:ring-inset focus-within:ring-custom-blue sm:max-w-md">
                 <input
                   type="email"
+                  onChange={handleOnChange}
+                  name="email"
                   className="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6"
                   placeholder="usuario@mail.com"
                 />
               </div>
               <div className="mt-2.5 mb-1 flex rounded-lg shadow-sm ring-1 ring-inset ring-custom-gray focus-within:ring-2 focus-within:ring-inset focus-within:ring-custom-blue sm:max-w-md">
                 <input
+                  onChange={handleOnChange}
+                  name="password"
                   type="password"
                   className="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6"
                   placeholder="Contraseña"
                 />
               </div>
-            </div>
-            <p className="mb-2.5 text-xs text-right text-custom-dark-gray cursor-pointer underline">
-              ¿Has olvidado tu contraseña?
-            </p>
-            <button className="mt-3 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white text-sm py-2 px-4 font-normal border border-custom-blue text-custom-blue">
-              Ingresar
-            </button>
+              <p className="mb-2.5 text-xs text-right text-custom-dark-gray cursor-pointer underline">
+                ¿Has olvidado tu contraseña?
+              </p>
+              <button
+                disabled={isLoading}
+                className="mt-3 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white text-sm py-2 px-4 font-normal border border-custom-blue text-custom-blue"
+              >
+                Ingresar
+              </button>
+            </form>
+
+            {isError && <p className="text-red-500">Error al iniciar sesión</p>}
           </div>
         </div>
       </div>
