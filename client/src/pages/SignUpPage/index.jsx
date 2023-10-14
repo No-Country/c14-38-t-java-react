@@ -1,6 +1,58 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { validateEmail, validatePassword } from '../../utils/validations/formValidation';
 
 const SignUpPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [errors, setErrors] = useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+  })
+
+  const handleChange = (e, input) => {
+    const value = e.target.value;
+  
+    switch (input) {
+      case 'email':
+        setEmail(value);
+        if (validateEmail(value)) {
+          setErrors((prevErrors) => ({ ...prevErrors, email: '' }));
+        } else if (value === '') {
+          setErrors((prevErrors) => ({...prevErrors, email: 'Campo Obligatorio'}));
+        } else {
+          setErrors((prevErrors) => ({...prevErrors, email: 'Ingresa un correo válido'}));
+        }
+        break;
+  
+      case 'password':
+        setPassword(value);
+        if (validatePassword(value)) {
+          setErrors((prevErrors) => ({...prevErrors, password: ''}));
+        } else if (value === '') {
+          setErrors((prevErrors) => ({...prevErrors, password: 'Campo Obligatorio'}));
+        } else {
+          setErrors((prevErrors) => ({...prevErrors, password: 'Ingresa de 5 a 15 caracteres'}));
+        }
+        break;
+  
+      case 'confirmPassword':
+        setConfirmPassword(value);
+        if (value === password) {
+          setErrors((prevErrors) => ({...prevErrors, confirmPassword: ''}));
+        }else if (value === '') {
+          setErrors((prevErrors) => ({...prevErrors, confirmPassword: 'Campo Obligatorio'}));
+        } else {
+          setErrors((prevErrors) => ({...prevErrors, confirmPassword: 'Las contraseñas no coinciden'}));
+        }
+        break;
+      default:
+        break;
+    }
+  };
+  
   return (
     <>
       <div className="flex w-full h-screen">
@@ -25,27 +77,42 @@ const SignUpPage = () => {
               </span>
             </p>
             <div>
-              <div className="mt-2.5 mb-2.5 flex rounded-lg shadow-sm ring-1 ring-inset ring-custom-gray focus-within:ring-2 focus-within:ring-inset focus-within:ring-custom-blue sm:max-w-md">
+              <div className={`mt-2.5 mb-2.5 flex rounded-lg shadow-sm ring-1 ring-inset ${errors.email ? 'ring-custom-red' : 'ring-custom-gray'} focus-within:ring-2 focus-within:ring-inset ${errors.email ? 'focus-within:ring-custom-red' : 'focus-within:ring-custom-blue'} sm:max-w-md`}>
                 <input
                   type="email"
                   className="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6"
+                  value={email}
+                  onChange={(e) => handleChange(e, 'email')}
+                  onBlur={(e) => handleChange(e, 'email')}
                   placeholder="usuario@mail.com"
+                  required
                 />
               </div>
-              <div className="mt-2.5 mb-1 flex rounded-lg shadow-sm ring-1 ring-inset ring-custom-gray focus-within:ring-2 focus-within:ring-inset focus-within:ring-custom-blue sm:max-w-md">
+              {errors.email && <span className='text-custom-red'>{errors.email}</span>}
+              <div className={`mt-2.5 mb-1 flex rounded-lg shadow-sm ring-1 ring-inset ${errors.password ? 'ring-custom-red' : 'ring-custom-gray'} focus-within:ring-2 focus-within:ring-inset ${errors.password ? 'focus-within:ring-custom-red' : 'focus-within:ring-custom-blue'} sm:max-w-md`}>
                 <input
                   type="password"
                   className="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6"
+                  value={password}
+                  onChange={(e) => handleChange(e, 'password')}
+                  onBlur={(e) => handleChange(e, 'password')}
                   placeholder="Contraseña"
+                  required
                 />
               </div>
-              <div className="mt-2.5 mb-1 flex rounded-lg shadow-sm ring-1 ring-inset ring-custom-gray focus-within:ring-2 focus-within:ring-inset focus-within:ring-custom-blue sm:max-w-md">
+              {errors.password && <span className='text-custom-red'>{errors.password}</span>}
+              <div className={`mt-2.5 mb-1 flex rounded-lg shadow-sm ring-1 ring-inset ${errors.confirmPassword ? 'ring-custom-red' : 'ring-custom-gray'} focus-within:ring-2 focus-within:ring-inset ${errors.confirmPassword ? 'focus-within:ring-custom-red' : 'focus-within:ring-custom-blue'} sm:max-w-md`}>
                 <input
                   type="password"
                   className="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6"
+                  value={confirmPassword}
+                  onChange={(e) => handleChange(e, 'confirmPassword')}
+                  onBlur={(e) => handleChange(e, 'confirmPassword')}
                   placeholder="Confirma la contraseña"
+                  required
                 />
               </div>
+              {errors.confirmPassword && <span className='text-custom-red'>{errors.confirmPassword}</span>}
             </div>
 
             <button className="mt-3 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white text-sm py-2 px-4 font-normal border border-custom-blue text-custom-blue">
