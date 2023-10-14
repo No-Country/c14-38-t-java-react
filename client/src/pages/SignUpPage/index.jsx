@@ -13,11 +13,11 @@ const SignUpPage = () => {
   })
 
   const handleChange = (e, input) => {
+    
     const value = e.target.value;
-  
     switch (input) {
       case 'email':
-        setEmail(value);
+        setEmail(value.toLowerCase());
         if (validateEmail(value)) {
           setErrors((prevErrors) => ({ ...prevErrors, email: '' }));
         } else if (value === '') {
@@ -124,5 +124,4 @@ const SignUpPage = () => {
     </>
   );
 };
-
 export default SignUpPage;
