@@ -1,8 +1,4 @@
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -12,6 +8,9 @@ import BranchProfilePage from './pages/BranchProfilePage';
 import ProductsPage from './pages/ProductsPage';
 import UserProfilePage from './pages/UserProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
+
+import axios from 'axios';
+axios.defaults.baseURL = 'https://stockwise-back.onrender.com/';
 
 function App() {
   return (
