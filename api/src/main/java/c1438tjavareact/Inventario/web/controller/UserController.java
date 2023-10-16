@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import c1438tjavareact.Inventario.model.persistence.entity.User;
 import c1438tjavareact.Inventario.web.service.UserService;
-
 @RestController
 @RequestMapping("/api")
 public class UserController {
@@ -42,12 +41,10 @@ public class UserController {
         }
         return "El usuario ingresado no existe";
     }
-
     @GetMapping("/user/all")
     public List<User> searchAll(){
         return userService.searchAll();
     }
-
     @GetMapping("/user/{id}")
     public ResponseEntity<User> searchById(@PathVariable Long id){
         User currentUser = userService.searchById(id);

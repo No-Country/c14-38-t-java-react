@@ -1,4 +1,11 @@
 package c1438tjavareact.Inventario.web.service;
+<<<<<<< HEAD
+
+import c1438tjavareact.Inventario.model.persistence.entity.User;
+import org.springframework.stereotype.Service;
+
+=======
+>>>>>>> origin/dev
 
 import java.util.List;
 
