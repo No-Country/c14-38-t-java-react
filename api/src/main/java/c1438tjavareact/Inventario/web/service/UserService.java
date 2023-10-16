@@ -1,4 +1,4 @@
-package c1438tjavareact.Inventario.model.domain.services;
+package c1438tjavareact.Inventario.web.service;
 
 import c1438tjavareact.Inventario.model.persistence.entity.User;
 import org.springframework.stereotype.Service;

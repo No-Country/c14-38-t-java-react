@@ -1,8 +1,9 @@
 package c1438tjavareact.Inventario.model.domain.services.impl;
 
-import c1438tjavareact.Inventario.model.domain.services.UserService;
+
 import c1438tjavareact.Inventario.model.persistence.entity.User;
 import c1438tjavareact.Inventario.model.persistence.repository.UserRepository;
+import c1438tjavareact.Inventario.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
