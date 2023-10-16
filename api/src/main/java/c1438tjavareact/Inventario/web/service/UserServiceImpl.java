@@ -14,8 +14,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepo;
 
-    
-
     /*@Override
     public User update(Long id, User userUpdate) {
         return userRepo.save(userUpdate);
@@ -30,7 +28,6 @@ public class UserServiceImpl implements UserService {
     public List<User> searchAll(){
         return userRepo.findAll();
     }
-
 
     @Override
     public String delete(Long id) {

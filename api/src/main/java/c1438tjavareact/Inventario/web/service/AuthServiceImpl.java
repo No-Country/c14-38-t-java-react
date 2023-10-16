@@ -17,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService{
 
-
     private final UserRepository userRepo;
 
     private final PasswordEncoder passwordEncoder;
