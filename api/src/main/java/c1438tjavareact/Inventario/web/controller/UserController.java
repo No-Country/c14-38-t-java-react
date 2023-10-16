@@ -1,34 +1,42 @@
 package c1438tjavareact.Inventario.web.controller;
 
-import c1438tjavareact.Inventario.web.service.UserService;
-import c1438tjavareact.Inventario.model.persistence.entity.User;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import c1438tjavareact.Inventario.model.persistence.entity.User;
+import c1438tjavareact.Inventario.web.service.UserService;
 
 @RestController
-@RequestMapping("v1/users")
+@RequestMapping("/api")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    //GetMapping para revisar una lista de usuarios.
-    /* @GetMapping
-    public List<User> getUsers(){
-         return userService.list();
-     }*/
+    @DeleteMapping("/delete/{id}")
+    public String deleteUser(@PathVariable Long id){
+        User currentUser = userService.searchById(id);
+        if(currentUser != null){
+            userService.delete(id);
+            return "El usuario fue eliminado";
+        }
+        return "El usuario ingresado no existe";
+    }
 
-     @PostMapping
-    public ResponseEntity<User> create(@RequestBody User user){
-         return new ResponseEntity<>(userService.create(user), HttpStatus.CREATED);
-     }
+    @GetMapping("/user/all")
+    public List<User> searchAll(){
+        return userService.searchAll();
+    }
 
-
-     @PutMapping("{id}")
-    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user){
-         user.setId(id);
-         return new ResponseEntity<>(userService.update(user), HttpStatus.ACCEPTED);
-     }
+    @GetMapping("/user/{id}")
+    public ResponseEntity<User> searchById(@PathVariable Long id){
+        User currentUser = userService.searchById(id);
+        return ResponseEntity.ok(currentUser);
+    }
 }
