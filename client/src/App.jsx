@@ -11,6 +11,7 @@ import NotFoundPage from './pages/NotFoundPage';
 
 import axios from 'axios';
 axios.defaults.baseURL = 'https://stockwise-back.onrender.com/';
+// axios.defaults.baseURL = 'http://localhost:3001';
 
 function App() {
   return (

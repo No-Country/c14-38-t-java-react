@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { authenticateUser } from '../../utils/auth';
 import {
   validateEmail,
   validatePassword,
@@ -49,6 +50,17 @@ const LoginPage = () => {
       }));
     }
   };
+
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const { token } = await authenticateUser(email, password);
+      localStorage.setItem('token', token);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div className="flex w-full h-screen">
@@ -63,7 +75,10 @@ const LoginPage = () => {
         </div>
 
         <div className="flex w-full items-center justify-center">
-          <div className="w-full max-w-sm m-4 sm:bg-[white] px-10 py-10 rounded sm:shadow-md">
+          <form
+            onSubmit={handleOnSubmit}
+            className="w-full max-w-sm m-4 sm:bg-[white] px-10 py-10 rounded sm:shadow-md"
+          >
             <h1 className="flex sm:hidden text-3xl bg-clip-text text-transparent bg-blue-gradient font-bold mt-2">
               Stockwise
             </h1>
@@ -86,7 +101,6 @@ const LoginPage = () => {
               >
                 <input
                   type="email"
-                  name="email"
                   className="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6"
                   value={email}
                   onChange={handleChangeEmail}
@@ -106,7 +120,6 @@ const LoginPage = () => {
                 } sm:max-w-md`}
               >
                 <input
-                  name="password"
                   type="password"
                   className="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6"
                   value={password}
@@ -121,10 +134,13 @@ const LoginPage = () => {
             <p className="mb-2.5 text-xs text-right text-custom-dark-gray cursor-pointer underline">
               ¿Has olvidado tu contraseña?
             </p>
-            <button className="mt-3 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white text-sm py-2 px-4 font-normal border border-custom-blue text-custom-blue">
+            <button
+              type="submit"
+              className="mt-3 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white text-sm py-2 px-4 font-normal border border-custom-blue text-custom-blue"
+            >
               Ingresar
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </>
