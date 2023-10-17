@@ -33,7 +33,7 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(request -> {
             CorsConfiguration corsConfig = new CorsConfiguration();
             corsConfig.applyPermitDefaultValues();
-            corsConfig.addAllowedOrigin("http://localhost:3000/"); // Añade tu dirección permitida aquí
+            corsConfig.addAllowedOrigin("*"); // Añade tu dirección permitida aquí
             return corsConfig;
             }))
             .authorizeHttpRequests(auth -> auth.requestMatchers(publicEndpoints()).permitAll().anyRequest().authenticated())
