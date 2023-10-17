@@ -1,7 +1,29 @@
-Dockerfile
-.dockerignore
-node_modules
+# Ignora archivos y directorios generados por Node.js y npm
+node_modules/
 npm-debug.log
-README.md
-.next
+yarn-debug.log
+yarn-error.log
+.pnp.js
+
+# Ignora archivos de compilación y salida de Vite
+/dist/
+/.vite/
+
+# Ignora archivos de compilación y salida de Next.js
+/.next/
+/out/
+
+# Ignora archivos de copia de seguridad de editores de código
+*~
+.vscode/
+
+# Ignora archivos de control de versiones
 .git
+.svn
+
+# Ignora archivos específicos de configuración
+.env
+.env.local
+
+# Ignora archivos de registro
+*.log

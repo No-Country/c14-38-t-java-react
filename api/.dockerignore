@@ -1,0 +1,27 @@
+# Ignora los archivos y directorios generados por Maven
+/target/
+*.iml
+.idea/
+
+# Ignora archivos y directorios específicos de Spring Boot
+mvnw
+.mvn/
+.springBeans
+spring-configuration-metadata.json
+
+# Ignora archivos de control de versiones
+.git
+.svn
+
+# Ignora archivos y directorios específicos de tu proyecto
+logs/
+docs/
+*.log
+
+# Ignora archivos de configuración específicos
+application.properties
+application.yml
+
+# Ignora archivos de dependencias de desarrollo (por ejemplo, pruebas)
+test/
+test-classes/
