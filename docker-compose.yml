@@ -20,8 +20,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3001:8080"
-    networks:
-      - external_network
+    # networks:
+    #   - external_network
     depends_on:
       - db
     environment:
@@ -40,12 +40,12 @@ services:
         - VITE_BACKEND_URL=${VITE_BACKEND_URL}
     ports:
       - "3000:80"
-    networks:
-      - external_network
+    # networks:
+    #   - external_network
     depends_on:
       - api
     restart: unless-stopped
 
-networks:
-  external_network:
-    external: true
+# networks:
+#   external_network:
+#     external: true
