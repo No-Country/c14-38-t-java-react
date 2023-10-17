@@ -88,7 +88,12 @@ const SignUpPage = () => {
 
         <div className="flex w-full items-center justify-center">
           <div className="w-full max-w-sm m-4 sm:bg-custom-white px-10 py-10 rounded sm:shadow-md">
-            <p className="text-xs">Paso 1/2</p>
+             {/* barra de progreso*/}
+            <div class="flex mb-1 items-center w-1/2 mx-auto mt-1">
+              <div class="w-2/3 h-2 bg-[#3058bf] rounded-l-full "></div>
+              <div class="w-1/3 h-2 bg-[#bebdbd] rounded-r-full "></div>
+            </div>
+            <p className="text-xs mt-3">Paso 1/2</p>
             <h1 className="text-3xl font-normal">Crea tu cuenta</h1>
             <p className="text-xs mt-2 mb-4">
               ¿Ya sos usuario?{' '}
@@ -166,10 +171,9 @@ const SignUpPage = () => {
                   </p>
                 ))}
             </div>
-
-            <button className="mt-3 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white text-sm py-2 px-4 font-normal border border-custom-blue text-custom-blue">
-              Continuar
-            </button>
+              <Link to="/signup-step" className="mt-3 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white text-sm py-2 px-4 font-normal border border-custom-blue text-custom-blue flex justify-center">
+                Continuar
+              </Link>
           </div>
         </div>
       </div>
