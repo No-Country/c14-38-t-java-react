@@ -19,13 +19,18 @@ public class SupplierController {
     private SupplierService supplierService;
 
     @PostMapping
-    public ResponseEntity<Supplier> create(@RequestBody Supplier supplier){
+    public ResponseEntity<Optional<Supplier>> create(@RequestBody Supplier supplier){
         return new ResponseEntity<>(supplierService.create(supplier), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Supplier> update(@PathVariable Long id, @RequestBody Supplier supplier){
-        return new ResponseEntity<>(supplierService.update(supplier), HttpStatus.ACCEPTED);
+    public ResponseEntity<Optional<Supplier>> update(@PathVariable Long id, @RequestBody Supplier supplier){
+        Optional<Supplier> currentSupplier = supplierService.SupplierId(id);
+        if(currentSupplier.isPresent()){
+            return new ResponseEntity<>(supplierService.update(supplier), HttpStatus.ACCEPTED);
+        }else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/all")
@@ -39,13 +44,13 @@ public class SupplierController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id){
-        supplierService.delete(id);
-        try{
+    public ResponseEntity<String> delete(@PathVariable Long id) throws Exception {
+        Optional<Supplier> currentSupplier = supplierService.SupplierId(id);
+        if(currentSupplier.isPresent()){
+            supplierService.delete(id);
             return new ResponseEntity<>("Se elimino correctamente", HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>("El proveedor ingresado no existe", HttpStatus.NOT_FOUND);
         }
     }
-
 }

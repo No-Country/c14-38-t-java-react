@@ -10,16 +10,14 @@ import java.util.Optional;
 @Service
 public interface SupplierService{
 
-    Supplier create (Supplier supplier);
+    Optional<Supplier> create (Supplier supplier);
 
-    Supplier update (Supplier supplier);
+    Optional<Supplier> update (Supplier supplier);
 
     List<Supplier> SupplierList();
 
     Optional<Supplier> SupplierId(Long id);
 
     void delete(Long id);
-
-
 
 }

@@ -16,13 +16,13 @@ public class SupplierServiceImpl implements SupplierService {
     private SupplierRepository supplierRepository;
 
     @Override
-    public Supplier create(Supplier supplier) {
-        return supplierRepository.save(supplier);
+    public Optional<Supplier> create(Supplier supplier) {
+        return Optional.of(supplierRepository.save(supplier));
     }
 
     @Override
-    public Supplier update(Supplier supplier) {
-        return supplierRepository.save(supplier);
+    public Optional<Supplier> update(Supplier supplier) {
+        return Optional.of(supplierRepository.save(supplier));
     }
 
     @Override

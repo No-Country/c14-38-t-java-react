@@ -12,7 +12,7 @@ import lombok.Data;
 @Entity
 @Table(name="suppliers")
 @Data
-public class Supplier {
+public class  Supplier {
 	//proveedores
 	/*TODO
 	*  hacer CRUD de esto, si es posible agregar DTO*/
