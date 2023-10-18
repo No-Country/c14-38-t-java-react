@@ -64,9 +64,9 @@ const LoginPage = () => {
     }
 
     try {
-      const { token } = await authenticateUser(email, password);
+      const { data } = await authenticateUser(email, password);
       setErrors((prevErrors) => ({ ...prevErrors, login: '' }));
-      localStorage.setItem('token', token);
+      localStorage.setItem('token', data.token);
       navigate('/branches');
     } catch (error) {
       if (error.response && error.response.status === 403) {
