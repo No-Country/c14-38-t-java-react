@@ -1,17 +1,21 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { authenticateUser } from '../../utils/auth';
+import { useNavigate } from 'react-router-dom';
 import {
   validateEmail,
   validatePassword,
 } from '../../utils/validations/formValidation';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({
     email: '',
     password: '',
+    login: '',
   });
 
   const handleChangeEmail = (e) => {
@@ -32,6 +36,7 @@ const LoginPage = () => {
       }));
     }
   };
+
   const handleChangePassword = (e) => {
     const passwordValue = e.target.value;
     setPassword(passwordValue);
@@ -54,13 +59,30 @@ const LoginPage = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
 
+    if (errors.email || errors.password) {
+      return;
+    }
+
     try {
       const { token } = await authenticateUser(email, password);
+      setErrors((prevErrors) => ({ ...prevErrors, login: '' }));
       localStorage.setItem('token', token);
+      navigate('/branches');
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 403) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          login: 'Email o password inválidos.',
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          login: 'Error inesperado, intentelo nuevamente.',
+        }));
+      }
     }
   };
+
   return (
     <>
       <div className="flex w-full h-screen">
@@ -140,6 +162,9 @@ const LoginPage = () => {
             >
               Ingresar
             </button>
+            {errors.login && (
+              <span className="text-custom-red">{errors.login}</span>
+            )}
           </form>
         </div>
       </div>
