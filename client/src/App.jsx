@@ -10,8 +10,13 @@ import UserProfilePage from './pages/UserProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 
 import axios from 'axios';
-axios.defaults.baseURL = 'https://stockwise-back.onrender.com/';
-// axios.defaults.baseURL = 'http://localhost:3001';
+
+// Si se quiere probar en local,
+// cambiar el valor de la variable de entorno a
+// http://localhost:3001/ en el archivo .env
+
+axios.defaults.baseURL =
+  import.meta.VITE_BACKEND_URL || 'https://stockwise-back.onrender.com/';
 
 function App() {
   return (
