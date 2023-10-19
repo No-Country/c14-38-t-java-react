@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { authenticateUser } from '../../utils/auth';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -109,12 +109,12 @@ const LoginPage = () => {
               Stockwise
             </h1>
             <h1 className="sm:text-3xl text-lg font-normal">Inicia Sesión</h1>
-            <p className="text-xs mt-2 mb-3">
+            {/* <p className="text-xs mt-2 mb-3">
               ¿Eres un usuario nuevo?{' '}
               <span className="text-custom-blue text-left mb-2 cursor-pointer underline">
                 <Link to="/signup">Crear una cuenta</Link>
               </span>
-            </p>
+            </p> */}
             <div>
               <div
                 className={`mt-2.5 mb-2.5 flex rounded-lg shadow-sm ring-1 ring-inset ${
@@ -157,12 +157,12 @@ const LoginPage = () => {
               </div>
               {/* {errors.password && (<span className="text-custom-red">{errors.password}</span>)} */}
               {errors.login && (
-                <span className="text-custom-red">{errors.login}</span>
+                <span className="text-custom-red text-xs">{errors.login}</span>
               )}
             </div>
-            <p className="mb-2.5 text-xs text-right text-custom-dark-gray cursor-pointer underline">
+            {/* <p className="mb-2.5 text-xs text-right text-custom-dark-gray cursor-pointer underline">
               ¿Has olvidado tu contraseña?
-            </p>
+            </p> */}
             <button
               type="submit"
               className="mt-3 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white text-sm py-2 px-4 font-normal border border-custom-blue text-custom-blue"

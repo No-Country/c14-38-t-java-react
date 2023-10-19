@@ -137,30 +137,30 @@ const BranchesPage = () => {
             </div>
             <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-gray-500/10">
-                <div className="space-y-2 py-6">
+                <div className="py-5">
                   <Link
                     href="#"
-                    className="-mx-3 block hover:bg-custom-button-hover rounded-lg px-3 py-2.5  leading-7 text-gray-900 "
+                    className="-mx-3 block hover:bg-custom-button-hover rounded-lg px-3 py-1.5  leading-7 text-gray-900 "
                   >
                     Inventario
                   </Link>
                   <Link
                     href="#"
-                    className="-mx-3 block hover:bg-custom-button-hover rounded-lg px-3 py-2.5  leading-7 text-gray-900 "
+                    className="-mx-3 block hover:bg-custom-button-hover rounded-lg px-3 py-1.5  leading-7 text-gray-900 "
                   >
                     Despacho
                   </Link>
                 </div>
-                <div className="space-y-2 py-6">
+                <div className="py-5">
                   <Link
                     href="#"
-                    className="-mx-3 block hover:bg-custom-button-hover rounded-lg px-3 py-2.5 leading-7 text-gray-900 "
+                    className="-mx-3 block hover:bg-custom-button-hover rounded-lg px-3 py-1.5 leading-7 text-gray-900 "
                   >
                     Perfil
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="w-full text-left -mx-3 block hover:bg-custom-button-hover rounded-lg px-3 py-2.5 leading-7 text-gray-900 "
+                    className="w-full text-left -mx-3 block hover:bg-custom-button-hover rounded-lg px-3 py-1.5 leading-7 text-gray-900 "
                   >
                     Cerrar Sesión
                   </button>
