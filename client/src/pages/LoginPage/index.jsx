@@ -1,16 +1,21 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { authenticateUser } from '../../utils/auth';
+import { useNavigate } from 'react-router-dom';
 import {
   validateEmail,
   validatePassword,
 } from '../../utils/validations/formValidation';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({
     email: '',
     password: '',
+    login: '',
   });
 
   const handleChangeEmail = (e) => {
@@ -31,6 +36,7 @@ const LoginPage = () => {
       }));
     }
   };
+
   const handleChangePassword = (e) => {
     const passwordValue = e.target.value;
     setPassword(passwordValue);
@@ -49,6 +55,34 @@ const LoginPage = () => {
       }));
     }
   };
+
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+
+    if (errors.email || errors.password) {
+      return;
+    }
+
+    try {
+      const { data } = await authenticateUser(email, password);
+      setErrors((prevErrors) => ({ ...prevErrors, login: '' }));
+      localStorage.setItem('token', data.token);
+      navigate('/branches');
+    } catch (error) {
+      if (error.response && error.response.status === 403) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          login: 'Email o password inválidos.',
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          login: 'Error inesperado, intentelo nuevamente.',
+        }));
+      }
+    }
+  };
+
   return (
     <>
       <div className="flex w-full h-screen">
@@ -63,7 +97,10 @@ const LoginPage = () => {
         </div>
 
         <div className="flex w-full items-center justify-center">
-          <div className="w-full max-w-sm m-4 sm:bg-[white] px-10 py-10 rounded sm:shadow-md">
+          <form
+            onSubmit={handleOnSubmit}
+            className="w-full max-w-sm m-4 sm:bg-[white] px-10 py-10 rounded sm:shadow-md"
+          >
             <h1 className="flex sm:hidden text-3xl bg-clip-text text-transparent bg-blue-gradient font-bold mt-2">
               Stockwise
             </h1>
@@ -119,10 +156,16 @@ const LoginPage = () => {
             <p className="mb-2.5 text-xs text-right text-custom-dark-gray cursor-pointer underline">
               ¿Has olvidado tu contraseña?
             </p>
-            <button className="mt-3 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white text-sm py-2 px-4 font-normal border border-custom-blue text-custom-blue">
+            <button
+              type="submit"
+              className="mt-3 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white text-sm py-2 px-4 font-normal border border-custom-blue text-custom-blue"
+            >
               Ingresar
             </button>
-          </div>
+            {errors.login && (
+              <span className="text-custom-red">{errors.login}</span>
+            )}
+          </form>
         </div>
       </div>
     </>
