@@ -6,9 +6,12 @@ import {
   validateEmail,
   validatePassword,
 } from '../../utils/validations/formValidation';
+import useAuthContext from '../../hooks/useAuthContext';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+
+  const { setToken } = useAuthContext();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -66,6 +69,7 @@ const LoginPage = () => {
     try {
       const { data } = await authenticateUser(email, password);
       setErrors((prevErrors) => ({ ...prevErrors, login: '' }));
+      setToken(data.token);
       localStorage.setItem('token', data.token);
       navigate('/branches');
     } catch (error) {
