@@ -9,7 +9,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 // import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
-import SignUpPageStep from './pages/SignUpPageStep';
+// import SignUpPageStep from './pages/SignUpPageStep';
 import BranchesPage from './pages/BranchesPage';
 import BranchProfilePage from './pages/BranchProfilePage';
 import ProductsPage from './pages/ProductsPage';
@@ -22,7 +22,7 @@ import useAuthContext from './hooks/useAuthContext';
 // Si no se especifica una dirección de backend en el archivo .env entonces
 // se utilizará localhost con el puerto 3001 de forma predeterminada.
 axios.defaults.baseURL =
-  import.meta.VITE_BACKEND_URL || 'http://localhost:3001';
+  import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
 
 function App() {
   const { token } = useAuthContext();
