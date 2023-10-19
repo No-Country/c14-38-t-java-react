@@ -30,7 +30,7 @@ const BranchesPage = () => {
       price: 123,
     },
   ];
-  
+
   const navigate = useNavigate();
   const { setToken } = useAuthContext();
 
@@ -44,9 +44,9 @@ const BranchesPage = () => {
 
   return (
     <div className="flex flex-col h-screen text-custom-blue">
-      <header className="bg-white">
+      <header>
         <nav
-          className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+          className="mx-auto flex w-full items-center justify-between p-6 lg:px-8"
           aria-label="Global"
         >
           <div className="flex lg:flex-1">
@@ -100,7 +100,8 @@ const BranchesPage = () => {
                     </Menu.Item>
                     <Menu.Item>
                       {({ active }) => (
-                        <button onClick={handleLogout}
+                        <button
+                          onClick={handleLogout}
                           className={`${
                             active ? 'bg-custom-button-hover' : ''
                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
@@ -157,12 +158,12 @@ const BranchesPage = () => {
                   >
                     Perfil
                   </Link>
-                  <Link
-                    href="#"
-                    className="-mx-3 block hover:bg-custom-button-hover rounded-lg px-3 py-2.5 leading-7 text-gray-900 "
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left -mx-3 block hover:bg-custom-button-hover rounded-lg px-3 py-2.5 leading-7 text-gray-900 "
                   >
                     Cerrar Sesión
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
@@ -183,10 +184,13 @@ const BranchesPage = () => {
               <span className="ml-1">Despacho</span>
             </Link>
 
-            <Link className="p-3 flex flex-row hover:bg-custom-button-hover rounded-lg">
+            <button
+              onClick={handleLogout}
+              className="p-3 flex flex-row hover:bg-custom-button-hover rounded-lg"
+            >
               <LogOut color="#3E43C7" />
               <span className="ml-1">Cerrar Sesión</span>
-            </Link>
+            </button>
           </div>
         </main>
         <main className="flex-grow w-3/4 bg-custom-panel p-4 m-2.5 rounded-lg">
