@@ -6,9 +6,12 @@ import {
   validateEmail,
   validatePassword,
 } from '../../utils/validations/formValidation';
+import useAuthContext from '../../hooks/useAuthContext';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+
+  const { setToken } = useAuthContext();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -66,20 +69,21 @@ const LoginPage = () => {
     try {
       const { data } = await authenticateUser(email, password);
       setErrors((prevErrors) => ({ ...prevErrors, login: '' }));
+      setToken(data.token);
       localStorage.setItem('token', data.token);
       navigate('/branches');
     } catch (error) {
-      if (error.response && error.response.status === 403) {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          login: 'Email o password inválidos.',
-        }));
-      } else {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          login: 'Error inesperado, intentelo nuevamente.',
-        }));
-      }
+      // if (error.response && error.response.status === 403) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        login: 'Email o password inválidos.',
+      }));
+      // } else {
+      //   setErrors((prevErrors) => ({
+      //     ...prevErrors,
+      //     login: 'Error inesperado, intentelo nuevamente.',
+      //   }));
+      // }
     }
   };
 
@@ -152,6 +156,9 @@ const LoginPage = () => {
                 />
               </div>
               {/* {errors.password && (<span className="text-custom-red">{errors.password}</span>)} */}
+              {errors.login && (
+                <span className="text-custom-red">{errors.login}</span>
+              )}
             </div>
             <p className="mb-2.5 text-xs text-right text-custom-dark-gray cursor-pointer underline">
               ¿Has olvidado tu contraseña?
@@ -162,9 +169,6 @@ const LoginPage = () => {
             >
               Ingresar
             </button>
-            {errors.login && (
-              <span className="text-custom-red">{errors.login}</span>
-            )}
           </form>
         </div>
       </div>
