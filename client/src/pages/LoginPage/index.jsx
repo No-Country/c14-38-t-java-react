@@ -1,6 +1,92 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { authenticateUser } from '../../utils/auth';
+import { useNavigate } from 'react-router-dom';
+import {
+  validateEmail,
+  validatePassword,
+} from '../../utils/validations/formValidation';
+import useAuthContext from '../../hooks/useAuthContext';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
+  const { setToken } = useAuthContext();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({
+    email: '',
+    password: '',
+    login: '',
+  });
+
+  const handleChangeEmail = (e) => {
+    const emailValue = e.target.value;
+    setEmail(emailValue.toLowerCase());
+
+    if (validateEmail(emailValue)) {
+      setErrors((prevErrors) => ({ ...prevErrors, email: '' }));
+    } else if (emailValue === '') {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: 'Este campo es requerido',
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        email: 'Ingresa un correo válido',
+      }));
+    }
+  };
+
+  const handleChangePassword = (e) => {
+    const passwordValue = e.target.value;
+    setPassword(passwordValue);
+
+    if (validatePassword(passwordValue)) {
+      setErrors((prevErrors) => ({ ...prevErrors, password: '' }));
+    } else if (passwordValue === '') {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        password: 'Este campo es requerido',
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        password: 'Ingresa una contraseña válida',
+      }));
+    }
+  };
+
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+
+    if (errors.email || errors.password) {
+      return;
+    }
+
+    try {
+      const { data } = await authenticateUser(email, password);
+      setErrors((prevErrors) => ({ ...prevErrors, login: '' }));
+      setToken(data.token);
+      localStorage.setItem('token', data.token);
+      navigate('/branches');
+    } catch (error) {
+      // if (error.response && error.response.status === 403) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        login: 'Email o password inválidos.',
+      }));
+      // } else {
+      //   setErrors((prevErrors) => ({
+      //     ...prevErrors,
+      //     login: 'Error inesperado, intentelo nuevamente.',
+      //   }));
+      // }
+    }
+  };
+
   return (
     <>
       <div className="flex w-full h-screen">
@@ -15,7 +101,10 @@ const LoginPage = () => {
         </div>
 
         <div className="flex w-full items-center justify-center">
-          <div className="w-full max-w-sm m-4 sm:bg-[white] px-10 py-10 rounded sm:shadow-md">
+          <form
+            onSubmit={handleOnSubmit}
+            className="w-full max-w-sm m-4 sm:bg-[white] px-10 py-10 rounded sm:shadow-md"
+          >
             <h1 className="flex sm:hidden text-3xl bg-clip-text text-transparent bg-blue-gradient font-bold mt-2">
               Stockwise
             </h1>
@@ -27,28 +116,60 @@ const LoginPage = () => {
               </span>
             </p>
             <div>
-              <div className="mt-2.5 mb-2.5 flex rounded-lg shadow-sm ring-1 ring-inset ring-custom-gray focus-within:ring-2 focus-within:ring-inset focus-within:ring-custom-blue sm:max-w-md">
+              <div
+                className={`mt-2.5 mb-2.5 flex rounded-lg shadow-sm ring-1 ring-inset ${
+                  errors.email ? 'ring-custom-red' : 'ring-custom-gray'
+                } focus-within:ring-2 focus-within:ring-inset ${
+                  errors.email
+                    ? 'focus-within:ring-custom-red'
+                    : 'focus-within:ring-custom-blue'
+                } sm:max-w-md`}
+              >
                 <input
                   type="email"
                   className="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6"
+                  value={email}
+                  onChange={handleChangeEmail}
+                  onBlur={handleChangeEmail}
                   placeholder="usuario@mail.com"
+                  required
                 />
               </div>
-              <div className="mt-2.5 mb-1 flex rounded-lg shadow-sm ring-1 ring-inset ring-custom-gray focus-within:ring-2 focus-within:ring-inset focus-within:ring-custom-blue sm:max-w-md">
+              {/* {errors.email && <span className='text-custom-red'>{errors.email}</span>} */}
+              <div
+                className={`mt-2.5 mb-1 flex rounded-lg shadow-sm ring-1 ring-inset ${
+                  errors.password ? 'ring-custom-red' : 'ring-custom-gray'
+                } focus-within:ring-2 focus-within:ring-inset ${
+                  errors.password
+                    ? 'focus-within:ring-custom-red'
+                    : 'focus-within:ring-custom-blue'
+                } sm:max-w-md`}
+              >
                 <input
                   type="password"
                   className="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6"
+                  value={password}
+                  onChange={handleChangePassword}
+                  onBlur={handleChangePassword}
                   placeholder="Contraseña"
+                  required
                 />
               </div>
+              {/* {errors.password && (<span className="text-custom-red">{errors.password}</span>)} */}
+              {errors.login && (
+                <span className="text-custom-red">{errors.login}</span>
+              )}
             </div>
             <p className="mb-2.5 text-xs text-right text-custom-dark-gray cursor-pointer underline">
               ¿Has olvidado tu contraseña?
             </p>
-            <button className="mt-3 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white text-sm py-2 px-4 font-normal border border-custom-blue text-custom-blue">
+            <button
+              type="submit"
+              className="mt-3 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white text-sm py-2 px-4 font-normal border border-custom-blue text-custom-blue"
+            >
               Ingresar
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </>

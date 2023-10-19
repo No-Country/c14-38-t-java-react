@@ -3,6 +3,9 @@ import { Package, LogOut, Truck, User, ArrowRight } from 'react-feather';
 import { Menu, Transition, Popover, Dialog } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useNavigate } from 'react-router-dom';
+import useAuthContext from '../../hooks/useAuthContext';
+import { logoutUser } from '../../utils/auth';
 
 const BranchesPage = () => {
   const products = [
@@ -27,6 +30,15 @@ const BranchesPage = () => {
       price: 123,
     },
   ];
+  
+  const navigate = useNavigate();
+  const { setToken } = useAuthContext();
+
+  const handleLogout = () => {
+    setToken(null);
+    logoutUser();
+    navigate('/login');
+  };
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -88,7 +100,7 @@ const BranchesPage = () => {
                     </Menu.Item>
                     <Menu.Item>
                       {({ active }) => (
-                        <button
+                        <button onClick={handleLogout}
                           className={`${
                             active ? 'bg-custom-button-hover' : ''
                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}

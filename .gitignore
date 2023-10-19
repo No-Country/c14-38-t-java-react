@@ -1,6 +1,7 @@
 ### GENERAL ###
 database
 .env
+.idea
 
 
 ### Linux ###
@@ -76,3 +77,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+### VS Code ###
+.vscode/
