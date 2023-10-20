@@ -1,9 +1,7 @@
 package c1438tjavareact.Inventario.web.service;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import c1438tjavareact.Inventario.model.persistence.entity.User;
 
 @Service
@@ -13,5 +11,5 @@ public interface UserService {
     String delete(Long id);
     List<User> searchAll();
     User searchById(Long id);
-    
+
 }
