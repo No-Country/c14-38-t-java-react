@@ -15,7 +15,7 @@ public interface DispatchMapper {
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "dispatchDate", target = "dispatchDate"),
             @Mapping(source = "quantity", target = "quantity"),
-
+            @Mapping(source = "product", target = "product")
     })
     DispatchDto toDispatch(Dispatch dispatch);
     List<DispatchDto> toDispatchs(List<Dispatch> dispatch);

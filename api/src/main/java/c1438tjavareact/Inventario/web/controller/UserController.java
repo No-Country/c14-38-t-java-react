@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import c1438tjavareact.Inventario.model.persistence.entity.User;
 import c1438tjavareact.Inventario.web.service.UserService;
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class UserController {
     
     @Autowired
