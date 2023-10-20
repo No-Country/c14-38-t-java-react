@@ -10,7 +10,6 @@ public class FamilyMapper {
         FamilyDto familyDto = new FamilyDto();
         familyDto.setId(family.getId());
         familyDto.setName(family.getName());
-        familyDto.setPrice(family.getPrice());
         return familyDto;
     }
 
@@ -18,7 +17,6 @@ public class FamilyMapper {
         Family family = new Family();
         family.setId(familyDto.getId());
         family.setName(familyDto.getName());
-        family.setPrice(familyDto.getPrice());
         return family;
     }
 }
