@@ -7,6 +7,7 @@ import {
   validatePassword,
 } from '../../utils/validations/formValidation';
 import useAuthContext from '../../hooks/useAuthContext';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -20,6 +21,8 @@ const LoginPage = () => {
     password: '',
     login: '',
   });
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChangeEmail = (e) => {
     const emailValue = e.target.value;
@@ -144,16 +147,16 @@ const LoginPage = () => {
               </div>
               {/* {errors.email && <span className='text-custom-red'>{errors.email}</span>} */}
               <div
-                className={`mb-4 flex rounded-lg shadow-sm ring-1 ring-inset ${
+                className={`mb-4 flex items-center rounded-lg shadow-sm ring-1 ring-inset ${
                   errors.password ? 'ring-custom-red' : 'ring-custom-gray'
                 } focus-within:ring-2 focus-within:ring-inset ${
                   errors.password
                     ? 'focus-within:ring-custom-red'
                     : 'focus-within:ring-custom-blue'
-                } sm:max-w-md`}
+                } sm:max-w-md relative`}
               >
                 <input
-                  type='password'
+                  type={showPassword ? 'text' : 'password'}
                   className='block flex-1 border-0 bg-transparent sm:py-1.5 py-3 px-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6'
                   value={password}
                   onChange={handleChangePassword}
@@ -161,6 +164,21 @@ const LoginPage = () => {
                   placeholder='Contraseña'
                   required
                 />
+                <button
+                  type='button'
+                  className='absolute right-3 text-custom-icon'
+                  aria-label={
+                    showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'
+                  }
+                  onMouseUp={() => setShowPassword(false)}
+                  onMouseDown={() => setShowPassword(true)}
+                >
+                  {showPassword ? (
+                    <EyeIcon className='h-5 w-5' />
+                  ) : (
+                    <EyeSlashIcon className='h-5 w-5' />
+                  )}
+                </button>
               </div>
               {/* {errors.password && (<span className="text-custom-red">{errors.password}</span>)} */}
               {errors.login && (

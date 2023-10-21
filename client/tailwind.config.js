@@ -17,6 +17,7 @@ export default {
         'custom-shine': '#F9F9F9',
         'custom-panel': '#DDDCE9',
         'custom-button-hover': '#C1BEDF',
+        'custom-icon': '#3C3C3C'
       },
     },
   },

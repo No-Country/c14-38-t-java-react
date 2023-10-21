@@ -30,8 +30,6 @@ const SignUpPage = () => {
     setStep(step + 1);
   };
 
-  const navigate = useNavigate();
-
   const handleSignUpChange = (e) => {
     const input = e.target.name;
     const value = e.target.value;
