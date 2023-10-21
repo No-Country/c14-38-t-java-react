@@ -19,7 +19,6 @@ export const buttonVariants = cva(
 export const Button = ({ children, className, variant, ...props }) => {
   return (
     <button
-      type="submit"
       className={cn(buttonVariants({ variant }), className)}
       {...props}
     >
