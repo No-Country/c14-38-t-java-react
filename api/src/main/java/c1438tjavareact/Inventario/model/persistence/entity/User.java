@@ -19,7 +19,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-//import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -46,6 +45,8 @@ public class User implements UserDetails{
 	private String name;
 
 	private String lastName;
+
+	private String companyName;
 	
 	@NotEmpty
 	@JsonIgnore

@@ -1,24 +1,23 @@
 package c1438tjavareact.Inventario.model.persistence.mapper;
-import c1438tjavareact.Inventario.model.dto.FamilyDto;
+
+
+import c1438tjavareact.Inventario.model.domain.dto.FamilyDto;
 import c1438tjavareact.Inventario.model.persistence.entity.Family;
-import org.springframework.stereotype.Component;
+import org.mapstruct.InheritInverseConfiguration;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
-@Component
-public class FamilyMapper {
+import java.util.List;
 
-    public FamilyDto toFamilyDto(Family family) {
-        FamilyDto familyDto = new FamilyDto();
-        familyDto.setId(family.getId());
-        familyDto.setName(family.getName());
-        familyDto.setPrice(family.getPrice());
-        return familyDto;
-    }
-
-    public Family toFamily(FamilyDto familyDto) {
-        Family family = new Family();
-        family.setId(familyDto.getId());
-        family.setName(familyDto.getName());
-        family.setPrice(familyDto.getPrice());
-        return family;
-    }
+@Mapper(componentModel = "spring")
+public interface FamilyMapper {
+    @Mappings({
+            @Mapping(source = "id", target = "id"),
+            @Mapping(source = "name", target = "name"),
+    })
+    FamilyDto toFamily(Family family);
+    List<FamilyDto> toFamilys(List<Family> family);
+    @InheritInverseConfiguration
+    Family toFamilydto(FamilyDto FamilyDto);
 }

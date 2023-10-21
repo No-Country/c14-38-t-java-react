@@ -1,10 +1,8 @@
 package c1438tjavareact.Inventario.web.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import c1438tjavareact.Inventario.model.persistence.entity.User;
 import c1438tjavareact.Inventario.model.persistence.repository.UserRepository;
 
@@ -14,10 +12,10 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepo;
 
-    /*@Override
+    @Override
     public User update(Long id, User userUpdate) {
         return userRepo.save(userUpdate);
-    }*/
+    }
 
     @Override
     public User searchById(Long id){
@@ -35,5 +33,5 @@ public class UserServiceImpl implements UserService {
         return "Usuario eliminado";
     }
 
-    
+
 }
