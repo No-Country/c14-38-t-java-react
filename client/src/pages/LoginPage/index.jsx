@@ -1,7 +1,6 @@
 import { useState } from 'react';
 // import { Link } from 'react-router-dom';
 import { loginUser } from '../../utils/auth';
-import { useNavigate } from 'react-router-dom';
 import {
   validateEmail,
   validatePassword,
@@ -9,9 +8,7 @@ import {
 import useAuthContext from '../../hooks/useAuthContext';
 
 const LoginPage = () => {
-  const navigate = useNavigate();
-
-  const { setToken } = useAuthContext();
+  const { login } = useAuthContext();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -59,7 +56,7 @@ const LoginPage = () => {
     }
   };
 
-  const handleOnSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     if (errors.email || errors.password) {
@@ -69,9 +66,7 @@ const LoginPage = () => {
     try {
       const { data } = await loginUser(email, password);
       setErrors((prevErrors) => ({ ...prevErrors, login: '' }));
-      setToken(data.token);
-      localStorage.setItem('token', data.token);
-      navigate('/products');
+      login(data.token);
     } catch (error) {
       // if (error.response && error.response.status === 403) {
       setErrors((prevErrors) => ({
@@ -107,7 +102,7 @@ const LoginPage = () => {
 
         <div className='flex w-full sm:items-center justify-center'>
           <form
-            onSubmit={handleOnSubmit}
+            onSubmit={handleLogin}
             className='flex flex-col w-full max-w-sm m-4 sm:bg-[white] sm:p-10 rounded sm:shadow-md'
           >
             {/* <h1 className='flex sm:hidden text-3xl bg-clip-text text-transparent bg-blue-gradient font-bold'>

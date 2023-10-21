@@ -1,22 +1,16 @@
 import { Fragment, useState } from 'react';
 import useAuthContext from '../../hooks/useAuthContext';
-import { useNavigate, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Menu, Transition, Popover, Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { User } from 'react-feather'; //
-import { logoutUser } from '../../utils/auth';
 import menuData from '../../data/menuData';
 
 function Header() {
   // #### Logout
-  const navigate = useNavigate();
-  const { setToken } = useAuthContext();
-  const handleLogout = () => {
-    setToken(null);
-    logoutUser();
-    navigate('/login');
-  };
+  const { logout: handleLogout } = useAuthContext();
+
   //   ####
 
   const classButton = ({ isActive }) =>

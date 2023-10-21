@@ -1,18 +1,12 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import useAuthContext from '../../hooks/useAuthContext';
-import { logoutUser } from '../../utils/auth';
 import { Package, LogOut, Truck } from 'react-feather';
 import menuData from '../../data/menuData';
 
 function Sidebar() {
   // #### Logout
-  const navigate = useNavigate();
-  const { setToken } = useAuthContext();
-  const handleLogout = () => {
-    setToken(null);
-    logoutUser();
-    navigate('/login');
-  };
+  const { logout: handleLogout } = useAuthContext();
+
   //   ####
 
   const classButton = ({ isActive }) =>
