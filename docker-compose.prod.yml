@@ -1,18 +1,18 @@
 version: "3.8"
 
 services:
-  db:
-    image: mysql:8.1.0
-    volumes:
-      - ./database:/var/lib/mysql
-    restart: unless-stopped
-    # ports:
-    #   - "3310:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+  # db:
+  #   image: mysql:8.1.0
+  #   volumes:
+  #     - ./database:/var/lib/mysql
+  #   restart: unless-stopped
+  #   # ports:
+  #   #   - "3310:3306"
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+  #     MYSQL_DATABASE: ${DB_NAME}
+  #     MYSQL_USER: ${DB_USER}
+  #     MYSQL_PASSWORD: ${DB_PASSWORD}
 
   api:
     build:
@@ -22,8 +22,8 @@ services:
     #   - "3001:8080"
     networks:
       - external_network
-    depends_on:
-      - db
+    # depends_on:
+    #   - db
     environment:
       DB_PASSWORD: ${DB_PASSWORD}
       DB_USER: ${DB_USER}
