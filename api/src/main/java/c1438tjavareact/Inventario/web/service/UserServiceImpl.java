@@ -12,10 +12,10 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepo;
 
-    /*@Override
+    @Override
     public User update(Long id, User userUpdate) {
         return userRepo.save(userUpdate);
-    }*/
+    }
 
     @Override
     public User searchById(Long id){

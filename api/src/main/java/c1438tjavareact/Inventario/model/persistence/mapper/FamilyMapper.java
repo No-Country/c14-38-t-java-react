@@ -15,8 +15,6 @@ public interface FamilyMapper {
     @Mappings({
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "name", target = "name"),
-            @Mapping(source = "price", target = "price"),
-
     })
     FamilyDto toFamily(Family family);
     List<FamilyDto> toFamilys(List<Family> family);
