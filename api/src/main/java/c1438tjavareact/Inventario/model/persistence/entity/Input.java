@@ -36,11 +36,8 @@ public class Input {
 	@NotNull
 	private Integer quantity;
 
-	@ManyToOne
-	@JoinColumn(name = "brach_id")
+	@OneToMany
+	@JoinColumn(name = "product_id")
 	private Branch branch;
-
-	@OneToMany(mappedBy = "input", cascade = CascadeType.ALL)
-	private List<Product> products = new ArrayList<>();
 
 }

@@ -6,8 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
-
 @RestController
 @RequestMapping("api/family")
 public class FamilyController {
@@ -42,7 +40,6 @@ public class FamilyController {
                 .map(t -> new ResponseEntity<>(t, HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
     @DeleteMapping("/delete/{familyId}")
     public ResponseEntity<Boolean> delete(@PathVariable Long familyId){
         return new ResponseEntity<Boolean>(service.delete(familyId), HttpStatus.OK);

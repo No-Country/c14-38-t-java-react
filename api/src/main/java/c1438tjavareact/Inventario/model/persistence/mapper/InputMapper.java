@@ -16,7 +16,7 @@ public interface InputMapper {
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "entryDate", target = "entryDate"),
             @Mapping(source = "quantity", target = "quantity"),
-            @Mapping(source = "branch", target = "branch"),
+            @Mapping(source = "product_id", target = "product_id"),
 
     })
     InputDto toInput(Input input);

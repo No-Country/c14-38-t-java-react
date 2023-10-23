@@ -2,7 +2,6 @@ package c1438tjavareact.Inventario.model.persistence.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,16 +21,13 @@ public class Branch {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	@NotEmpty
-	private String name; 
-	
+	private String name;
 	@NotEmpty
 	private String address;
-	
 	@NotEmpty
-	private String phone; 
-	
+	private String phone;
+
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
     private List<Input> inputs = new ArrayList<>();
 }

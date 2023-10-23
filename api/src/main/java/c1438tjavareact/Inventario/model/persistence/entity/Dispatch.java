@@ -25,14 +25,11 @@ public class Dispatch {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	@Temporal(TemporalType.DATE)
 	@Column(name="dispatch_dates")
 	private Date dispatchDate;
-	
 	@NotNull
 	private Integer quantity;
-	
     @OneToMany(mappedBy = "dispatch", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products = new ArrayList<>();
 

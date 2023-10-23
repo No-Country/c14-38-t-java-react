@@ -1,12 +1,8 @@
 package c1438tjavareact.Inventario.model.persistence.repository;
 
 import c1438tjavareact.Inventario.model.persistence.entity.Family;
+import c1438tjavareact.Inventario.model.persistence.entity.Stock;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.query.Param;
 
-
-public interface FamilyRepository extends JpaRepository <Family, Long>{
+public interface StockRepository extends JpaRepository<Stock, Long> {
 }
-
-
-

@@ -11,17 +11,11 @@ import lombok.*;
 @Getter
 @Setter
 public class BranchDto {
-
     private Long id;
-
     @NotEmpty
     private String name;
-
     @NotEmpty
     private String address;
-
     @NotEmpty
     private String phone;
-
-
 }

@@ -22,13 +22,10 @@ public class Family {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	@NotEmpty
 	private String name;
-	
 	@NotNull
 	private Double price;
-	
     @OneToMany(mappedBy = "family", cascade = CascadeType.ALL)
     private List<Product> products = new ArrayList<>();
 

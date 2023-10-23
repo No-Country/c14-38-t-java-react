@@ -13,6 +13,6 @@ public class InputDto {
     private Long id;
     private Date entryDate;
     private Integer quantity;
-    private Branch branch;
+    private Long product_id;
 
 }
