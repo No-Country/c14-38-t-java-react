@@ -3,7 +3,6 @@ package c1438tjavareact.Inventario.model.persistence.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.annotation.sql.DataSourceDefinitions;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;

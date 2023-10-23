@@ -1,7 +1,7 @@
 package c1438tjavareact.Inventario.web.controller;
 
+import c1438tjavareact.Inventario.model.dto.SupplierDto;
 import c1438tjavareact.Inventario.web.service.SupplierService;
-import c1438tjavareact.Inventario.model.persistence.entity.Supplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,38 +19,36 @@ public class SupplierController {
     private SupplierService supplierService;
 
     @PostMapping
-    public ResponseEntity<Optional<Supplier>> create(@RequestBody Supplier supplier){
+    public ResponseEntity<Optional<SupplierDto>> create(@RequestBody SupplierDto supplier){
         return new ResponseEntity<>(supplierService.create(supplier), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Optional<Supplier>> update(@PathVariable Long id, @RequestBody Supplier supplier){
-        Optional<Supplier> currentSupplier = supplierService.SupplierId(id);
+    public ResponseEntity<Optional<SupplierDto>> update(@PathVariable Long id, @RequestBody SupplierDto supplier){
+        Optional<SupplierDto> currentSupplier = supplierService.SupplierId(id);
         if(currentSupplier.isPresent()){
             return new ResponseEntity<>(supplierService.update(supplier), HttpStatus.ACCEPTED);
-        }else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Supplier>> getSuppliers(){
+    public ResponseEntity<Optional<List<SupplierDto>>> getSuppliers(){
         return new ResponseEntity<>(supplierService.SupplierList(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Supplier>> getSupplier(@PathVariable Long id){
+    public ResponseEntity<Optional<SupplierDto>> getSupplier(@PathVariable Long id){
         return new ResponseEntity<>(supplierService.SupplierId(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) throws Exception {
-        Optional<Supplier> currentSupplier = supplierService.SupplierId(id);
+        Optional<SupplierDto> currentSupplier = supplierService.SupplierId(id);
         if(currentSupplier.isPresent()){
             supplierService.delete(id);
             return new ResponseEntity<>("Se elimino correctamente", HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>("El proveedor ingresado no existe", HttpStatus.NOT_FOUND);
         }
+            return new ResponseEntity<>("El proveedor ingresado no existe", HttpStatus.NOT_FOUND);
     }
 }

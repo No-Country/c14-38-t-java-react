@@ -1,7 +1,7 @@
 package c1438tjavareact.Inventario.web.service;
 
 
-import c1438tjavareact.Inventario.model.persistence.entity.Supplier;
+import c1438tjavareact.Inventario.model.dto.SupplierDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,13 +10,13 @@ import java.util.Optional;
 @Service
 public interface SupplierService{
 
-    Optional<Supplier> create (Supplier supplier);
+    Optional<SupplierDto> create (SupplierDto supplierDto);
 
-    Optional<Supplier> update (Supplier supplier);
+    Optional<SupplierDto> update (SupplierDto supplierDto);
 
-    List<Supplier> SupplierList();
+    Optional<List<SupplierDto>> SupplierList();
 
-    Optional<Supplier> SupplierId(Long id);
+    Optional<SupplierDto> SupplierId(Long id);
 
     void delete(Long id);
 
