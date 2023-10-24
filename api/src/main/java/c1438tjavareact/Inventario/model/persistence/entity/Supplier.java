@@ -3,21 +3,18 @@ package c1438tjavareact.Inventario.model.persistence.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
-@Entity 
+
+@Entity
 @Table(name="suppliers")
 @Data
-public class Supplier {
-	
+public class  Supplier {
+	//proveedores
+	/*TODO
+	*  hacer CRUD de esto, si es posible agregar DTO*/
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -34,7 +31,7 @@ public class Supplier {
 	@NotEmpty
 	private String email;
 	
-    @OneToMany(mappedBy ="supplier", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,mappedBy ="supplier", cascade = CascadeType.ALL)
     private List<Product> products = new ArrayList<>();
 
 }
