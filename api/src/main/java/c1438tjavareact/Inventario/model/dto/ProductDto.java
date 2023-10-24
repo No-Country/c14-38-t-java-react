@@ -9,10 +9,9 @@ public class ProductDto {
     private Long id;
     private String name;
     private String description;
-    /*private Dispatch dispatch;*/
-    private Input input;
+    private Double price;
     private Family family;
     private Supplier supplier;
-    private Stock stock;
+
 
 }

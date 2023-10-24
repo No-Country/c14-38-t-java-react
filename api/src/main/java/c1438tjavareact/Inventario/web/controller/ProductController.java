@@ -1,7 +1,6 @@
 package c1438tjavareact.Inventario.web.controller;
 
 import c1438tjavareact.Inventario.model.dto.ProductDto;
-import c1438tjavareact.Inventario.model.persistence.entity.Product;
 import c1438tjavareact.Inventario.web.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,7 +24,11 @@ public class ProductController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<ProductDto>> getProduct(@PathVariable Long id){
-        return new ResponseEntity<>(productService.ProductId(id),HttpStatus.OK);
+        Optional<ProductDto> currentProduct = productService.ProductId(id);
+        if(currentProduct.isPresent()){
+            return new ResponseEntity<>(productService.ProductId(id),HttpStatus.OK);
+        }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/all")
@@ -39,7 +42,7 @@ public class ProductController {
         if(currentProduct.isPresent()){
             return new ResponseEntity<>(productService.update(productDto),HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
@@ -48,7 +51,7 @@ public class ProductController {
             productService.delete(id);
             return new ResponseEntity<>("Se elimino correctamente",HttpStatus.OK);
         }
-        return new ResponseEntity<>("El producto ingresado no existe", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("El producto ingresado no existe", HttpStatus.NOT_FOUND);
     }
 }
 
