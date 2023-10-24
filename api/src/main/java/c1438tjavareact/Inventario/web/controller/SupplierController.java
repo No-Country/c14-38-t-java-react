@@ -39,7 +39,11 @@ public class SupplierController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<SupplierDto>> getSupplier(@PathVariable Long id){
-        return new ResponseEntity<>(supplierService.SupplierId(id), HttpStatus.OK);
+        Optional<SupplierDto> currentSupplier = supplierService.SupplierId(id);
+        if(currentSupplier.isPresent()){
+            return new ResponseEntity<>(supplierService.SupplierId(id), HttpStatus.OK);
+        }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
