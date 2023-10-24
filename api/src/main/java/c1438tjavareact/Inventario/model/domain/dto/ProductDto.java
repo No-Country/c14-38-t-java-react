@@ -5,10 +5,7 @@ import c1438tjavareact.Inventario.model.persistence.entity.Supplier;
 import lombok.*;
 
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+@Data
 public class ProductDto {
 
     private Long id;

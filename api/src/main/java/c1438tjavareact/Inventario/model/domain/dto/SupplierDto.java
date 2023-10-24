@@ -1,9 +1,6 @@
 package c1438tjavareact.Inventario.model.domain.dto;
 import lombok.*;
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+@Data
 public class SupplierDto {
 
     private Long id;
