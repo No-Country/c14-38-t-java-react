@@ -31,7 +31,8 @@ public class FamilyServiceImpl implements FamilyService {
         return familyRepository.findById(id).orElse(null);
     }
     @Override
-    public List<Family> getAllFamilies() { return familyRepository.findAll();
+    public List<Family> getAllFamilies() {
+        return familyRepository.findAll();
     }
 
 }

@@ -1,5 +1,6 @@
 package c1438tjavareact.Inventario.web.service;
 
+import c1438tjavareact.Inventario.model.dto.ProductDto;
 import c1438tjavareact.Inventario.model.persistence.entity.Product;
 import org.springframework.stereotype.Service;
 
@@ -9,13 +10,13 @@ import java.util.Optional;
 @Service
 public interface ProductService {
 
-    Optional<Product> create (Product supplier);
+    Optional<ProductDto> create (ProductDto productDto);
 
-    Optional<Product> update (Product supplier);
+    Optional<ProductDto> update (ProductDto productDto);
 
-    Optional<List<Product>> ProductList();
+    Optional<List<ProductDto>> ProductList();
 
-    Optional<Product> ProductId(Long id);
+    Optional<ProductDto> ProductId(Long id);
 
     void delete(Long id);
 }

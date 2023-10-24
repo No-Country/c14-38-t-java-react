@@ -1,5 +1,6 @@
 package c1438tjavareact.Inventario.web.controller;
 
+import c1438tjavareact.Inventario.model.dto.ProductDto;
 import c1438tjavareact.Inventario.model.persistence.entity.Product;
 import c1438tjavareact.Inventario.web.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,31 +19,31 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
-    public ResponseEntity<Optional<Product>> create(@RequestBody Product product){
-        return new ResponseEntity<>(productService.create(product), HttpStatus.CREATED);
+    public ResponseEntity<Optional<ProductDto>> create(@RequestBody ProductDto productDto){
+        return new ResponseEntity<>(productService.create(productDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Product>> getProduct(@PathVariable Long id){
+    public ResponseEntity<Optional<ProductDto>> getProduct(@PathVariable Long id){
         return new ResponseEntity<>(productService.ProductId(id),HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Optional<List<Product>>> getProducts(){
+    public ResponseEntity<Optional<List<ProductDto>>> getProducts(){
         return new ResponseEntity<>(productService.ProductList(),HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Optional<Product>> update(@PathVariable Long id, @RequestBody Product product){
-        Optional<Product> currentProduct = productService.ProductId(id);
+    public ResponseEntity<Optional<ProductDto>> update(@PathVariable Long id, @RequestBody ProductDto productDto){
+        Optional<ProductDto> currentProduct = productService.ProductId(id);
         if(currentProduct.isPresent()){
-            return new ResponseEntity<>(productService.update(product),HttpStatus.OK);
+            return new ResponseEntity<>(productService.update(productDto),HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
-        Optional<Product> currentProduct = productService.ProductId(id);
+        Optional<ProductDto> currentProduct = productService.ProductId(id);
         if(currentProduct.isPresent()){
             productService.delete(id);
             return new ResponseEntity<>("Se elimino correctamente",HttpStatus.OK);
