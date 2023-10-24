@@ -28,6 +28,6 @@ public class Branch {
 	@NotEmpty
 	private String phone;
 
-    @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
-    private List<Input> inputs = new ArrayList<>();
+    //@OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
+    //private List<Input> inputs = new ArrayList<>();
 }

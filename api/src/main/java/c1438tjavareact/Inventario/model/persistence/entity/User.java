@@ -45,6 +45,8 @@ public class User implements UserDetails{
 	private String name;
 
 	private String lastName;
+
+	private String companyName;
 	
 	@NotEmpty
 	@JsonIgnore

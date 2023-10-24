@@ -9,5 +9,6 @@ public interface FamilyService {
     Optional<FamilyDto> create(FamilyDto familyDto);
     Optional<FamilyDto> update(FamilyDto familyDto);
     boolean delete(Long id);
+    boolean isItemNameDuplicate(String name);
 
 }

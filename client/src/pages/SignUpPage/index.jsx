@@ -1,25 +1,44 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import ProgressBar from '../../components/ProgressBar';
 import {
   validateEmail,
   validatePassword,
 } from '../../utils/validations/formValidation';
 
+import StepOne from './StepWizard/StepOne';
+import StepTwo from './StepWizard/StepTwo';
+
 const SignUpPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [signupValues, setSignupValues] = useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
   const [errors, setErrors] = useState({
     email: '',
     password: '',
     confirmPassword: '',
   });
 
-  const handleChange = (e, input) => {
+  const totalSteps = 2;
+  const [step, setStep] = useState(1);
+
+  const nextStep = () => {
+    if (step === totalSteps) return;
+    setStep(step + 1);
+  };
+
+  const handleSignUpChange = (e) => {
+    const input = e.target.name;
     const value = e.target.value;
     switch (input) {
       case 'email':
-        setEmail(value.toLowerCase());
+        setSignupValues((prevValues) => ({
+          ...prevValues,
+          email: value.toLowerCase(),
+        }));
         if (validateEmail(value)) {
           setErrors((prevErrors) => ({ ...prevErrors, email: '' }));
         } else if (value === '') {
@@ -36,7 +55,7 @@ const SignUpPage = () => {
         break;
 
       case 'password':
-        setPassword(value);
+        setSignupValues((prevValues) => ({ ...prevValues, password: value }));
         if (validatePassword(value)) {
           setErrors((prevErrors) => ({ ...prevErrors, password: '' }));
         } else if (value === '') {
@@ -53,8 +72,11 @@ const SignUpPage = () => {
         break;
 
       case 'confirmPassword':
-        setConfirmPassword(value);
-        if (value === password) {
+        setSignupValues((prevValues) => ({
+          ...prevValues,
+          confirmPassword: value,
+        }));
+        if (value === signupValues.password) {
           setErrors((prevErrors) => ({ ...prevErrors, confirmPassword: '' }));
         } else if (value === '') {
           setErrors((prevErrors) => ({
@@ -73,6 +95,40 @@ const SignUpPage = () => {
     }
   };
 
+  const submitForm = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Realiza solicitud de la API para crear el usuario
+      alert(
+        "Simulando que pasó todas las valicaciones, se redirige a '/branch'\n\n" +
+          'Estos datos se van a enviar en el formulario\n' +
+          JSON.stringify(signupValues, null, 2),
+      );
+      // navigate('/branches');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  function renderStep(step) {
+    switch (step) {
+      case 1:
+        return (
+          <StepOne
+            handleChange={handleSignUpChange}
+            signupValues={signupValues}
+            errors={errors}
+            nextStep={nextStep}
+          />
+        );
+      case 2:
+        return <StepTwo submitForm={submitForm} />;
+      default:
+        return null;
+    }
+  }
+
   return (
     <>
       <div className="flex w-full h-screen">
@@ -88,7 +144,8 @@ const SignUpPage = () => {
 
         <div className="flex w-full items-center justify-center">
           <div className="w-full max-w-sm m-4 sm:bg-custom-white px-10 py-10 rounded sm:shadow-md">
-            <p className="text-xs">Paso 1/2</p>
+            <ProgressBar step={step} totalSteps={totalSteps} />
+            <p className="text-xs mt-3">Paso {step}/2</p>
             <h1 className="text-3xl font-normal">Crea tu cuenta</h1>
             <p className="text-xs mt-2 mb-4">
               ¿Ya sos usuario?{' '}
@@ -96,80 +153,8 @@ const SignUpPage = () => {
                 <Link to="/login">Inicia Sesión</Link>
               </span>
             </p>
-            <div>
-              <div
-                className={`mt-2.5 mb-2.5 flex rounded-lg shadow-sm ring-1 ring-inset ${
-                  errors.email ? 'ring-custom-red' : 'ring-custom-gray'
-                } focus-within:ring-2 focus-within:ring-inset ${
-                  errors.email
-                    ? 'focus-within:ring-custom-red'
-                    : 'focus-within:ring-custom-blue'
-                } sm:max-w-md`}
-              >
-                <input
-                  type="email"
-                  className="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6"
-                  value={email}
-                  onChange={(e) => handleChange(e, 'email')}
-                  onBlur={(e) => handleChange(e, 'email')}
-                  placeholder="usuario@mail.com"
-                  required
-                />
-              </div>
 
-              <div
-                className={`mt-2.5 mb-1 flex rounded-lg shadow-sm ring-1 ring-inset ${
-                  errors.password ? 'ring-custom-red' : 'ring-custom-gray'
-                } focus-within:ring-2 focus-within:ring-inset ${
-                  errors.password
-                    ? 'focus-within:ring-custom-red'
-                    : 'focus-within:ring-custom-blue'
-                } sm:max-w-md`}
-              >
-                <input
-                  type="password"
-                  className="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6"
-                  value={password}
-                  onChange={(e) => handleChange(e, 'password')}
-                  onBlur={(e) => handleChange(e, 'password')}
-                  placeholder="Contraseña"
-                  required
-                />
-              </div>
-
-              <div
-                className={`mt-2.5 mb-1 flex rounded-lg shadow-sm ring-1 ring-inset ${
-                  errors.confirmPassword
-                    ? 'ring-custom-red'
-                    : 'ring-custom-gray'
-                } focus-within:ring-2 focus-within:ring-inset ${
-                  errors.confirmPassword
-                    ? 'focus-within:ring-custom-red'
-                    : 'focus-within:ring-custom-blue'
-                } sm:max-w-md`}
-              >
-                <input
-                  type="password"
-                  className="block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6"
-                  value={confirmPassword}
-                  onChange={(e) => handleChange(e, 'confirmPassword')}
-                  onBlur={(e) => handleChange(e, 'confirmPassword')}
-                  placeholder="Confirma la contraseña"
-                  required
-                />
-              </div>
-
-              {errors &&
-                Object.values(errors).map((value, index) => (
-                  <p key={index} className="text-custom-red text-xs">
-                    {value}
-                  </p>
-                ))}
-            </div>
-
-            <button className="mt-3 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white text-sm py-2 px-4 font-normal border border-custom-blue text-custom-blue">
-              Continuar
-            </button>
+            {renderStep(step)}
           </div>
         </div>
       </div>

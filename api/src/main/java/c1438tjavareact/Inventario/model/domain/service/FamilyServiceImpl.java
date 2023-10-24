@@ -1,5 +1,6 @@
 package c1438tjavareact.Inventario.model.domain.service;
 import c1438tjavareact.Inventario.model.domain.dto.FamilyDto;
+import c1438tjavareact.Inventario.model.persistence.entity.Family;
 import c1438tjavareact.Inventario.model.persistence.repository.FamilyRepository;
 import c1438tjavareact.Inventario.model.persistence.mapper.FamilyMapper;
 import c1438tjavareact.Inventario.web.service.FamilyService;
@@ -26,10 +27,7 @@ public class FamilyServiceImpl implements FamilyService {
     @Override
     public Optional<FamilyDto> create(FamilyDto familyDto)
     {
-        return Optional.of(
-                mapper.toFamily(
-                        repository.save(
-                                mapper.toFamilydto(familyDto)
+        return Optional.of(mapper.toFamily(repository.save(mapper.toFamilydto(familyDto)
                         )
                 ));
     }
@@ -59,5 +57,21 @@ public class FamilyServiceImpl implements FamilyService {
         }
         return false;
     }
+
+    @Override
+    public boolean isItemNameDuplicate(String name) {
+        // Implementa la lógica para verificar si el nombre está duplicado en la base de datos
+        // Puedes usar el repositorio (repository) para realizar la consulta
+        // Retorna true si el nombre está duplicado, false en caso contrario
+        Family existingFamily = repository.findByName(name);
+        return existingFamily != null;
+    }
+
+
+
+
+
+
+
 
 }

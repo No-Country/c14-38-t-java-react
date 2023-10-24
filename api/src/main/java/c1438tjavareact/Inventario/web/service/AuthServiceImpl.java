@@ -35,13 +35,9 @@ public class AuthServiceImpl implements AuthService{
         userRepo.save(user);
         var jwtToken = jwtService.generateToken(user);
         Long id = user.getId();
-        String name = user.getName();
-        String lastName = user.getLastName();
         String email = user.getEmail();
         return AuthResponse.builder()
                 .id(id)
-                .name(name)
-                .lastName(lastName)
                 .email(email)
                 .token(jwtToken)
                 .build();
@@ -56,12 +52,14 @@ public class AuthServiceImpl implements AuthService{
         String name = user.getName();
         String lastName = user.getLastName();
         String email = user.getEmail();
+        String companyName = user.getCompanyName();
         return AuthResponse.builder()
                 .id(id)
                 .name(name)
                 .lastName(lastName)
                 .email(email)
                 .token(jwtToken)
+                .companyName(companyName)
                 .build();
     }
     

@@ -29,10 +29,16 @@ public class FamilyController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     @PostMapping("/create")
-    public ResponseEntity<FamilyDto> create(@RequestBody FamilyDto familyDto){
-        return service.create(familyDto)
-                .map(t-> new ResponseEntity<>(t, HttpStatus.CREATED))
-                .orElse(new ResponseEntity<>(HttpStatus.CONFLICT));    }
+    public ResponseEntity<FamilyDto> create(@RequestBody FamilyDto familyDto) {
+        // Verifica si el nombre del ítem está duplicado antes de crearlo
+        if (service.isItemNameDuplicate(familyDto.getName())) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT); // Devuelve un error de conflicto si el nombre está duplicado
+        } else {
+            return service.create(familyDto)
+                    .map(t -> new ResponseEntity<>(t, HttpStatus.CREATED))
+                    .orElse(new ResponseEntity<>(HttpStatus.CONFLICT)); // Otra opción si ocurre algún otro error
+        }
+    }
 
     @PatchMapping("/update")
     public ResponseEntity<FamilyDto> update(@RequestBody FamilyDto familyDto){

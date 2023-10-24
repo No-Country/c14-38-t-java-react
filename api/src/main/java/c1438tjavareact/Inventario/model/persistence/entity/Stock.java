@@ -24,8 +24,6 @@ public class Stock {
 	
     @OneToOne
     @JoinColumn(name = "product_id")
-    
     private Product product;
     
-
 }
