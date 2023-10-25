@@ -4,7 +4,7 @@ import Sidebar from '../components/Sidebar';
 
 function LayoutUser() {
   return (
-    <div className='flex flex-col h-screen text-custom-blue'>
+    <div className='flex flex-col min-h-screen text-custom-blue'>
       <Header />
       <div className='flex flex-row h-full w-full'>
         <Sidebar />
