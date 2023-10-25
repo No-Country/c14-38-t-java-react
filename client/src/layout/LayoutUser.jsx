@@ -8,7 +8,7 @@ function LayoutUser() {
       <Header />
       <div className='flex flex-row h-full w-full'>
         <Sidebar />
-        <main className='flex-grow w-3/4 bg-custom-panel p-4 m-2.5 rounded-lg'>
+        <main className='flex-grow bg-custom-panel p-4 m-2.5 rounded-lg'>
           <Outlet />
         </main>
       </div>

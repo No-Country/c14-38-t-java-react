@@ -15,7 +15,7 @@ function Sidebar() {
       : 'p-3 flex gap-2 flex-row hover:bg-custom-button-hover rounded-lg mb-1';
 
   return (
-    <aside className='hidden md:block flex-grow w-1/4 bg-custom-panel p-4 m-2.5 rounded-lg'>
+    <aside className='hidden md:block w-[356px] bg-custom-panel p-4 m-2.5 rounded-lg'>
       <div className='flex flex-col'>
         {menuData.map((item) => (
           <NavLink key={item.id} to={item.navigate} className={classButton}>
