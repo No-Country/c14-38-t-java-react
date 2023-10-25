@@ -17,7 +17,7 @@ export const SearchBar = ({ className, children, ...props }) => {
         id='search'
         name='search'
         type='search'
-        className='flex-grow border-0 ring-0 focus-visible:border-0 focus-visible:ring-0 bg-transparent'
+        className='max-w-[136px] sm:max-w-full sm:w-full border-0 ring-0 focus-visible:border-0 focus-visible:ring-0 bg-transparent'
         {...props}
       />
 
