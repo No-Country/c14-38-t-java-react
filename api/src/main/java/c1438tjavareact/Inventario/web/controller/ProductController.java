@@ -1,6 +1,6 @@
 package c1438tjavareact.Inventario.web.controller;
 
-import c1438tjavareact.Inventario.model.dto.ProductDto;
+import c1438tjavareact.Inventario.model.domain.dto.ProductDto;
 import c1438tjavareact.Inventario.web.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

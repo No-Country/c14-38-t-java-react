@@ -1,6 +1,6 @@
-package c1438tjavareact.Inventario.model.domain.services.impl;
+package c1438tjavareact.Inventario.model.domain.service;
 
-import c1438tjavareact.Inventario.model.dto.SupplierDto;
+import c1438tjavareact.Inventario.model.domain.dto.SupplierDto;
 import c1438tjavareact.Inventario.model.persistence.mapper.SupplierMapper;
 import c1438tjavareact.Inventario.web.service.SupplierService;
 import c1438tjavareact.Inventario.model.persistence.repository.SupplierRepository;

@@ -1,14 +1,9 @@
 package c1438tjavareact.Inventario.model.domain.dto;
 
-import c1438tjavareact.Inventario.model.persistence.entity.Family;
-import c1438tjavareact.Inventario.model.persistence.entity.Supplier;
-import lombok.*;
+import c1438tjavareact.Inventario.model.persistence.entity.*;
+import lombok.Data;
 
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+@Data
 public class ProductDto {
 
     private Long id;
@@ -17,4 +12,6 @@ public class ProductDto {
     private Double price;
     private Family family;
     private Supplier supplier;
+
+
 }
