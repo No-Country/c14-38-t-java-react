@@ -18,6 +18,26 @@ export const EditIcon = (props) => {
   );
 };
 
+export const MoreOptionsIcon = (props) => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width={24}
+      height={25}
+      fill='currentColor'
+      {...props}
+    >
+      <path
+        stroke='#000'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        strokeWidth={2}
+        d='M12 13.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM19 13.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM5 13.5a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z'
+      />
+    </svg>
+  );
+};
+
 export const FilterIcon = (props) => {
   return (
     <svg
