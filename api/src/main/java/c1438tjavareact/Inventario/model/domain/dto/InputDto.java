@@ -5,10 +5,7 @@ import java.util.Date;
 
 import c1438tjavareact.Inventario.model.persistence.entity.Product;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+@Data
 public class InputDto {
 
     private Long id;
