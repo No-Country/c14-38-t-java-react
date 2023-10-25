@@ -14,7 +14,6 @@ const ProductsPage = () => {
           <h2>Digital Express</h2>
         </div>
         <hr className='border-t-1 border-[#898AA3] mb-3' />
-
         <div className='text-custom-white mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 xl:grid-cols-3 xl:gap-x-8'>
           {productsData.map((branch) => (
             <div key={branch.id} className='group flex bg-blue-card rounded'>
