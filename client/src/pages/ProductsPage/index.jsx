@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'react-feather';
-// import branchesData from '../../data/branchesData';
+//import branchesData from '../../data/branchesData';
 import productsData from '../../data/productsData';
 import Sidebar from '../../components/Sidebar';
+//import Loading from '../../components/Loading';
 
 const ProductsPage = () => {
   return (

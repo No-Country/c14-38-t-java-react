@@ -8,6 +8,7 @@ import {
 
 import StepOne from './StepWizard/StepOne';
 import StepTwo from './StepWizard/StepTwo';
+//import Loading from '../../components/Loading';
 
 const SignUpPage = () => {
   const [signupValues, setSignupValues] = useState({
@@ -24,7 +25,7 @@ const SignUpPage = () => {
 
   const totalSteps = 2;
   const [step, setStep] = useState(1);
-
+  const [isLoading, setIsLoading] = useState(false);//componente loading
   const nextStep = () => {
     if (step === totalSteps) return;
     setStep(step + 1);
@@ -97,7 +98,6 @@ const SignUpPage = () => {
 
   const submitForm = async (e) => {
     e.preventDefault();
-
     try {
       // Realiza solicitud de la API para crear el usuario
       alert(
@@ -153,7 +153,6 @@ const SignUpPage = () => {
                 <Link to="/login">Inicia Sesión</Link>
               </span>
             </p>
-
             {renderStep(step)}
           </div>
         </div>
