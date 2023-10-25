@@ -1,7 +1,7 @@
 package c1438tjavareact.Inventario.web.service;
 
 
-import c1438tjavareact.Inventario.model.dto.SupplierDto;
+import c1438tjavareact.Inventario.model.domain.dto.SupplierDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

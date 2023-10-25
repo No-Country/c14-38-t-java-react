@@ -1,7 +1,6 @@
 package c1438tjavareact.Inventario.web.service;
 
-import c1438tjavareact.Inventario.model.dto.ProductDto;
-import c1438tjavareact.Inventario.model.persistence.entity.Product;
+import c1438tjavareact.Inventario.model.domain.dto.ProductDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

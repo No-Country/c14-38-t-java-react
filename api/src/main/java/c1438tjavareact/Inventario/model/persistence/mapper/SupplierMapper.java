@@ -1,7 +1,7 @@
 package c1438tjavareact.Inventario.model.persistence.mapper;
 
 
-import c1438tjavareact.Inventario.model.dto.SupplierDto;
+import c1438tjavareact.Inventario.model.domain.dto.SupplierDto;
 import c1438tjavareact.Inventario.model.persistence.entity.Supplier;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
