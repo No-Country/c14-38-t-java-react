@@ -33,7 +33,7 @@ public class ProductController {
         return productService.ProductList().map(t-> new ResponseEntity<>(t, HttpStatus.OK));
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public Optional<ResponseEntity<ProductDto>> update(@PathVariable Long id, @RequestBody ProductDto productDto){
         return Optional.of(productService.update(productDto).map(t-> new ResponseEntity<>(t, HttpStatus.ACCEPTED))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)));
