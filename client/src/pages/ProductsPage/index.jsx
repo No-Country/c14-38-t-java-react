@@ -17,7 +17,8 @@ const ProductsPage = () => {
     axios
       .get('/api/product/all')
       .then((response) => {
-        setProducts(response.data);
+        setProducts(response.data.body);
+        console.log(response.data.body);
       })
       .catch((error) => {
         console.error('Error al cargar los productos:', error);
@@ -56,9 +57,9 @@ const ProductsPage = () => {
               {/* <th className='bg-custom-button-hover hidden md:table-cell px-5 py-3'>
                 Código
               </th> */}
-              <th className='bg-custom-button-hover hidden md:table-cell px-5 py-3'>
+              {/* <th className='bg-custom-button-hover hidden md:table-cell px-5 py-3'>
                 Categoría
-              </th>
+              </th> */}
               <th className='bg-custom-button-hover px-5 py-3'>Stock</th>
               <th className='bg-custom-button-hover rounded-tr-lg sm:rounded-tr-md px-5 py-3 text-center'>
                 Acción
@@ -83,9 +84,9 @@ const ProductsPage = () => {
                 {/* <td className='hidden md:table-cell px-5 py-1'>
                   {product.code}
                 </td> */}
-                <td className='hidden md:table-cell px-5 py-1'>
+                {/* <td className='hidden md:table-cell px-5 py-1'>
                   {product.family}
-                </td>
+                </td> */}
                 <td className='px-5 py-1'>{product.stock}</td>
                 <td className='px-5 py-1'>
                   <div className='flex items-center justify-center'>

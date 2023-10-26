@@ -16,7 +16,7 @@ const SuppliersPage = () => {
     axios
       .get('/api/supplier/all')
       .then((response) => {
-        setSuppliers(response.data);
+        setSuppliers(response.data.body);
       })
       .catch((error) => {
         console.error('Error al cargar los Proveedores:', error);
