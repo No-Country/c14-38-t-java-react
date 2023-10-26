@@ -35,5 +35,4 @@ public class Input {
 	@ManyToOne
 	@JoinColumn(name= "product_id")
 	private Product product;
-
 }
