@@ -1,5 +1,6 @@
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
+//import Loading from '../../components/Loading';
 
 const StepOne = ({ handleChange, signupValues, errors, nextStep }) => {
   const [showPassword, setShowPassword] = useState(false);

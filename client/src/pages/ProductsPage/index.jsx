@@ -6,6 +6,7 @@ import { ChevronLeft } from 'react-feather';
 import { ChevronRight } from 'react-feather';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
+//import Loading from '../../components/Loading';
 
 const ProductsPage = () => {
   return (

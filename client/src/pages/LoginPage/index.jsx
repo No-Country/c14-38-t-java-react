@@ -7,6 +7,7 @@ import {
 } from '../../utils/validations/formValidation';
 import useAuthContext from '../../hooks/useAuthContext';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import Loading from '../../components/Loading';
 
 const LoginPage = () => {
   const { login } = useAuthContext();
@@ -20,6 +21,7 @@ const LoginPage = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); //componente loading
 
   const handleChangeEmail = (e) => {
     const emailValue = e.target.value;
@@ -65,7 +67,7 @@ const LoginPage = () => {
     if (errors.email || errors.password) {
       return;
     }
-
+  setIsLoading(true);
     try {
       const { data } = await loginUser(email, password);
       setErrors((prevErrors) => ({ ...prevErrors, login: '' }));
@@ -82,9 +84,10 @@ const LoginPage = () => {
       //     login: 'Error inesperado, intentelo nuevamente.',
       //   }));
       // }
+    }finally{
+      setIsLoading(false);
     }
   };
-
   return (
     <>
       <div className='sm:hidden flex justify-center items-center h-44 bg-blue-gradient rounded-b-[65px] pb-4'>
@@ -187,8 +190,9 @@ const LoginPage = () => {
               type='submit'
               className='mt-3 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white py-2.5 px-4 font-normal border border-custom-blue text-custom-blue'
             >
-              Ingresar
+            Continuar
             </button>
+            {isLoading && <Loading />}
           </form>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { Menu, Transition, Popover, Dialog } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import useAuthContext from '../../hooks/useAuthContext';
+//import Loading from '../../components/Loading';
 
 const BranchesPage = () => {
   const products = [
