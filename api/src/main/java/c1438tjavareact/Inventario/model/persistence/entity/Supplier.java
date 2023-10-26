@@ -3,6 +3,7 @@ package c1438tjavareact.Inventario.model.persistence.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
@@ -30,7 +31,7 @@ public class  Supplier {
 	
 	@NotEmpty
 	private String email;
-	
+	@JsonIgnore
     @OneToMany(fetch = FetchType.EAGER,mappedBy ="supplier", cascade = CascadeType.ALL)
     private List<Product> products = new ArrayList<>();
 

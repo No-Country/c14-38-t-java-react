@@ -19,31 +19,25 @@ public class SupplierController {
     private SupplierService supplierService;
 
     @PostMapping
-    public ResponseEntity<Optional<SupplierDto>> create(@RequestBody SupplierDto supplier){
-        return new ResponseEntity<>(supplierService.create(supplier), HttpStatus.CREATED);
+    public Optional<ResponseEntity<SupplierDto>> create(@RequestBody SupplierDto supplier){
+        return supplierService.create(supplier).map(t-> new ResponseEntity<>(t, HttpStatus.CREATED));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Optional<SupplierDto>> update(@PathVariable Long id, @RequestBody SupplierDto supplier){
-        Optional<SupplierDto> currentSupplier = supplierService.SupplierId(id);
-        if(currentSupplier.isPresent()){
-            return new ResponseEntity<>(supplierService.update(supplier), HttpStatus.ACCEPTED);
-        }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public Optional<ResponseEntity<SupplierDto>> update(@PathVariable Long id, @RequestBody SupplierDto supplier){
+        return Optional.of(supplierService.update(supplier).map(t-> new ResponseEntity<>(t, HttpStatus.ACCEPTED))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Optional<List<SupplierDto>>> getSuppliers(){
-        return new ResponseEntity<>(supplierService.SupplierList(), HttpStatus.OK);
+    public Optional<ResponseEntity<List<SupplierDto>>> getSuppliers(){
+        return  supplierService.SupplierList().map(t-> new ResponseEntity<>(t, HttpStatus.OK));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<SupplierDto>> getSupplier(@PathVariable Long id){
-        Optional<SupplierDto> currentSupplier = supplierService.SupplierId(id);
-        if(currentSupplier.isPresent()){
-            return new ResponseEntity<>(supplierService.SupplierId(id), HttpStatus.OK);
-        }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public Optional<ResponseEntity<SupplierDto>> getSupplier(@PathVariable Long id){
+        return Optional.of(supplierService.SupplierId(id).map(t-> new ResponseEntity<>(t, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)));
     }
 
     @DeleteMapping("/{id}")
@@ -51,7 +45,7 @@ public class SupplierController {
         Optional<SupplierDto> currentSupplier = supplierService.SupplierId(id);
         if(currentSupplier.isPresent()){
             supplierService.delete(id);
-            return new ResponseEntity<>("Se elimino correctamente", HttpStatus.OK);
+            return new ResponseEntity<>("Se eliminó correctamente", HttpStatus.OK);
         }
             return new ResponseEntity<>("El proveedor ingresado no existe", HttpStatus.NOT_FOUND);
     }

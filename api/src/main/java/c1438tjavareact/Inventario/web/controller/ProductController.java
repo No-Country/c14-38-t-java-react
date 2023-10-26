@@ -18,31 +18,25 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping
-    public ResponseEntity<Optional<ProductDto>> create(@RequestBody ProductDto productDto){
-        return new ResponseEntity<>(productService.create(productDto), HttpStatus.CREATED);
+    public Optional<ResponseEntity<ProductDto>> create(@RequestBody ProductDto productDto){
+        return productService.create(productDto).map(t-> new ResponseEntity<>(t, HttpStatus.CREATED));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<ProductDto>> getProduct(@PathVariable Long id){
-        Optional<ProductDto> currentProduct = productService.ProductId(id);
-        if(currentProduct.isPresent()){
-            return new ResponseEntity<>(productService.ProductId(id),HttpStatus.OK);
-        }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public Optional<ResponseEntity<ProductDto>> getProduct(@PathVariable Long id){
+        return Optional.of(productService.ProductId(id).map(t -> new ResponseEntity<>(t, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Optional<List<ProductDto>>> getProducts(){
-        return new ResponseEntity<>(productService.ProductList(),HttpStatus.OK);
+    public Optional<ResponseEntity<List<ProductDto>>> getProducts(){
+        return productService.ProductList().map(t-> new ResponseEntity<>(t, HttpStatus.OK));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Optional<ProductDto>> update(@PathVariable Long id, @RequestBody ProductDto productDto){
-        Optional<ProductDto> currentProduct = productService.ProductId(id);
-        if(currentProduct.isPresent()){
-            return new ResponseEntity<>(productService.update(productDto),HttpStatus.OK);
-        }
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public Optional<ResponseEntity<ProductDto>> update(@PathVariable Long id, @RequestBody ProductDto productDto){
+        return Optional.of(productService.update(productDto).map(t-> new ResponseEntity<>(t, HttpStatus.ACCEPTED))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id){
