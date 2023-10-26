@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import useAuthContext from '../../hooks/useAuthContext';
-import { Package, LogOut, Truck } from 'react-feather';
+import { Package, LogOut, Truck, Grid, Users } from 'react-feather';
 import menuData from '../../data/menuData';
 
 function Sidebar() {
@@ -21,6 +21,8 @@ function Sidebar() {
           <NavLink key={item.id} to={item.navigate} className={classButton}>
             {item.icon === 'Package' && <Package color={item.iconColor} />}
             {item.icon === 'Truck' && <Truck color={item.iconColor} />}
+            {item.icon === 'Grid' && <Grid color={item.iconColor} />}
+            {item.icon === 'Users' && <Users color={item.iconColor} />}
             {item.name}
           </NavLink>
         ))}

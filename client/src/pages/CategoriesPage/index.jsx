@@ -1,4 +1,3 @@
-// import productsData from '../../data/productsData';
 import { SearchBar } from '../../components/SearchBar';
 import { EditIcon, FilterIcon, MoreOptionsIcon } from '../../components/Icons';
 import { Button } from '../../components/ui/Button';
@@ -10,17 +9,17 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 //import Loading from '../../components/Loading';
 
-const ProductsPage = () => {
-  const [products, setProducts] = useState([]);
+const CategoriesPage = () => {
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     axios
-      .get('/api/product/all')
+      .get('/api/family')
       .then((response) => {
-        setProducts(response.data);
+        setCategories(response.data);
       })
       .catch((error) => {
-        console.error('Error al cargar los productos:', error);
+        console.error('Error al cargar las categorias:', error);
       });
   }, []);
 
@@ -33,7 +32,7 @@ const ProductsPage = () => {
 
       <hr className='hidden sm:flex border-t-1 border-[#898AA3] mb-3' />
 
-      <p className='text-2xl font-[500] text-custom-icon'>Productos</p>
+      <p className='text-2xl font-[500] text-custom-icon'>Categorias</p>
 
       <div className='flex justify-between gap-2 my-5'>
         <SearchBar placeholder='Buscar ítem' className='w-full sm:w-[424px]'>
@@ -51,15 +50,12 @@ const ProductsPage = () => {
           <thead>
             <tr className='text-left'>
               <th className='bg-custom-button-hover min-w-[168px] rounded-tl-lg sm:rounded-tl-md px-5 py-3'>
-                Ítem
+                Categoría
               </th>
               {/* <th className='bg-custom-button-hover hidden md:table-cell px-5 py-3'>
                 Código
               </th> */}
-              <th className='bg-custom-button-hover hidden md:table-cell px-5 py-3'>
-                Categoría
-              </th>
-              <th className='bg-custom-button-hover px-5 py-3'>Stock</th>
+              <th className='bg-custom-button-hover px-5 py-3'>Items</th>
               <th className='bg-custom-button-hover rounded-tr-lg sm:rounded-tr-md px-5 py-3 text-center'>
                 Acción
               </th>
@@ -67,9 +63,9 @@ const ProductsPage = () => {
           </thead>
 
           <tbody>
-            {products.map((product) => (
+            {categories.map((item) => (
               <tr
-                key={product.id}
+                key={item.id}
                 className='border-b sm:border-b-4 border-custom-button-hover last:border-b-0'
               >
                 <td className='px-5 py-1 flex items-center min-w-[168px]'>
@@ -78,15 +74,9 @@ const ProductsPage = () => {
                     className='inline-block mr-2'
                     src='/images/media.png'
                   />
-                  {product.name}
+                  {item.name}
                 </td>
-                {/* <td className='hidden md:table-cell px-5 py-1'>
-                  {product.code}
-                </td> */}
-                <td className='hidden md:table-cell px-5 py-1'>
-                  {product.family}
-                </td>
-                <td className='px-5 py-1'>{product.stock}</td>
+                <td className='px-5 py-1'>1</td>
                 <td className='px-5 py-1'>
                   <div className='flex items-center justify-center'>
                     <Menu as='div' className='relative'>
@@ -143,7 +133,7 @@ const ProductsPage = () => {
 
       {/* Pagination */}
       <footer className='flex items-center flex-wrap gap-3 justify-center sm:justify-end mt-7'>
-        <span className='text-[#1A1A1A]'>{`Total ${products.length} Ítems`}</span>
+        <span className='text-[#1A1A1A]'>{`Total ${categories.length} Ítems`}</span>
         <nav>
           <ul className='flex items-center gap-3'>
             <li>
@@ -180,4 +170,4 @@ const ProductsPage = () => {
   );
 };
 
-export default ProductsPage;
+export default CategoriesPage;

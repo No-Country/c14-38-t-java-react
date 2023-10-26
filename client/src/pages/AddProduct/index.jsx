@@ -2,6 +2,7 @@ import { useState } from 'react';
 import AddCategory from '../../components/Modals/AddCategory';
 import AddSupplier from '../../components/Modals/AddSupplier';
 import { Check } from 'react-feather';
+import { Link } from 'react-router-dom';
 
 export const AddProduct = () => {
   const [isCategoryModal, setIsCategoryModal] = useState(false);
@@ -25,6 +26,7 @@ export const AddProduct = () => {
                 type='text'
                 className='block flex-1 border-0 bg-transparent py-1.5 pl-3  placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6 w-full'
                 placeholder='Nombre del producto'
+                required
               />
             </div>
             <div className=' font-sans  text-base '>Código</div>
@@ -113,9 +115,11 @@ export const AddProduct = () => {
           </div>
         </div>
         <div className='flex justify-end gap-11 '>
-          <button className='hidden sm:flex items-center justify-center w-36 h-11 text-custom-blue text-xs border border-custom-blue rounded-3xl'>
-            Cancelar
-          </button>
+          <Link to='/products'>
+            <button className='hidden sm:flex items-center justify-center w-36 h-11 text-custom-blue text-xs border border-custom-blue rounded-3xl'>
+              Cancelar
+            </button>
+          </Link>
           <button className='flex items-center justify-center w-8 h-8 sm:w-36 sm:h-11 absolute sm:static top-8 text-custom-blue sm:text-custom-white sm:bg-blue-gradient sm:text-xs sm:border sm:border-custom-blue rounded-3xl'>
             <Check className='w-8 h-8 sm:hidden' />
             <span className='hidden sm:block'>Agregar</span>

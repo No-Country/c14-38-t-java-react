@@ -8,9 +8,16 @@ const menuData = [
   },
   {
     id: 2,
-    name: 'Despacho',
-    navigate: '/branches',
-    icon: 'Truck',
+    name: 'Categorias',
+    navigate: '/categories',
+    icon: 'Grid',
+    iconColor: '#3E43C7',
+  },
+  {
+    id: 3,
+    name: 'Proveedores',
+    navigate: '/suppliers',
+    icon: 'Users',
     iconColor: '#3E43C7',
   },
 ];
