@@ -21,7 +21,11 @@ public class SupplierServiceImpl implements SupplierService {
     private final SupplierMapper supplierMapper;
 
 
-    /*Optional.of(mapper.toFamily(repository.save(mapper.toFamilydto(familyDto)*/
+    /*if(supplierRepository.existsById(supplierDto.getId())){
+            return Optional.of(supplierMapper.toSupplierDTO(supplierRepository
+                    .save(supplierMapper.toSupplier(supplierDto))));
+        }
+            return Optional.of(new supplierDto());*/
     @Override
     public Optional<SupplierDto> create(SupplierDto supplierDto) {
         return Optional.of(supplierMapper.toSupplierDTO(supplierRepository
@@ -30,8 +34,11 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public Optional<SupplierDto> update(SupplierDto supplierDto) {
-        return Optional.of(supplierMapper.toSupplierDTO(supplierRepository
-                .save(supplierMapper.toSupplier(supplierDto))));
+        if(supplierRepository.existsById(supplierDto.getId())){
+            return Optional.of(supplierMapper.toSupplierDTO(supplierRepository
+                    .save(supplierMapper.toSupplier(supplierDto))));
+        }
+        return Optional.of(new SupplierDto());
     }
 
     @Override

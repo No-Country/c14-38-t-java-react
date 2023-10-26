@@ -29,8 +29,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Optional<ProductDto> update(ProductDto productDto) {
-        return Optional.of(productMapper.toProductDTO(productRepository
-                .save(productMapper.toProduct(productDto))));
+        if(productRepository.existsById(productDto.getId())){
+            return Optional.of(productMapper.toProductDTO(productRepository
+                    .save(productMapper.toProduct(productDto))));
+        }
+        return Optional.of(new ProductDto());
     }
 
     @Override

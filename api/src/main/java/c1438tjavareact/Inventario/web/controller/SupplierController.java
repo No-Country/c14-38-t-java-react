@@ -23,7 +23,7 @@ public class SupplierController {
         return supplierService.create(supplier).map(t-> new ResponseEntity<>(t, HttpStatus.CREATED));
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public Optional<ResponseEntity<SupplierDto>> update(@PathVariable Long id, @RequestBody SupplierDto supplier){
         return Optional.of(supplierService.update(supplier).map(t-> new ResponseEntity<>(t, HttpStatus.ACCEPTED))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND)));
