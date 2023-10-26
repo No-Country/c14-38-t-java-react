@@ -13,8 +13,7 @@ public class FamilyController {
     private final FamilyService service;
 
     public FamilyController(FamilyService service) {
-        this.service = service;
-    }
+        this.service = service;    }
 
     @GetMapping
     public ResponseEntity<List<FamilyDto>>findAll(){
@@ -39,7 +38,6 @@ public class FamilyController {
                     .orElse(new ResponseEntity<>(HttpStatus.CONFLICT)); // Otra opción si ocurre algún otro error
         }
     }
-
     @PatchMapping("/update")
     public ResponseEntity<FamilyDto> update(@RequestBody FamilyDto familyDto){
         return service.update(familyDto)
