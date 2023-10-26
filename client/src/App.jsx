@@ -1,18 +1,17 @@
 import { Route, Routes, Outlet } from 'react-router-dom';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { GuestRoute } from './components/GuestRoute';
-
 // import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 // import SignUpPageStep from './pages/SignUpPageStep';
 import ProductsPage from './pages/ProductsPage';
+import { AddProduct } from './pages/AddProduct';
 import UserProfilePage from './pages/UserProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 
 import axios from 'axios';
 import LayoutUser from './layout/LayoutUser';
-
 // Si no se especifica una dirección de backend en el archivo .env entonces
 // se utilizará localhost con el puerto 3001 de forma predeterminada.
 axios.defaults.baseURL =
@@ -34,6 +33,7 @@ function App() {
           {/* <Route path='/branches' element={<BranchesPage />} /> */}
           {/* <Route path='/branches/:id' element={<BranchProfilePage />} /> */}
           <Route path='/products' element={<ProductsPage />} />
+          <Route path='/addproduct' element={<AddProduct />} />
           <Route path='/profile' element={<UserProfilePage />} />
           <Route path='*' element={<NotFoundPage />} />
         </Route>
