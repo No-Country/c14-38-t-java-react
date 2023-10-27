@@ -5,24 +5,13 @@ import { Button } from '../../components/ui/Button';
 import { ChevronLeft } from 'react-feather';
 import { ChevronRight } from 'react-feather';
 import { Menu, Transition } from '@headlessui/react';
-import { Fragment, useEffect, useState } from 'react';
-import axios from 'axios';
+import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { useProducts } from '../../hooks/useProducts';
 //import Loading from '../../components/Loading';
 
 const ProductsPage = () => {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get('/api/product/all')
-      .then((response) => {
-        setProducts(response.data);
-      })
-      .catch((error) => {
-        console.error('Error al cargar los productos:', error);
-      });
-  }, []);
+  const { products } = useProducts();
 
   return (
     <>
@@ -59,7 +48,7 @@ const ProductsPage = () => {
               <th className='bg-custom-button-hover hidden md:table-cell px-5 py-3'>
                 Categoría
               </th>
-              <th className='bg-custom-button-hover px-5 py-3'>Stock</th>
+              {/* <th className='bg-custom-button-hover px-5 py-3'>Stock</th> */}
               <th className='bg-custom-button-hover rounded-tr-lg sm:rounded-tr-md px-5 py-3 text-center'>
                 Acción
               </th>
@@ -84,9 +73,9 @@ const ProductsPage = () => {
                   {product.code}
                 </td> */}
                 <td className='hidden md:table-cell px-5 py-1'>
-                  {product.family}
+                  {product.family.name}
                 </td>
-                <td className='px-5 py-1'>{product.stock}</td>
+                {/* <td className='px-5 py-1'>{product.stock}</td> */}
                 <td className='px-5 py-1'>
                   <div className='flex items-center justify-center'>
                     <Menu as='div' className='relative'>
