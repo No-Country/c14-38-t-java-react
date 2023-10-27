@@ -5,25 +5,14 @@ import { Button } from '../../components/ui/Button';
 import { ChevronLeft } from 'react-feather';
 import { ChevronRight } from 'react-feather';
 import { Menu, Transition } from '@headlessui/react';
-import { Fragment, useEffect, useState } from 'react';
-import axios from 'axios';
+import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { useProducts } from '../../hooks/useProducts';
+
 //import Loading from '../../components/Loading';
 
 const ProductsPage = () => {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get('/api/product/all')
-      .then((response) => {
-        setProducts(response.data.body);
-        console.log(response.data.body);
-      })
-      .catch((error) => {
-        console.error('Error al cargar los productos:', error);
-      });
-  }, []);
+  const { products } = useProducts();
 
   return (
     <>
