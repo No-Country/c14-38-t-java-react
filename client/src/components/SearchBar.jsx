@@ -5,7 +5,7 @@ export const SearchBar = ({ className, children, ...props }) => {
   return (
     <div
       className={cn(
-        'focus-within:border-custom-blue flex items-center rounded-full bg-[#E5E5E5] px-2.5 border border-[#C8C8C8] text-custom-dark-gray',
+        'focus-within:border-custom-blue focus-within:text-[#1A1A1A] flex items-center rounded-full bg-[#E5E5E5] px-2.5 py-1 border border-[#C8C8C8] text-custom-dark-gray',
         className,
       )}
     >
