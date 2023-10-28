@@ -6,6 +6,7 @@ const ProductContext = createContext();
 
 export const ProductsProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { isAuth } = useAuthContext();
 
   useEffect(() => {
@@ -17,6 +18,9 @@ export const ProductsProvider = ({ children }) => {
         })
         .catch((error) => {
           console.error('Error al cargar los productos:', error);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     }
   }, [isAuth]);
@@ -26,6 +30,7 @@ export const ProductsProvider = ({ children }) => {
       value={{
         products,
         setProducts,
+        isLoading,
       }}
     >
       {children}
