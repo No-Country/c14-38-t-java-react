@@ -7,6 +7,7 @@ import SignUpPage from './pages/SignUpPage';
 // import SignUpPageStep from './pages/SignUpPageStep';
 import ProductsPage from './pages/ProductsPage';
 import { AddProduct } from './pages/AddProduct';
+import { EditProduct } from './pages/EditProduct';
 import UserProfilePage from './pages/UserProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 
@@ -35,6 +36,7 @@ function App() {
           {/* <Route path='/branches' element={<BranchesPage />} /> */}
           {/* <Route path='/branches/:id' element={<BranchProfilePage />} /> */}
           <Route path='/products' element={<ProductsPage />} />
+          <Route path='/products/edit/:id' element={<EditProduct />} />
           <Route path='/addproduct' element={<AddProduct />} />
           <Route path='/categories' element={<CategoriesPage />} />
           <Route path='/suppliers' element={<SuppliersPage />} />

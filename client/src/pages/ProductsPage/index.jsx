@@ -1,22 +1,33 @@
 // import productsData from '../../data/productsData';
 import { SearchBar } from '../../components/SearchBar';
 import { EditIcon, FilterIcon, MoreOptionsIcon } from '../../components/Icons';
-import { Button } from '../../components/ui/Button';
+import { Button, buttonVariants } from '../../components/ui/Button';
 import { ChevronLeft, X } from 'react-feather';
 import { ChevronRight } from 'react-feather';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useProducts } from '../../hooks/useProducts';
+import { cn } from '../../utils/cn';
+import axios from 'axios';
 
 //import Loading from '../../components/Loading';
 
 const ProductsPage = () => {
-  const { products } = useProducts();
+  const { products, setProducts } = useProducts();
   const [search, setSearch] = useState('');
 
   const handleSearchChange = (e) => setSearch(e.target.value);
   const clearSearch = () => setSearch('');
+
+  const handleDeleteProduct = async (id) => {
+    try {
+      await axios.delete(`/api/product/${id}`);
+      setProducts(products.filter((product) => product.id !== id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -49,8 +60,11 @@ const ProductsPage = () => {
             </button>
           )}
         </SearchBar>
-        <Link to='/addproduct'>
-          <Button className='text-xs min-w-[100px]'>Agregar Ítem</Button>
+        <Link
+          to='/addproduct'
+          className={cn(buttonVariants(), 'text-xs min-w-[100px]')}
+        >
+          Agregar Ítem
         </Link>
       </div>
 
@@ -64,10 +78,10 @@ const ProductsPage = () => {
               {/* <th className='bg-custom-button-hover hidden md:table-cell px-5 py-3'>
                 Código
               </th> */}
-              {/* <th className='bg-custom-button-hover hidden md:table-cell px-5 py-3'>
+              <th className='bg-custom-button-hover hidden md:table-cell px-5 py-3'>
                 Categoría
-              </th> */}
-              <th className='bg-custom-button-hover px-5 py-3'>Stock</th>
+              </th>
+              {/* <th className='bg-custom-button-hover px-5 py-3'>Stock</th> */}
               <th className='bg-custom-button-hover rounded-tr-lg sm:rounded-tr-md px-5 py-3 text-center'>
                 Acción
               </th>
@@ -88,13 +102,11 @@ const ProductsPage = () => {
                   />
                   {product.name}
                 </td>
-                {/* <td className='hidden md:table-cell px-5 py-1'>
-                  {product.code}
-                </td> */}
-                {/* <td className='hidden md:table-cell px-5 py-1'>
-                  {product.family}
-                </td> */}
-                <td className='px-5 py-1'>{product.stock}</td>
+                {/* <td className='hidden md:table-cell px-5 py-1'>{product.id}</td> */}
+                <td className='hidden md:table-cell px-5 py-1'>
+                  {product.family.name}
+                </td>
+                {/* <td className='px-5 py-1'>{product.stock}</td> */}
                 <td className='px-5 py-1'>
                   <div className='flex items-center justify-center'>
                     <Menu as='div' className='relative'>
@@ -118,18 +130,20 @@ const ProductsPage = () => {
                         <Menu.Items className='absolute top-full mt-2 right-0 bg-[#E7E7E7] flex flex-col rounded shadow z-10 min-w-[130px]'>
                           <Menu.Item>
                             {(active) => (
-                              <button
+                              <Link
+                                to={`/products/edit/${product.id}`}
                                 className={`text-left px-4 py-2 ${
                                   active ? 'hover:text-custom-blue' : ''
                                 }`}
                               >
                                 Editar
-                              </button>
+                              </Link>
                             )}
                           </Menu.Item>
                           <Menu.Item>
                             {(active) => (
                               <button
+                                onClick={async () => handleDeleteProduct(product.id)}
                                 className={`text-left px-4 py-2 ${
                                   active ? 'hover:text-custom-blue' : ''
                                 }`}
