@@ -20,4 +20,6 @@ public interface SupplierService{
 
     void delete(Long id);
 
+    boolean isItemNameDuplicate(String name);
+
 }

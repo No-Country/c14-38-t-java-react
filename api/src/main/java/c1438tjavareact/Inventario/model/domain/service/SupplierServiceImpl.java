@@ -1,6 +1,7 @@
 package c1438tjavareact.Inventario.model.domain.service;
 
 import c1438tjavareact.Inventario.model.domain.dto.SupplierDto;
+import c1438tjavareact.Inventario.model.persistence.entity.Supplier;
 import c1438tjavareact.Inventario.model.persistence.mapper.SupplierMapper;
 import c1438tjavareact.Inventario.web.service.SupplierService;
 import c1438tjavareact.Inventario.model.persistence.repository.SupplierRepository;
@@ -54,5 +55,16 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     public void delete(Long id) {
         supplierRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isItemNameDuplicate(String name) {
+
+        // Implementa la lógica para verificar si el nombre está duplicado en la base de datos
+        // Puedes usar el repositorio (repository) para realizar la consulta
+        // Retorna true si el nombre está duplicado, false en caso contrario
+        Supplier existingSupplier = supplierRepository.findByName(name);
+        return existingSupplier != null;
+
     }
 }

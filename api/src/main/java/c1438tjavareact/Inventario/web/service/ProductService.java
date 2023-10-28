@@ -18,4 +18,6 @@ public interface ProductService {
     Optional<ProductDto> ProductId(Long id);
 
     void delete(Long id);
+
+    boolean isItemNameDuplicate(String name);
 }
