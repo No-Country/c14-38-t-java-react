@@ -16,7 +16,7 @@ function Sidebar() {
 
   return (
     <aside className='hidden md:block w-[356px] bg-custom-panel p-4 m-2.5 rounded-lg'>
-      <div className='flex flex-col'>
+      <div className='flex flex-col h-full'>
         {menuData.map((item) => (
           <NavLink key={item.id} to={item.navigate} className={classButton}>
             {item.icon === 'Package' && <Package color={item.iconColor} />}
@@ -29,7 +29,7 @@ function Sidebar() {
 
         <button
           onClick={handleLogout}
-          className='p-3 flex flex-row hover:bg-custom-button-hover rounded-lg'
+          className='p-3 flex flex-row hover:bg-custom-button-hover rounded-lg mt-auto'
         >
           <LogOut color='#3E43C7' />
           <span className='ml-1'>Cerrar Sesión</span>
