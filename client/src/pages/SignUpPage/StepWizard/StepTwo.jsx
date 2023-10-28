@@ -29,22 +29,22 @@ const StepTwo = ({ submitForm }) => {
             <input
               className="border-b border-t-0 border-l-0 border-r-0 bg-gray-100 border-[#9f9f9f] text-[#626265] "
               type="text"
-              placeholder="Nombre completo de administrado"
+              placeholder="Nombre de la persona a cargo"
             ></input>
             <input
               className="border-b border-t-0 border-l-0 border-r-0 bg-gray-100 border-[#9f9f9f] text-[#626265]"
               type="text"
-              placeholder="Nombre de la Empresa"
+              placeholder="Nombre del emprendimiento"
             ></input>
             <input
               className="border-b border-t-0 border-l-0 border-r-0 bg-gray-100 border-[#9f9f9f] text-[#626265]"
               type="text"
-              placeholder="Sector de la Sucursal"
+              placeholder="Numero de telefono"
             ></input>
           </div>
         </div>
       </div>
-      {/* Formulario de paises, moneda e idioma*/}
+      {/*//*Formulario de paises, moneda e idioma
       <div className="rounded-lg bg-gray-100 shadow-md p-2">
         <div className="w-312 h-40">
           <div className="select-container flex flex-col space-y-4">
@@ -79,11 +79,11 @@ const StepTwo = ({ submitForm }) => {
               <option value="Español">Español</option>
             </select>
           </div>
-        </div>
-      </div>
+        </div> /*
+      </div>*/}
       <button
         onClick={submitForm}
-        className="mt-4 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white text-sm py-2 px-4 font-normal border border-custom-blue text-custom-blue flex justify-center"
+        className="mt-7 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white text-sm py-2 px-4 font-normal border border-custom-blue text-custom-blue flex justify-center"
       >
         Finalizar
       </button>
