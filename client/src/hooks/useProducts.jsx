@@ -9,12 +9,12 @@ export const ProductsProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const { isAuth } = useAuthContext();
 
-  useEffect(() => {
+  const fetchProducts = () => {
     if (isAuth) {
       axios
         .get('/api/product/all')
         .then((response) => {
-          setProducts(response.data.body);
+          setProducts(response.data);
         })
         .catch((error) => {
           console.error('Error al cargar los productos:', error);
@@ -23,7 +23,9 @@ export const ProductsProvider = ({ children }) => {
           setIsLoading(false);
         });
     }
-  }, [isAuth]);
+  };
+
+  useEffect(fetchProducts, [isAuth]);
 
   return (
     <ProductContext.Provider
@@ -31,6 +33,7 @@ export const ProductsProvider = ({ children }) => {
         products,
         setProducts,
         isLoading,
+        fetchProducts,
       }}
     >
       {children}
