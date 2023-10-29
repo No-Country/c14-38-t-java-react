@@ -30,7 +30,7 @@ export const EditProduct = () => {
         description: product.description,
         family: product.family.name,
         supplier: product.supplier.name,
-        stock: product.stock,
+        stock: product.stock ?? '',
       });
     }
   }, [product]);
@@ -47,10 +47,10 @@ export const EditProduct = () => {
     setForm((prevForm) => ({ ...prevForm, supplier: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/api/product/${id}`);
+      await axios.patch(`/api/product/${id}`);
     } catch (err) {
       console.log(err);
     }
@@ -60,10 +60,7 @@ export const EditProduct = () => {
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit}
-        className='text-custom-black p-7 bg-gray-100 sm:bg-white sm:rounded-xl flex flex-col sm:justify-center sm:align-baseline gap-4 absolute top-0 left-0 bottom-0 right-0 sm:static w-full h-auto sm:w-auto sm:h-auto overflow-auto sm:overflow-visible'
-      >
+      <div className='text-custom-black p-7 bg-gray-100 sm:bg-white sm:rounded-xl flex flex-col sm:justify-center sm:align-baseline gap-4 absolute top-0 left-0 bottom-0 right-0 sm:static w-full h-auto sm:w-auto sm:h-auto overflow-auto sm:overflow-visible'>
         <h3 className='hidden sm:flex  text-xl  items-start sm:mb-0 '>
           Editar Ítem
         </h3>
@@ -147,6 +144,7 @@ export const EditProduct = () => {
               <input
                 type='number'
                 value={form.stock}
+                name='stock'
                 onChange={handleFormChange}
                 className='block flex-1 border-0 bg-transparent py-1.5 pl-3  placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6 w-full'
                 placeholder='Stock'
@@ -178,12 +176,15 @@ export const EditProduct = () => {
               Cancelar
             </button>
           </Link>
-          <button className='flex items-center justify-center w-8 h-8 sm:w-36 sm:h-11 absolute sm:static top-8 text-custom-blue sm:text-custom-white sm:bg-blue-gradient sm:text-xs sm:border sm:border-custom-blue rounded-3xl'>
+          <button
+            onClick={handleUpdate}
+            className='flex items-center justify-center w-8 h-8 sm:w-36 sm:h-11 absolute sm:static top-8 text-custom-blue sm:text-custom-white sm:bg-blue-gradient sm:text-xs sm:border sm:border-custom-blue rounded-3xl'
+          >
             <Check className='w-8 h-8 sm:hidden' />
             <span className='hidden sm:block'>Guardar</span>
           </button>
         </div>
-      </form>
+      </div>
     </>
   );
 };
