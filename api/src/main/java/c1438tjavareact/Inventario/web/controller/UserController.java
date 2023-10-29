@@ -5,13 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import c1438tjavareact.Inventario.model.persistence.entity.User;
 import c1438tjavareact.Inventario.web.service.UserService;
@@ -22,12 +16,14 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PutMapping("/{id}")
-    public ResponseEntity<User> editUser(@PathVariable Long id, @RequestBody User userUpdate) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<User> editUser(@PathVariable Long id, @RequestBody User user) {
         User currentUser = userService.searchById(id);
         if(currentUser!=null){
-            userService.update(id, userUpdate);
-            return ResponseEntity.ok(currentUser);
+            User newUserUpdate = userService.update(id, user);
+            if(newUserUpdate!=null){
+                return ResponseEntity.ok(newUserUpdate);
+            }
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
