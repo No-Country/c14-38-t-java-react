@@ -9,7 +9,7 @@ import c1438tjavareact.Inventario.model.persistence.entity.User;
 @Service
 public interface UserService {
 
-    User update(Long id, UserUpdateRequest request);
+    User update(Long id, User user);
     String delete(Long id);
     List<User> searchAll();
     User searchById(Long id);

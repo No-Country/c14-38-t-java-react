@@ -18,10 +18,10 @@ public class UserController {
     private UserService userService;
 
     @PatchMapping("/{id}")
-    public ResponseEntity<User> editUser(@PathVariable Long id, @RequestBody UserUpdateRequest request) {
+    public ResponseEntity<User> editUser(@PathVariable Long id, @RequestBody User user) {
         User currentUser = userService.searchById(id);
         if(currentUser!=null){
-            User newUserUpdate = userService.update(id, request);
+            User newUserUpdate = userService.update(id, user);
             if(newUserUpdate!=null){
                 return ResponseEntity.ok(newUserUpdate);
             }
