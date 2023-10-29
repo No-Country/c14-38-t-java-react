@@ -1,6 +1,7 @@
-package c1438tjavareact.Inventario.web.service;
+package c1438tjavareact.Inventario.model.domain.service;
 
 
+import c1438tjavareact.Inventario.web.service.AuthService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,13 +16,13 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImpl implements AuthService{
+public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepo;
 
     private final PasswordEncoder passwordEncoder;
 
-    private final JwtService jwtService;
+    private final JwtServiceImpl jwtServiceImpl;
 
     private final AuthenticationManager authenticationManager;
 
@@ -33,7 +34,7 @@ public class AuthServiceImpl implements AuthService{
                     .build();
         
         userRepo.save(user);
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = jwtServiceImpl.generateToken(user);
         Long id = user.getId();
         String email = user.getEmail();
         return AuthResponse.builder()
@@ -47,7 +48,7 @@ public class AuthServiceImpl implements AuthService{
     public AuthResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         var user = userRepo.findUserByEmail(request.getEmail()).orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = jwtServiceImpl.generateToken(user);
         Long id = user.getId();        
         String name = user.getName();
         String lastName = user.getLastName();

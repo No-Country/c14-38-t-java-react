@@ -1,8 +1,9 @@
-package c1438tjavareact.Inventario.web.service;
+package c1438tjavareact.Inventario.model.domain.service;
 
 import java.util.List;
 
 import c1438tjavareact.Inventario.web.controller.models.UserUpdateRequest;
+import c1438tjavareact.Inventario.web.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
