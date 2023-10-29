@@ -30,7 +30,7 @@ export const EditProduct = () => {
         description: product.description,
         family: product.family.name,
         supplier: product.supplier.name,
-        stock: product.stock?.quantity,
+        stock: product.stock,
       });
     }
   }, [product]);
@@ -146,6 +146,8 @@ export const EditProduct = () => {
             <div className=' flex rounded-lg shadow-sm ring-1 ring-inset ring-custom-gray focus-within:ring-2 focus-within:ring-inset focus-within:ring-custom-blue'>
               <input
                 type='number'
+                value={form.stock}
+                onChange={handleFormChange}
                 className='block flex-1 border-0 bg-transparent py-1.5 pl-3  placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6 w-full'
                 placeholder='Stock'
               />
