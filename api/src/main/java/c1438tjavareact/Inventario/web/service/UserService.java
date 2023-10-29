@@ -1,7 +1,6 @@
 package c1438tjavareact.Inventario.web.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import c1438tjavareact.Inventario.web.controller.models.UserUpdateRequest;
 import org.springframework.stereotype.Service;
