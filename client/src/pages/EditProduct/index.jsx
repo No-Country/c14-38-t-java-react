@@ -20,6 +20,7 @@ export const EditProduct = () => {
     description: '',
     family: '',
     supplier: '',
+    stock: '',
   });
 
   useEffect(() => {
@@ -29,6 +30,7 @@ export const EditProduct = () => {
         description: product.description,
         family: product.family.name,
         supplier: product.supplier.name,
+        stock: product.stock?.quantity,
       });
     }
   }, [product]);
@@ -80,14 +82,14 @@ export const EditProduct = () => {
                 required
               />
             </div>
-            <div className=' font-sans  text-base '>Código</div>
+            {/* <div className=' font-sans  text-base '>Código</div>
             <div className=' flex rounded-lg shadow-sm ring-1 ring-inset ring-custom-gray focus-within:ring-2 focus-within:ring-inset focus-within:ring-custom-blue'>
               <input
                 type='number'
                 className='block flex-1 border-0 bg-transparent py-1.5 pl-3  placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6 w-full'
                 placeholder='Código'
               />
-            </div>
+            </div> */}
             <div className=' font-sans  text-base '>Descripción</div>
             <div className='mb-3 sm:mb-3 flex rounded-lg shadow-sm ring-1 ring-inset ring-custom-gray focus-within:ring-2 focus-within:ring-inset focus-within:ring-custom-blue'>
               <textarea

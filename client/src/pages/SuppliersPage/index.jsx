@@ -4,24 +4,13 @@ import { Button } from '../../components/ui/Button';
 import { ChevronLeft } from 'react-feather';
 import { ChevronRight } from 'react-feather';
 import { Menu, Transition } from '@headlessui/react';
-import { Fragment, useEffect, useState } from 'react';
-import axios from 'axios';
+import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { useSuppliers } from '../../hooks/useSuppliers';
 //import Loading from '../../components/Loading';
 
 const SuppliersPage = () => {
-  const [suppliers, setSuppliers] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get('/api/supplier/all')
-      .then((response) => {
-        setSuppliers(response.data.body);
-      })
-      .catch((error) => {
-        console.error('Error al cargar los Proveedores:', error);
-      });
-  }, []);
+  const { suppliers } = useSuppliers();
 
   return (
     <>

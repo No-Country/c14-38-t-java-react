@@ -81,7 +81,7 @@ const ProductsPage = () => {
               <th className='bg-custom-button-hover hidden md:table-cell px-5 py-3'>
                 Categoría
               </th>
-              {/* <th className='bg-custom-button-hover px-5 py-3'>Stock</th> */}
+              <th className='bg-custom-button-hover px-5 py-3'>Stock</th>
               <th className='bg-custom-button-hover rounded-tr-lg sm:rounded-tr-md px-5 py-3 text-center'>
                 Acción
               </th>
@@ -106,7 +106,7 @@ const ProductsPage = () => {
                 <td className='hidden md:table-cell px-5 py-1'>
                   {product.family.name}
                 </td>
-                {/* <td className='px-5 py-1'>{product.stock}</td> */}
+                <td className='px-5 py-1'>{product.stock?.quantity}</td>
                 <td className='px-5 py-1'>
                   <div className='flex items-center justify-center'>
                     <Menu as='div' className='relative'>
@@ -143,7 +143,9 @@ const ProductsPage = () => {
                           <Menu.Item>
                             {(active) => (
                               <button
-                                onClick={async () => handleDeleteProduct(product.id)}
+                                onClick={async () =>
+                                  handleDeleteProduct(product.id)
+                                }
                                 className={`text-left px-4 py-2 ${
                                   active ? 'hover:text-custom-blue' : ''
                                 }`}
