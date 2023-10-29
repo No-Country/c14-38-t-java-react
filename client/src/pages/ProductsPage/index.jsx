@@ -106,7 +106,7 @@ const ProductsPage = () => {
                 <td className='hidden md:table-cell px-5 py-1'>
                   {product.family.name}
                 </td>
-                <td className='px-5 py-1'>{product.stock?.quantity}</td>
+                <td className='px-5 py-1'>{product.stock}</td>
                 <td className='px-5 py-1'>
                   <div className='flex items-center justify-center'>
                     <Menu as='div' className='relative'>
