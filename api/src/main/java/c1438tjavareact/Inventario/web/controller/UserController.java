@@ -2,7 +2,6 @@ package c1438tjavareact.Inventario.web.controller;
 
 import java.util.List;
 
-import c1438tjavareact.Inventario.web.controller.models.UserUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
