@@ -50,7 +50,9 @@ export const EditProduct = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`/api/product/${id}`);
+      await axios.patch(`/api/product/${id}`, {
+        // TODO: request body for products
+      });
     } catch (err) {
       console.log(err);
     }
