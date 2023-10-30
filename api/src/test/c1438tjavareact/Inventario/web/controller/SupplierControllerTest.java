@@ -17,10 +17,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class SupplierControllerTest {
 
@@ -39,59 +37,85 @@ public class SupplierControllerTest {
 
     @Test
     public void testCreateSupplier() {
-        SupplierDto supplierDto = new SupplierDto(); // Crea un objeto SupplierDto para la prueba
-        Mockito.when(supplierService.create(Mockito.any(SupplierDto.class))).thenReturn(Optional.of(supplierDto));
+        // Crea un objeto SupplierDto para la prueba
+        SupplierDto supplierDto = new SupplierDto();
 
-        Optional<ResponseEntity<SupplierDto>> response = supplierController.create(supplierDto);
-        Mockito.verify(supplierService).create(Mockito.any(SupplierDto.class)); // Verifica que se llamó al servicio
-        // Realiza aserciones en la respuesta
-        assert(response.isPresent());
-        assert(response.get().getStatusCode() == HttpStatus.CREATED);
-        assert(response.get().getBody() == supplierDto);
+        // Crea un ResponseEntity con el objeto supplierDto
+        ResponseEntity<SupplierDto> responseEntity = ResponseEntity.ok(supplierDto);
+
+        // Configura el servicio para simular una creación exitosa con el objeto supplierDto
+        Mockito.when(supplierService.create(Mockito.eq(supplierDto))).thenReturn(Optional.of(supplierDto));
+
+        // Llama al método del controlador y obtén la respuesta
+        ResponseEntity<SupplierDto> response = supplierController.create(supplierDto);
+
+        // Verifica que la respuesta no esté vacía y que el código de estado sea HttpStatus.CREATED
+        assertNotNull(response);
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+
+        // Verifica que el cuerpo de la respuesta sea el mismo objeto supplierDto
+        assertEquals(supplierDto, response.getBody());
     }
 
     @Test
     public void testUpdateSupplier() {
-        Long supplierId = 1L;
-        SupplierDto supplierDto = new SupplierDto(); // Crea un objeto SupplierDto para la prueba
-        Mockito.when(supplierService.update(supplierDto)).thenReturn(Optional.of(supplierDto));
+        long supplierId = 1L;
+        SupplierDto supplierDto = new SupplierDto();
+        supplierDto.setId(supplierId);
+        supplierDto.setName("Updated Supplier Name");
 
-        Optional<ResponseEntity<SupplierDto>> response = supplierController.update(supplierId, supplierDto);
-        Mockito.verify(supplierService).update(Mockito.any(SupplierDto.class)); // Verifica que se llamó al servicio
-        // Realiza aserciones en la respuesta
-        assert(response.isPresent());
-        assert(response.get().getStatusCode() == HttpStatus.ACCEPTED);
-        assert(response.get().getBody() == supplierDto);
+        when(supplierService.update(supplierDto)).thenReturn(Optional.of(supplierDto));
+
+        ResponseEntity<SupplierDto> responseEntity = supplierController.update(supplierId, supplierDto);
+
+        assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
+        assertEquals(supplierDto, responseEntity.getBody());
     }
+
     @Test
     public void testGetSuppliers() {
         List<SupplierDto> supplierDtoList = List.of(new SupplierDto(), new SupplierDto());
-        Mockito.when(supplierService.SupplierList()).thenReturn(Optional.of(supplierDtoList));
 
-        Optional<ResponseEntity<List<SupplierDto>>> response = supplierController.getSuppliers();
+        // Configura el comportamiento del servicio para devolver la lista
+        when(supplierService.SupplierList()).thenReturn(Optional.of(supplierDtoList));
+
+        // Llama al método del controlador que deseas probar
+        ResponseEntity<List<SupplierDto>> responseEntity = supplierController.getSuppliers();
+
+        // Verifica que el servicio fue llamado
         Mockito.verify(supplierService).SupplierList();
 
-        assertTrue(response.isPresent());
-
-        ResponseEntity<List<SupplierDto>> responseEntity = response.get();
+        // Realiza aserciones en la respuesta
+        assertNotNull(responseEntity);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(supplierDtoList, responseEntity.getBody());
     }
+
+
+
+
+
 
     @Test
     public void testGetSupplier() {
         Long supplierId = 1L;
         SupplierDto supplierDto = new SupplierDto(); // Crea un objeto SupplierDto para la prueba
-        Mockito.when(supplierService.SupplierId(supplierId)).thenReturn(Optional.of(supplierDto));
 
-        Optional<ResponseEntity<SupplierDto>> response = supplierController.getSupplier(supplierId);
-        Mockito.verify(supplierService).SupplierId(supplierId); // Verifica que se llamó al servicio
+        // Configura el comportamiento del servicio
+        when(supplierService.SupplierId(supplierId)).thenReturn(Optional.of(supplierDto));
 
-        assertTrue(response.isPresent());
+        // Llama al método del controlador que deseas probar
+        ResponseEntity<SupplierDto> response = supplierController.getSupplier(supplierId);
 
-        ResponseEntity<SupplierDto> responseEntity = response.get();
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(supplierDto, responseEntity.getBody());
+        // Verifica que el servicio fue llamado
+        Mockito.verify(supplierService).SupplierId(supplierId);
+
+        // Realiza aserciones en la respuesta
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(supplierDto, response.getBody());
     }
+
+
 
 }
