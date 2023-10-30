@@ -7,7 +7,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-@Entity 
+/**
+ * Clase que representa una familia de productos en el sistema.
+ */
+@Entity
 @Table(name="families")
 @Data
 public class Family {
