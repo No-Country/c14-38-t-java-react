@@ -28,6 +28,8 @@ public class Product {
 
 	@NotNull
 	private Double price;
+
+	private Long stock;
     
     @ManyToOne
     @JoinColumn(name = "family_id")

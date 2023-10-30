@@ -1,6 +1,7 @@
 package c1438tjavareact.Inventario.model.domain.service;
 
 import c1438tjavareact.Inventario.model.domain.dto.ProductDto;
+import c1438tjavareact.Inventario.model.persistence.entity.Product;
 import c1438tjavareact.Inventario.model.persistence.mapper.ProductMapper;
 import c1438tjavareact.Inventario.model.persistence.repository.ProductRepository;
 import c1438tjavareact.Inventario.web.service.ProductService;
@@ -29,8 +30,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Optional<ProductDto> update(ProductDto productDto) {
-        return Optional.of(productMapper.toProductDTO(productRepository
-                .save(productMapper.toProduct(productDto))));
+        if(productRepository.existsById(productDto.getId())){
+            return Optional.of(productMapper.toProductDTO(productRepository
+                    .save(productMapper.toProduct(productDto))));
+        }
+        return Optional.of(new ProductDto());
     }
 
     @Override
@@ -46,5 +50,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void delete(Long id) {
         productRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean isItemNameDuplicate(String name) {
+
+            // Implementa la lógica para verificar si el nombre está duplicado en la base de datos
+            // Puedes usar el repositorio (repository) para realizar la consulta
+            // Retorna true si el nombre está duplicado, false en caso contrario
+            Product existingProduct = productRepository.findByName(name);
+            return existingProduct != null;
     }
 }

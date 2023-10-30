@@ -2,10 +2,10 @@
 import { SearchBar } from '../../components/SearchBar';
 import { EditIcon, FilterIcon, MoreOptionsIcon } from '../../components/Icons';
 import { Button } from '../../components/ui/Button';
-import { ChevronLeft } from 'react-feather';
+import { ChevronLeft, X } from 'react-feather';
 import { ChevronRight } from 'react-feather';
 import { Menu, Transition } from '@headlessui/react';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useProducts } from '../../hooks/useProducts';
 
@@ -13,6 +13,10 @@ import { useProducts } from '../../hooks/useProducts';
 
 const ProductsPage = () => {
   const { products } = useProducts();
+  const [search, setSearch] = useState('');
+
+  const handleSearchChange = (e) => setSearch(e.target.value);
+  const clearSearch = () => setSearch('');
 
   return (
     <>
@@ -26,10 +30,24 @@ const ProductsPage = () => {
       <p className='text-2xl font-[500] text-custom-icon'>Productos</p>
 
       <div className='flex justify-between gap-2 my-5'>
-        <SearchBar placeholder='Buscar ítem' className='w-full sm:w-[424px]'>
-          <button className='hidden sm:flex p-2 hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'>
-            <FilterIcon />
-          </button>
+        <SearchBar
+          placeholder='Buscar ítem'
+          className='w-full sm:w-[424px]'
+          value={search}
+          onChange={handleSearchChange}
+        >
+          {search.length > 0 ? (
+            <button
+              className='hidden sm:flex p-2 items-center hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'
+              onClick={clearSearch}
+            >
+              <X strokeWidth={3} />
+            </button>
+          ) : (
+            <button className='hidden sm:flex p-2 items-center hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'>
+              <FilterIcon />
+            </button>
+          )}
         </SearchBar>
         <Link to='/addproduct'>
           <Button className='text-xs min-w-[100px]'>Agregar Ítem</Button>
