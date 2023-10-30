@@ -3,11 +3,13 @@ import AddCategory from '../../components/Modals/AddCategory';
 import AddSupplier from '../../components/Modals/AddSupplier';
 import { Check } from 'react-feather';
 import { Link } from 'react-router-dom';
-// import { useProducts } from '../../hooks/useProducts';
+import { useProducts } from '../../hooks/useProducts';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export const AddProduct = () => {
-  // const { setProducts } = useProducts();
+  const { setProducts } = useProducts();
+  const navigate = useNavigate();
 
   const [isCategoryModal, setIsCategoryModal] = useState(false);
   const [isSupplierModal, setIsSupplierModal] = useState(false);
@@ -15,9 +17,10 @@ export const AddProduct = () => {
   const [form, setForm] = useState({
     name: '',
     description: '',
-    family: '',
-    supplier: '',
+    family: { id: '', name: '' },
+    supplier: { id: '', name: '' },
     stock: '',
+    price: 0,
   });
 
   const handleFormChange = (e) => {
@@ -35,9 +38,9 @@ export const AddProduct = () => {
   const handleAdd = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`/api/product`, {
-        // TODO: request body for products
-      });
+      const { data } = await axios.post(`/api/product`, form);
+      setProducts((prevProducts) => [...prevProducts, data]);
+      navigate('/products');
     } catch (err) {
       console.log(err);
     }
@@ -91,8 +94,7 @@ export const AddProduct = () => {
               <input
                 className='block flex-1 border-0 bg-transparent py-1.5 pl-3   placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6 w-full'
                 placeholder='Categoría'
-                value={form.family}
-                onChange={(e) => handleFamilyChange(e.target.value)}
+                value={form.family.name}
                 readOnly
               />
             </div>
@@ -112,8 +114,7 @@ export const AddProduct = () => {
                 type='text'
                 className='block flex-1 border-0 bg-transparent py-1.5 pl-3  placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6 w-full'
                 placeholder='Proveedor del producto'
-                value={form.supplier}
-                onChange={(e) => handleSupplierChange(e.target.value)}
+                value={form.supplier.name}
                 readOnly
               />
             </div>
@@ -141,7 +142,7 @@ export const AddProduct = () => {
               <img
                 src='/images/media.png'
                 alt='media'
-                className='hidden sm:block rounded-xl w-full lg:max-w-sm'
+                className='hidden sm:block w-full lg:max-w-sm'
               />
               <img
                 src='/images/media-responsive.png'

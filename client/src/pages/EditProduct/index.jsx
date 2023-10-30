@@ -18,8 +18,8 @@ export const EditProduct = () => {
   const [form, setForm] = useState({
     name: '',
     description: '',
-    family: '',
-    supplier: '',
+    family: { id: '', name: '' },
+    supplier: { id: '', name: '' },
     stock: '',
   });
 
@@ -28,8 +28,8 @@ export const EditProduct = () => {
       setForm({
         name: product.name,
         description: product.description,
-        family: product.family.name,
-        supplier: product.supplier.name,
+        family: product.family,
+        supplier: product.supplier,
         stock: product.stock ?? '',
       });
     }
@@ -108,8 +108,7 @@ export const EditProduct = () => {
               <input
                 className='block flex-1 border-0 bg-transparent py-1.5 pl-3   placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6 w-full'
                 placeholder='Categoría'
-                value={form.family}
-                onChange={(e) => handleFamilyChange(e.target.value)}
+                value={form.family.name}
                 readOnly
               />
             </div>
@@ -129,8 +128,7 @@ export const EditProduct = () => {
                 type='text'
                 className='block flex-1 border-0 bg-transparent py-1.5 pl-3  placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6 w-full'
                 placeholder='Proveedor del producto'
-                value={form.supplier}
-                onChange={(e) => handleSupplierChange(e.target.value)}
+                value={form.supplier.name}
                 readOnly
               />
             </div>
@@ -158,7 +156,7 @@ export const EditProduct = () => {
               <img
                 src='/images/media.png'
                 alt='media'
-                className='hidden sm:block rounded-xl w-full lg:max-w-sm'
+                className='hidden sm:block w-full lg:max-w-sm'
               />
               <img
                 src='/images/media-responsive.png'

@@ -30,7 +30,7 @@ function Header() {
             <Link to='/'>
               <h1 className='text-4xl font-semibold bg-blue-gradient text-transparent bg-clip-text'>
                 <span className='hidden md:block'>Stockwise</span>
-                <span className='md:hidden'>SM</span>
+                <span className='md:hidden'>SW</span>
               </h1>
             </Link>
           </div>
@@ -50,7 +50,8 @@ function Header() {
               <div>
                 <Menu.Button>
                   <div className='flex justify-center items-center h-16 w-16 rounded-full bg-custom-panel'>
-                    <User size={38} />
+                    <img src='/images/user-avatar.png' alt='User avatar' />
+                    {/* <User size={38} /> */}
                   </div>
                 </Menu.Button>
               </div>

@@ -6,7 +6,7 @@ import axios from 'axios';
 const AddCategory = ({ isCategoryModal, setIsCategoryModal, setCategory }) => {
   const { families: categories, setFamilies: setCategories } = useFamilies();
 
-  const [selectCategory, isSelectCategory] = useState(false);
+  // const [selectCategory, isSelectCategory] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
 
   const [search, setSearch] = useState('');
@@ -15,17 +15,15 @@ const AddCategory = ({ isCategoryModal, setIsCategoryModal, setCategory }) => {
     category.name.toLowerCase().includes(search.toLowerCase()),
   );
 
-  const handleItemClick = (categoryName) => {
-    setSelectedCategory(categoryName);
+  const handleItemClick = (category) => {
+    setSelectedCategory(category);
   };
 
   const handleAddCategory = async () => {
-    const newCategory = {
-      name: search,
-    };
-
     try {
-      await axios.post(`/api/family/create`, newCategory);
+      const { data: newCategory } = await axios.post(`/api/family/create`, {
+        name: search,
+      });
       setCategories((prevCat) => [...prevCat, newCategory]);
     } catch (err) {
       console.log(err);
@@ -108,9 +106,9 @@ const AddCategory = ({ isCategoryModal, setIsCategoryModal, setCategory }) => {
                 <li
                   key={item.id}
                   className={`bg-gray-200 text-custom-black py-2.5 pl-8 cursor-pointer border border-solid   ${
-                    selectedCategory === item.name ? 'border-custom-blue' : ''
+                    selectedCategory.name === item.name ? 'border-custom-blue' : ''
                   }`}
-                  onClick={() => handleItemClick(item.name)}
+                  onClick={() => handleItemClick(item)}
                 >
                   {item.name}
                 </li>

@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { Search, Check } from 'react-feather';
+import { Search, Check, Plus } from 'react-feather';
 import { useSuppliers } from '../../hooks/useSuppliers';
 import axios from 'axios';
-import { Plus } from 'react-feather';
 
 const AddSupplier = ({ isSupplierModal, setIsSupplierModal, setSupplier }) => {
   const { suppliers, setSuppliers } = useSuppliers();
 
-  const [selectSupplier, isSelectSupplier] = useState(false);
+  // const [selectSupplier, isSelectSupplier] = useState(false);
   const [selectedSupplier, setSelectedSupplier] = useState('');
 
   const [search, setSearch] = useState('');
@@ -16,26 +15,24 @@ const AddSupplier = ({ isSupplierModal, setIsSupplierModal, setSupplier }) => {
     supplier.name.toLowerCase().includes(search.toLowerCase()),
   );
 
-  const handleItemClick = (supplierName) => {
-    setSelectedSupplier(supplierName);
+  const handleItemClick = (supplier) => {
+    setSelectedSupplier(supplier);
+  };
+
+  const handleAddSupplier = async () => {
+    try {
+      const { data: newSupplier } = await axios.post(`/api/supplier/create`, {
+        name: search,
+      });
+      setSuppliers((prevSuppliers) => [...prevSuppliers, newSupplier]);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleAddClick = () => {
     setSupplier(selectedSupplier);
     setIsSupplierModal(false);
-  };
-
-  const handleAddSupplier = async () => {
-    const newSupplier = {
-      name: search,
-    };
-
-    try {
-      await axios.post(`/api/supplier/create`, newSupplier);
-      setSuppliers((prevSuppliers) => [...prevSuppliers, newSupplier]);
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   return (
@@ -109,9 +106,9 @@ const AddSupplier = ({ isSupplierModal, setIsSupplierModal, setSupplier }) => {
                 <li
                   key={item.id}
                   className={`bg-gray-200 text-custom-black py-2.5 pl-8 cursor-pointer border border-solid  ${
-                    selectedSupplier === item.name ? 'border-custom-blue' : ''
+                    selectedSupplier.name === item.name ? 'border-custom-blue' : ''
                   }`}
-                  onClick={() => handleItemClick(item.name)}
+                  onClick={() => handleItemClick(item)}
                 >
                   {item.name}
                 </li>
