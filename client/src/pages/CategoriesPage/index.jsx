@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 
 const CategoriesPage = () => {
   const [categories, setCategories] = useState([]);
+  const [searching, setSearching] = useState('');
 
   useEffect(() => {
     axios
@@ -22,6 +23,10 @@ const CategoriesPage = () => {
         console.error('Error al cargar las categorias:', error);
       });
   }, []);
+
+  const categoryFound = categories.filter((category) => 
+    category.name.toLowerCase().includes((searching.toLowerCase()))
+  );
 
   return (
     <>
@@ -35,7 +40,14 @@ const CategoriesPage = () => {
       <p className='text-2xl font-[500] text-custom-icon'>Categorias</p>
 
       <div className='flex justify-between gap-2 my-5'>
-        <SearchBar placeholder='Buscar ítem' className='w-full sm:w-[424px]'>
+        <SearchBar 
+          placeholder='Buscar ítem' 
+          className='w-full sm:w-[424px]'
+          searching={searching}
+          setSearching={setSearching}
+          searchTye='categories'
+          categories={categories}
+        >
           <button className='hidden sm:flex p-2 hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'>
             <FilterIcon />
           </button>
@@ -63,70 +75,79 @@ const CategoriesPage = () => {
           </thead>
 
           <tbody>
-            {categories.map((item) => (
-              <tr
-                key={item.id}
-                className='border-b sm:border-b-4 border-custom-button-hover last:border-b-0'
-              >
-                <td className='px-5 py-1 flex items-center min-w-[168px]'>
-                  <img
-                    width={50}
-                    className='inline-block mr-2'
-                    src='/images/media.png'
-                  />
-                  {item.name}
-                </td>
-                <td className='px-5 py-1'>1</td>
-                <td className='px-5 py-1'>
-                  <div className='flex items-center justify-center'>
-                    <Menu as='div' className='relative'>
-                      <Menu.Button
-                        aria-label='Mas opciones'
-                        className='text-custom-blue'
-                      >
-                        <EditIcon className='hidden sm:inline-block' />
-                        <MoreOptionsIcon className='sm:hidden' />
-                      </Menu.Button>
-
-                      <Transition
-                        as={Fragment}
-                        enter='transition ease-out duration-100'
-                        enterFrom='transform opacity-0 scale-95'
-                        enterTo='transform opacity-100 scale-100'
-                        leave='transition ease-in duration-75'
-                        leaveFrom='transform opacity-100 scale-100'
-                        leaveTo='transform opacity-0 scale-95'
-                      >
-                        <Menu.Items className='absolute top-full mt-2 right-0 bg-[#E7E7E7] flex flex-col rounded shadow z-10 min-w-[130px]'>
-                          <Menu.Item>
-                            {(active) => (
-                              <button
-                                className={`text-left px-4 py-2 ${
-                                  active ? 'hover:text-custom-blue' : ''
-                                }`}
-                              >
-                                Editar
-                              </button>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {(active) => (
-                              <button
-                                className={`text-left px-4 py-2 ${
-                                  active ? 'hover:text-custom-blue' : ''
-                                }`}
-                              >
-                                Eliminar
-                              </button>
-                            )}
-                          </Menu.Item>
-                        </Menu.Items>
-                      </Transition>
-                    </Menu>
-                  </div>
+            {categoryFound.length > 0 ? (
+              categoryFound.map((item) => (
+                <tr
+                  key={item.id}
+                  className='border-b sm:border-b-4 border-custom-button-hover last:border-b-0'
+                >
+                  <td className='px-5 py-1 flex items-center min-w-[168px]'>
+                    <img
+                      width={50}
+                      className='inline-block mr-2'
+                      src='/images/media.png'
+                    />
+                    {item.name}
+                  </td>
+                  <td className='px-5 py-1'>1</td>
+                  <td className='px-5 py-1'>
+                    <div className='flex items-center justify-center'>
+                      <Menu as='div' className='relative'>
+                        <Menu.Button
+                          aria-label='Mas opciones'
+                          className='text-custom-blue'
+                        >
+                          <EditIcon className='hidden sm:inline-block' />
+                          <MoreOptionsIcon className='sm:hidden' />
+                        </Menu.Button>
+  
+                        <Transition
+                          as={Fragment}
+                          enter='transition ease-out duration-100'
+                          enterFrom='transform opacity-0 scale-95'
+                          enterTo='transform opacity-100 scale-100'
+                          leave='transition ease-in duration-75'
+                          leaveFrom='transform opacity-100 scale-100'
+                          leaveTo='transform opacity-0 scale-95'
+                        >
+                          <Menu.Items className='absolute top-full mt-2 right-0 bg-[#E7E7E7] flex flex-col rounded shadow z-10 min-w-[130px]'>
+                            <Menu.Item>
+                              {(active) => (
+                                <button
+                                  className={`text-left px-4 py-2 ${
+                                    active ? 'hover:text-custom-blue' : ''
+                                  }`}
+                                >
+                                  Editar
+                                </button>
+                              )}
+                            </Menu.Item>
+                            <Menu.Item>
+                              {(active) => (
+                                <button
+                                  className={`text-left px-4 py-2 ${
+                                    active ? 'hover:text-custom-blue' : ''
+                                  }`}
+                                >
+                                  Eliminar
+                                </button>
+                              )}
+                            </Menu.Item>
+                          </Menu.Items>
+                        </Transition>
+                      </Menu>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr className='w-full'>
+                <td colSpan='4' className=' text-center p-5'>
+                  No se encontraron categorias relacionadas
                 </td>
               </tr>
-            ))}
+              )
+            }
           </tbody>
         </table>
       </div>
