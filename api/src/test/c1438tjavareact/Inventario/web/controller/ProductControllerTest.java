@@ -3,8 +3,6 @@ package c1438tjavareact.Inventario.web.controller;
 import c1438tjavareact.Inventario.model.domain.dto.FamilyDto;
 import c1438tjavareact.Inventario.model.domain.dto.ProductDto;
 import c1438tjavareact.Inventario.model.domain.dto.SupplierDto;
-import c1438tjavareact.Inventario.model.persistence.entity.Family;
-import c1438tjavareact.Inventario.model.persistence.entity.Supplier;
 import c1438tjavareact.Inventario.web.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,12 +11,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import java.util.ArrayList;
-
-
 import java.util.List;
 import java.util.Optional;
-
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -37,6 +32,12 @@ public class ProductControllerTest {
 
     @Test
     public void testCreateProduct() {
+        ProductDto productDto = new ProductDto();
+        productDto.setId(1L);
+        productDto.setName("Product Name");
+        productDto.setDescription("Product Description");
+        productDto.setPrice(99.99);
+
         // Crear un objeto FamilyDto
         FamilyDto familyDto = new FamilyDto();
         familyDto.setId(1L);
@@ -47,22 +48,21 @@ public class ProductControllerTest {
         supplierDto.setId(1L);
         supplierDto.setName("Supplier 1");
 
-        ProductDto productDto = new ProductDto();
-        productDto.setId(1L);
-        productDto.setName("Product Name");
-        productDto.setDescription("Product Description");
-        productDto.setPrice(99.99);
         productDto.setFamily(familyDto); // Asigna directamente el FamilyDto
         productDto.setSupplier(supplierDto); // Asigna directamente el SupplierDto
 
+        // Configura el servicio para simular una actualización exitosa
         when(productService.create(productDto)).thenReturn(Optional.of(productDto));
 
-        ResponseEntity<Optional<ProductDto>> response = productController.create(productDto);
+        Optional<ResponseEntity<ProductDto>> response = productController.create(productDto);
 
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(productDto, response.getBody().get());
+        assertTrue(response.isPresent());
+
+        ResponseEntity<ProductDto> responseEntity = response.get();
+
+        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+        assertEquals(productDto, responseEntity.getBody());
     }
-
 
     @Test
     public void testGetProductById() {
@@ -73,39 +73,11 @@ public class ProductControllerTest {
         // Configura el servicio para simular la obtención de un producto por su ID
         when(productService.ProductId(productId)).thenReturn(Optional.of(productDto));
 
-        ResponseEntity<Optional<ProductDto>> response = productController.getProduct(productId);
+        Optional<ResponseEntity<ProductDto>> response = productController.getProduct(productId);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(productDto, response.getBody().get());
-    }
-    @Test
-    public void testUpdateProduct() {
-        long productId = 1L;
-        ProductDto productDto = new ProductDto();
-        productDto.setId(productId);
-        productDto.setName("Updated Product Name");
-
-        // Supongamos que también has actualizado otros campos en productDto
-
-        when(productService.ProductId(productId)).thenReturn(Optional.of(productDto));
-        when(productService.update(productDto)).thenReturn(Optional.of(productDto));
-
-        ResponseEntity<Optional<ProductDto>> response = productController.update(productId, productDto);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(productDto, response.getBody().get());
-    }
-
-    @Test
-    public void testDeleteProduct() {
-        long productId = 1L;
-
-        // Configura el servicio para lanzar una excepción en lugar de devolver void
-        doNothing().when(productService).delete(productId);
-        ResponseEntity<String> response = productController.delete(productId);
-
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Se eliminó correctamente", response.getBody());
+        assertTrue(response.isPresent());
+        assertEquals(HttpStatus.OK, response.get().getStatusCode());
+        assertEquals(productDto, response.get().getBody());
     }
 
     @Test
@@ -113,11 +85,18 @@ public class ProductControllerTest {
         List<ProductDto> productDtoList = createProductList();
         when(productService.ProductList()).thenReturn(Optional.of(productDtoList));
 
-        ResponseEntity<Optional<List<ProductDto>>> response = productController.getProducts();
+        Optional<ResponseEntity<List<ProductDto>>> response = productController.getProducts();
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(productDtoList, response.getBody().get());
+        // Verificar si el Optional no está vacío
+        assertTrue(response.isPresent());
+
+        // Verificar el código de estado
+        assertEquals(HttpStatus.OK, response.get().getStatusCode());
+
+        // Verificar la lista de ProductDto
+        assertEquals(productDtoList, response.get().getBody());
     }
+
 
     // Método de utilidad para crear una lista de productos ficticia
     private List<ProductDto> createProductList() {
@@ -130,5 +109,50 @@ public class ProductControllerTest {
     }
 
 
+    @Test
+    public void testUpdateProduct() {
+        long productId = 1L;
+        ProductDto productDto = new ProductDto();
+        productDto.setId(productId);
+        productDto.setName("Updated Product Name");
 
+        // Supongamos que también has actualizado otros campos en productDto
+
+        when(productService.ProductId(productId)).thenReturn(Optional.of(productDto));
+        when(productService.update(productDto)).thenReturn(Optional.of(productDto));
+
+        Optional<ResponseEntity<ProductDto>> response = productController.update(productId, productDto);
+
+        assertTrue(response.isPresent());
+        ResponseEntity<ProductDto> responseEntity = response.get();
+        assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
+        assertEquals(productDto, responseEntity.getBody());
+    }
+
+
+    @Test
+    public void testDeleteProduct() {
+        long productId = 1L;
+        ProductDto productDto = new ProductDto();
+        productDto.setId(productId);
+
+        // Configura el servicio para simular la obtención de un producto por su ID
+        when(productService.ProductId(productId)).thenReturn(Optional.of(productDto));
+
+        // Configura el servicio para simular la eliminación de un producto
+        doNothing().when(productService).delete(productId);
+
+        ResponseEntity<String> response = productController.delete(productId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Se elimino correctamente", response.getBody());
+
+        // Vuelve a configurar el servicio para simular que no se encuentra un producto por el ID
+        when(productService.ProductId(productId)).thenReturn(Optional.empty());
+
+        ResponseEntity<String> responseNotFound = productController.delete(productId);
+
+        assertEquals(HttpStatus.NOT_FOUND, responseNotFound.getStatusCode());
+        assertEquals("El producto ingresado no existe", responseNotFound.getBody());
+    }
 }

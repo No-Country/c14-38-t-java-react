@@ -8,11 +8,23 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 @Data
 public class BranchDto {
+    /**
+     * Identificador único de la sucursal (Branch)
+     */
     private Long id;
+    /**
+     * Nombre de la sucursal (Branch)
+     */
     @NotEmpty
     private String name;
+    /**
+     * Dirección de la sucursal (Branch)
+     */
     @NotEmpty
     private String address;
+    /**
+     * Teléfono de la sucursal (Branch)
+     */
     @NotEmpty
     private String phone;
 }

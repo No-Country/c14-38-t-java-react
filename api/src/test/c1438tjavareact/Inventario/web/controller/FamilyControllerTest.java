@@ -9,11 +9,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
@@ -56,11 +54,11 @@ class FamilyControllerTest {
         familyDto.setName("Familia Duplicada");
 
         // Configura el servicio para simular un escenario de error
-        when(familyService.isItemNameDuplicate(familyDto.getName())).thenReturn(false);
-        when(familyService.create(familyDto)).thenReturn(Optional.of(familyDto));
+        //when(familyService.isItemNameDuplicate(familyDto.getName())).thenReturn(false);
+        //when(familyService.create(familyDto)).thenReturn(Optional.of(familyDto));
 
         // Configura el servicio para simular un escenario exitoso
-        //when(familyService.isItemNameDuplicate(familyDto.getName())).thenReturn(true);
+        when(familyService.isItemNameDuplicate(familyDto.getName())).thenReturn(true);
 
         // Ejecuta la prueba
         ResponseEntity<FamilyDto> response = familyController.create(familyDto);
@@ -113,10 +111,10 @@ class FamilyControllerTest {
         familyDto.setName("Familia Actualizada");
 
         // Configura el servicio para simular una actualización exitosa
-        //when(familyService.update(familyDto)).thenReturn(Optional.of(familyDto));
+        when(familyService.update(familyDto)).thenReturn(Optional.of(familyDto));
 
         // Configura el servicio para simular una actualización no exitosa
-        when(familyService.update(familyDto)).thenReturn(Optional.empty());
+        //when(familyService.update(familyDto)).thenReturn(Optional.empty());
 
 
         // Ejecuta la prueba
@@ -132,10 +130,10 @@ class FamilyControllerTest {
         Long familyId = 1L;
 
         // Configura el servicio para simular una eliminación exitosa
-        //when(familyService.delete(familyId)).thenReturn(true);
+        when(familyService.delete(familyId)).thenReturn(true);
 
         // Configura el servicio para simular una eliminación no exitosa
-        when(familyService.delete(familyId)).thenReturn(false);
+        //when(familyService.delete(familyId)).thenReturn(false);
 
         // Ejecuta la prueba
         ResponseEntity<Boolean> response = familyController.delete(familyId);

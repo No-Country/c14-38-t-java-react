@@ -3,7 +3,13 @@ package c1438tjavareact.Inventario.model.domain.dto;
 import lombok.*;
 @Data
 public class FamilyDto {
-    private Long id;
+    /**
+     * Identificador único de la familia (Family)
+     */
+    private Long id = null;
+    /**
+     * Nombre de la familia
+     */
     private String name;
 
 }
