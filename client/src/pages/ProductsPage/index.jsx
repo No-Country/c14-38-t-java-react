@@ -18,6 +18,20 @@ const ProductsPage = () => {
   const handleSearchChange = (e) => setSearch(e.target.value);
   const clearSearch = () => setSearch('');
 
+  //Logica de la paginacion
+  //contexto (useProducts), obtiene la cantidad total de productos
+  const totalProducts = products.length;
+
+  // Define la cantidad de productos que se desea mostrar por página
+  const itemsPerPage = 10;
+
+  // Calcula la cantidad total de páginas
+  const totalPages = Math.ceil(totalProducts / itemsPerPage);
+
+  //estado que almacena la página actual
+  const [currentPage, setCurrentPage] = useState(1);
+
+
   return (
     <>
       <div className='hidden sm:flex flex-row justify-between text-custom-black'>
@@ -119,9 +133,8 @@ const ProductsPage = () => {
                           <Menu.Item>
                             {(active) => (
                               <button
-                                className={`text-left px-4 py-2 ${
-                                  active ? 'hover:text-custom-blue' : ''
-                                }`}
+                                className={`text-left px-4 py-2 ${active ? 'hover:text-custom-blue' : ''
+                                  }`}
                               >
                                 Editar
                               </button>
@@ -130,9 +143,8 @@ const ProductsPage = () => {
                           <Menu.Item>
                             {(active) => (
                               <button
-                                className={`text-left px-4 py-2 ${
-                                  active ? 'hover:text-custom-blue' : ''
-                                }`}
+                                className={`text-left px-4 py-2 ${active ? 'hover:text-custom-blue' : ''
+                                  }`}
                               >
                                 Eliminar
                               </button>
@@ -151,39 +163,52 @@ const ProductsPage = () => {
 
       {/* Pagination */}
       <footer className='flex items-center flex-wrap gap-3 justify-center sm:justify-end mt-7'>
-        <span className='text-[#1A1A1A]'>{`Total ${products.length} Ítems`}</span>
+        <span className='text-[#1A1A1A]'>{`Total ${totalProducts} Ítems`}</span>
         <nav>
           <ul className='flex items-center gap-3'>
             <li>
-              <Button className='w-8 h-8 sm:p-1 rounded-md bg-[#B4B4B4]'>
+              <Button
+                className='w-8 h-8 sm:p-1 rounded-md bg-[#B4B4B4]'
+                onClick={() => setCurrentPage(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
                 <ChevronLeft className='text-[#626265]' />
               </Button>
             </li>
-            <li>
-              <Button className='w-8 h-8 sm:px-3 sm:py-1.5 rounded-md border border-transparent bg-[#918AC1] text-sm'>
-                1
-              </Button>
-            </li>
-            {Array(5)
-              .fill(0)
-              .map((_, index) => {
-                const page = index + 2;
+            {Array.from({ length: totalPages }).map((_, index) => {
+              const page = index + 1;
+              // Mostrar solo un rango limitado de páginas (por ejemplo, 5)
+              if (page === 1 || page === totalPages || (page >= currentPage - 2 && page <= currentPage + 2)) {
                 return (
                   <li key={page}>
-                    <Button className='w-8 h-8 sm:px-3 sm:py-1.5 rounded-md bg-transparent border border-[#918AC1] text-custom-black text-sm'>
+                    <Button
+                      className={`w-8 h-8 sm:px-3 sm:py-1.5 rounded-md ${page === currentPage ? 'bg-[#918AC1]' : 'bg-transparent border border-[#918AC1]'
+                        } text-custom-black text-sm`}
+                      onClick={() => setCurrentPage(page)}
+                    >
                       {page}
                     </Button>
                   </li>
                 );
-              })}
+              } else if (page === currentPage - 3 || page === currentPage + 3) {
+                // Agregar puntos suspensivos
+                return <li key={page}>...</li>;
+              }
+              return null;
+            })}
             <li>
-              <Button className='w-8 h-8 sm:p-1 rounded-md'>
+              <Button
+                className='w-8 h-8 sm:p-1 rounded-md'
+                onClick={() => setCurrentPage(currentPage + 1)}
+                disabled={currentPage === totalPages}
+              >
                 <ChevronRight />
               </Button>
             </li>
           </ul>
         </nav>
       </footer>
+
     </>
   );
 };
