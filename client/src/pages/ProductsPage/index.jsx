@@ -4,10 +4,11 @@ import { EditIcon, FilterIcon, MoreOptionsIcon } from '../../components/Icons';
 import { Button } from '../../components/ui/Button';
 import { ChevronLeft, X } from 'react-feather';
 import { ChevronRight } from 'react-feather';
-import { Menu, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
+import { Menu, Transition, Dialog } from '@headlessui/react';
+import { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useProducts } from '../../hooks/useProducts';
+import FilterCategory from '../../components/Modals/FilterCategory';
 
 //import Loading from '../../components/Loading';
 
@@ -15,8 +16,19 @@ const ProductsPage = () => {
   const { products } = useProducts();
   const [search, setSearch] = useState('');
 
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedSupplier, setSelectedSupplier] = useState('');
+
+  const [productsLocal, setProductsLocal] = useState([]);
+
   const handleSearchChange = (e) => setSearch(e.target.value);
   const clearSearch = () => setSearch('');
+
+  const [openFilter, setOpenFilter] = useState(false);
+
+  useEffect(() => {
+    setProductsLocal([...products]);
+  }, [products]);
 
   return (
     <>
@@ -44,7 +56,10 @@ const ProductsPage = () => {
               <X strokeWidth={3} />
             </button>
           ) : (
-            <button className='hidden sm:flex p-2 items-center hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'>
+            <button
+              onClick={() => setOpenFilter(true)}
+              className='hidden sm:flex p-2 items-center hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'
+            >
               <FilterIcon />
             </button>
           )}
@@ -53,7 +68,40 @@ const ProductsPage = () => {
           <Button className='text-xs min-w-[100px]'>Agregar Ítem</Button>
         </Link>
       </div>
-
+      <div className='flex flex-auto mb-3 text-custom-dark-gray'>
+        {selectedCategory ? (
+          <div className='bg-custom-gray rounded-full px-2 py-1 text-xs flex items-center'>
+            <span>{selectedCategory} </span>{' '}
+            <div
+              className='cursor-pointer'
+              onClick={() => {
+                setSelectedCategory('');
+                setProductsLocal([...products]);
+              }}
+            >
+              <X size={18} />
+            </div>
+          </div>
+        ) : (
+          ''
+        )}
+        {selectedSupplier ? (
+          <div className='bg-custom-gray rounded-full px-2 py-1 text-xs flex items-center'>
+            <span>{selectedSupplier} </span>{' '}
+            <div
+              className='cursor-pointer'
+              onClick={() => {
+                setSelectedSupplier('');
+                setProductsLocal([...products]);
+              }}
+            >
+              <X size={18} />
+            </div>
+          </div>
+        ) : (
+          ''
+        )}
+      </div>
       <div className='border sm:border-4 rounded-xl border-custom-button-hover'>
         <table className='w-full text-[#1A1A1A]'>
           <thead>
@@ -64,9 +112,12 @@ const ProductsPage = () => {
               {/* <th className='bg-custom-button-hover hidden md:table-cell px-5 py-3'>
                 Código
               </th> */}
-              {/* <th className='bg-custom-button-hover hidden md:table-cell px-5 py-3'>
+              <th className='bg-custom-button-hover hidden md:table-cell px-5 py-3'>
                 Categoría
-              </th> */}
+              </th>
+              <th className='bg-custom-button-hover hidden md:table-cell px-5 py-3'>
+                Proveedor
+              </th>
               <th className='bg-custom-button-hover px-5 py-3'>Stock</th>
               <th className='bg-custom-button-hover rounded-tr-lg sm:rounded-tr-md px-5 py-3 text-center'>
                 Acción
@@ -75,7 +126,7 @@ const ProductsPage = () => {
           </thead>
 
           <tbody>
-            {products.map((product) => (
+            {productsLocal.map((product) => (
               <tr
                 key={product.id}
                 className='border-b sm:border-b-4 border-custom-button-hover last:border-b-0'
@@ -91,9 +142,12 @@ const ProductsPage = () => {
                 {/* <td className='hidden md:table-cell px-5 py-1'>
                   {product.code}
                 </td> */}
-                {/* <td className='hidden md:table-cell px-5 py-1'>
-                  {product.family}
-                </td> */}
+                <td className='hidden md:table-cell px-5 py-1'>
+                  {product.family.name}
+                </td>
+                <td className='hidden md:table-cell px-5 py-1'>
+                  {product.supplier.name}
+                </td>
                 <td className='px-5 py-1'>{product.stock}</td>
                 <td className='px-5 py-1'>
                   <div className='flex items-center justify-center'>
@@ -184,6 +238,47 @@ const ProductsPage = () => {
           </ul>
         </nav>
       </footer>
+
+      <Transition.Root show={openFilter} as={Fragment}>
+        <Dialog as='div' className='relative z-10' onClose={setOpenFilter}>
+          <Transition.Child
+            as={Fragment}
+            enter='ease-out duration-300'
+            enterFrom='opacity-0'
+            enterTo='opacity-100'
+            leave='ease-in duration-200'
+            leaveFrom='opacity-100'
+            leaveTo='opacity-0'
+          >
+            <div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity' />
+          </Transition.Child>
+
+          <div className='fixed inset-0 z-10 w-screen overflow-y-auto'>
+            <div className='flex min-h-full items-start justify-center sm:p-4 text-center sm:items-center'>
+              <Transition.Child
+                as={Fragment}
+                enter='ease-out duration-300'
+                enterFrom='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
+                enterTo='opacity-100 translate-y-0 sm:scale-100'
+                leave='ease-in duration-200'
+                leaveFrom='opacity-100 translate-y-0 sm:scale-100'
+                leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
+              >
+                <Dialog.Panel className='relative h-screen sm:h-auto sm:min-h-full w-full transform overflow-hidden sm:rounded-lg bg-white text-left shadow-xl transition-all sm:w-full sm:max-w-lg'>
+                  <FilterCategory
+                    setOpenFilter={setOpenFilter}
+                    setProductsLocal={setProductsLocal}
+                    selectedCategory={selectedCategory}
+                    setSelectedCategory={setSelectedCategory}
+                    selectedSupplier={selectedSupplier}
+                    setSelectedSupplier={setSelectedSupplier}
+                  />
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
     </>
   );
 };

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 import useAuthContext from './useAuthContext';
+import productsData from '../data/productsData';
 
 const ProductContext = createContext();
 
@@ -10,14 +11,16 @@ export const ProductsProvider = ({ children }) => {
 
   useEffect(() => {
     if (isAuth) {
-      axios
-        .get('/api/product/all')
-        .then((response) => {
-          setProducts(response.data.body);
-        })
-        .catch((error) => {
-          console.error('Error al cargar los productos:', error);
-        });
+      // axios
+      //   .get('/api/product/all')
+      //   .then((response) => {
+      //     setProducts(response.data.body);
+      //   })
+      //   .catch((error) => {
+      //     console.error('Error al cargar los productos:', error);
+      //   });
+
+      setProducts(productsData); // Fake data
     }
   }, [isAuth]);
 

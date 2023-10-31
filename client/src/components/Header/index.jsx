@@ -4,7 +4,15 @@ import { NavLink } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Menu, Transition, Popover, Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { User } from 'react-feather'; //
+import {
+  Package,
+  LogOut,
+  Truck,
+  Grid,
+  Users,
+  User,
+  Settings,
+} from 'react-feather';
 import menuData from '../../data/menuData';
 
 function Header() {
@@ -29,8 +37,9 @@ function Header() {
           <div className='flex lg:flex-1'>
             <Link to='/'>
               <h1 className='text-4xl font-semibold bg-blue-gradient text-transparent bg-clip-text'>
-                <span className='hidden md:block'>Stockwise</span>
-                <span className='md:hidden'>SM</span>
+                <span>Stockwise</span>
+                {/* <span className='hidden md:block'>Stockwise</span> */}
+                {/* <span className='md:hidden'>SW</span> */}
               </h1>
             </Link>
           </div>
@@ -122,18 +131,30 @@ function Header() {
                       to={item.navigate}
                       className={classButton}
                     >
-                      {item.name}
+                      {item.icon === 'Package' && (
+                        <Package color={item.iconColor} />
+                      )}
+                      {item.icon === 'Truck' && (
+                        <Truck color={item.iconColor} />
+                      )}
+                      {item.icon === 'Grid' && <Grid color={item.iconColor} />}
+                      {item.icon === 'Users' && (
+                        <Users color={item.iconColor} />
+                      )}
+                      <span className='ml-1'>{item.name}</span>
                     </NavLink>
                   ))}
                   <hr className='mb-1' />
                   <NavLink to='/profile' className={classButton}>
-                    Cuenta
+                    <Settings color='#3E43C7' />
+                    <span className='ml-1'>Cuenta</span>
                   </NavLink>
                   <button
                     onClick={handleLogout}
                     className='w-full p-3 flex flex-row hover:bg-custom-button-hover rounded-lg mb-1'
                   >
-                    Cerrar Sesión
+                    <LogOut color='#3E43C7' />
+                    <span className='ml-1'>Cerrar Sesión</span>
                   </button>
                 </div>
               </div>
