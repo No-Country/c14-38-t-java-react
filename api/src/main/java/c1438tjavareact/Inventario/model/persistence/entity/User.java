@@ -25,6 +25,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+/**
+ * Entidad que representa un usuario en el sistema.
+ */
+
 @Entity 
 @Table(name="users")
 @Data

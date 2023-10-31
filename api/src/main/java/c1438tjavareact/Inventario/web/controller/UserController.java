@@ -16,6 +16,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Actualiza un usuario existente.
+     * @param id   El ID del usuario que se va a actualizar.
+     * @param user Los nuevos datos del usuario.
+     * @return Una respuesta con el usuario actualizado si tiene éxito, o NOT_FOUND si el usuario no existe.
+     */
+
     @PatchMapping("/{id}")
     public ResponseEntity<User> editUser(@PathVariable Long id, @RequestBody User user) {
         User currentUser = userService.searchById(id);
@@ -28,6 +35,12 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    /**
+     * Elimina un usuario por su ID.
+     * @param id El ID del usuario que se va a eliminar.
+     * @return Un mensaje que indica si el usuario fue eliminado o si no existe.
+     */
+
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable Long id){
         User currentUser = userService.searchById(id);
@@ -37,10 +50,21 @@ public class UserController {
         }
         return "El usuario ingresado no existe";
     }
+
+    /**
+     * Obtiene la lista de todos los usuarios.
+     * @return Una lista de todos los usuarios.
+     */
     @GetMapping("/all")
     public List<User> searchAll(){
         return userService.searchAll();
     }
+
+    /**
+     * Busca un usuario por su ID.
+     * @param id El ID del usuario que se desea buscar.
+     * @return Una respuesta con el usuario si se encuentra, o NOT_FOUND si no existe.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<User> searchById(@PathVariable Long id){
         User currentUser = userService.searchById(id);

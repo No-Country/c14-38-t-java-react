@@ -27,6 +27,13 @@ public class SecurityConfig {
 
     private final AuthenticationProvider authenticationProvider;
 
+    /**
+     * Configura las reglas de seguridad para la aplicación.
+     * @param http El objeto HttpSecurity para configurar la seguridad.
+     * @return La cadena de filtros de seguridad.
+     * @throws Exception Si hay un error al configurar la seguridad.
+     */
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.csrf(csrf -> csrf.disable())
@@ -44,6 +51,10 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Define los endpoints públicos que no requieren autenticación.
+     * @return Un objeto RequestMatcher que combina los endpoints públicos.
+     */
     private RequestMatcher publicEndpoints(){
         return new OrRequestMatcher(
             new AntPathRequestMatcher("/api/test"),

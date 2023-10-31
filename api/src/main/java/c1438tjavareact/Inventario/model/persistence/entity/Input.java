@@ -15,6 +15,10 @@ import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+
+/**
+ * Entidad que representa una entrada en el sistema.
+ */
 @Entity
 @Table(name = "inputs")
 @Data

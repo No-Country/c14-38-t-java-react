@@ -14,7 +14,9 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-
+/**
+ * Entidad que representa un despacho en el sistema.
+ */
 @Entity
 @Data
 @Table(name="dispatchs")

@@ -11,7 +11,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
-
+/**
+ * Entidad que representa una sucursal en el sistema.
+ */
 
 @Entity
 @Table(name="branchs")

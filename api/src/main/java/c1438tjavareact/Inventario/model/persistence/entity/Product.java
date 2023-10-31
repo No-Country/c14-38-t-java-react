@@ -11,6 +11,10 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+
+/**
+ * Entidad que representa un producto en el sistema.
+ */
 @Entity 
 @Table(name="products")
 @Data
