@@ -16,21 +16,25 @@ export const EditProduct = () => {
   const [isSupplierModal, setIsSupplierModal] = useState(false);
 
   const [form, setForm] = useState({
+    id: '',
     name: '',
     description: '',
     family: { id: '', name: '' },
     supplier: { id: '', name: '' },
-    stock: '',
+    // stock: '',
+    price: '',
   });
 
   useEffect(() => {
     if (product) {
       setForm({
+        id: product.id,
         name: product.name,
         description: product.description,
         family: product.family,
         supplier: product.supplier,
-        stock: product.stock ?? '',
+        // stock: product.stock ?? '',
+        price: product.price,
       });
     }
   }, [product]);
@@ -50,8 +54,25 @@ export const EditProduct = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
+      // TODO: cambiar a /api/product/update (version final)
+      console.log({
+        ...form,
+        family: {
+          id: form.family.id,
+        },
+        supplier: {
+          id: form.supplier.id,
+        },
+      });
+
       await axios.patch(`/api/product/${id}`, {
-        // TODO: request body for products
+        ...form,
+        family: {
+          id: form.family.id,
+        },
+        supplier: {
+          id: form.supplier.id,
+        },
       });
     } catch (err) {
       console.log(err);

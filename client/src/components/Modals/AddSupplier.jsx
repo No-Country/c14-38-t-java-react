@@ -10,6 +10,7 @@ const AddSupplier = ({ isSupplierModal, setIsSupplierModal, setSupplier }) => {
   const [selectedSupplier, setSelectedSupplier] = useState('');
 
   const [search, setSearch] = useState('');
+  const [inputSupplier, setInputSupplier] = useState('');
 
   const filteredSuppliers = suppliers.filter((supplier) =>
     supplier.name.toLowerCase().includes(search.toLowerCase()),
@@ -22,7 +23,7 @@ const AddSupplier = ({ isSupplierModal, setIsSupplierModal, setSupplier }) => {
   const handleAddSupplier = async () => {
     try {
       const { data: newSupplier } = await axios.post(`/api/supplier/create`, {
-        name: search,
+        name: inputSupplier,
       });
       setSuppliers((prevSuppliers) => [...prevSuppliers, newSupplier]);
     } catch (err) {
@@ -92,26 +93,38 @@ const AddSupplier = ({ isSupplierModal, setIsSupplierModal, setSupplier }) => {
               </button>
             )}
           </div>
-          {/* <button
+          <input
+            placeholder='+ Agrega un proveedor nuevo'
+            type='text'
             className='sm:flex hidden justify-start items-center bg-gray-200  text-custom-black py-2.5 pl-3 pr-6 w-auto lg:w-96 lg:h-10 ml-14 mr-16 border border-solid border-custom-gray rounded'
-            onClick={() => isSelectSupplier(true)}
-          >
-            <span className='flex ml-5 text-sm'>
-              + Agrega un proveedor nuevo
-            </span>
-          </button> */}
+            onChange={(e) => setInputSupplier(e.target.value)}
+            onKeyDown={async (e) => {
+              if (e.key === 'Enter') {
+                handleAddSupplier();
+              }
+            }}
+          />
           <div className='h-screen sm:h-52 sm:ml-14 sm:mr-16 overflow-auto'>
             <ul className='flex flex-col gap-0.5 bg-white'>
               {filteredSuppliers.map((item) => (
-                <li
-                  key={item.id}
-                  className={`bg-gray-200 text-custom-black py-2.5 pl-8 cursor-pointer border border-solid  ${
-                    selectedSupplier.name === item.name ? 'border-custom-blue' : ''
-                  }`}
-                  onClick={() => handleItemClick(item)}
-                >
-                  {item.name}
-                </li>
+                <div key={item.id}>
+                  <li
+                    className={`bg-gray-200 text-custom-black py-2.5 pl-8 cursor-pointer border border-solid  ${
+                      selectedSupplier.name === item.name
+                        ? 'border-custom-blue'
+                        : ''
+                    }`}
+                    onClick={() => handleItemClick(item)}
+                  >
+                    {item.name}
+                  </li>
+                  {selectedSupplier.name === item.name && (
+                    <span className='text-custom-blue text-xs'>
+                      Podrás agregar más información en la sección de
+                      &quot;Proveedores&quot;
+                    </span>
+                  )}
+                </div>
               ))}
 
               {filteredSuppliers.length === 0 && (
