@@ -7,6 +7,8 @@ import { ChevronLeft } from 'react-feather';
 import { ChevronRight } from 'react-feather';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
+import DeleteItem from '../../components/Modals/DeleteItem';
+import RemovedMessage from '../../components/RemovedMessage';
 import { Link } from 'react-router-dom';
 import { useProducts } from '../../hooks/useProducts';
 
@@ -16,9 +18,16 @@ const ProductsPage = () => {
   const { products } = useProducts();
   const [searching, setSearching] = useState('');
 
+  const [alertDelete, setAlertDelete] = useState(false);
+  const [removedmsg, setRemovedmsg] = useState(false);
+
   const productFound = products.filter((product) => 
     product.name.toLowerCase().includes((searching.toLowerCase()))
   );
+
+  setTimeout(() => {
+    setRemovedmsg(false);
+  }, 2500)
 
   return (
     <>
@@ -129,6 +138,7 @@ const ProductsPage = () => {
                                   className={`text-left px-4 py-2 ${
                                     active ? 'hover:text-custom-blue' : ''
                                   }`}
+                                  onClick={() => setAlertDelete(true)}
                                 >
                                   Eliminar
                                 </button>
@@ -150,8 +160,10 @@ const ProductsPage = () => {
             )}
           </tbody>
         </table>
+        <DeleteItem alertDelete={alertDelete} setAlertDelete={setAlertDelete} setRemovedmsg={setRemovedmsg}/>
       </div>
-
+      {/* message component, has been removed */}
+      {removedmsg && <RemovedMessage />}
       {/* Pagination */}
       <footer className='flex items-center flex-wrap gap-3 justify-center sm:justify-end mt-7'>
         <span className='text-[#1A1A1A]'>{`Total ${products.length} Ítems`}</span>

@@ -35,7 +35,7 @@ const AddSupplier = ({isSupplierModal, setIsSupplierModal, setSupplier}) => {
                         <input type="text" className="block flex-1 border-0 bg-transparent py-2.5 pl-3 pr-6 text-custom-black placeholder:text-custom-black focus:ring-0 sm:text-sm sm:leading-6" placeholder="Buscar proveedor" />
                     </div>
                     <button className="sm:flex hidden justify-start items-center bg-gray-200  text-custom-black py-2.5 pl-3 pr-6 w-auto lg:w-96 lg:h-10 ml-14 mr-16 border border-solid border-custom-gray rounded" onClick={() => isSelectSupplier(true)}>
-                      <span className="flex ml-5 text-sm">+ Agrega un proveedor nuevo</span>
+                      <span className="flex ml-5 text-sm gap-[3px] before:content-['+'] hover:before:content-['|']">Agrega un proveedor nuevo</span>
                   </button>
                   <div className="h-screen sm:h-36 sm:ml-14 sm:mr-16 overflow-auto">
                     <ul className="flex flex-col gap-0.5 bg-white">

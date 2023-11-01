@@ -13,7 +13,7 @@ export const AddProduct = () => {
 
   return (
     <>
-      <div className='text-custom-black p-7 bg-gray-100 sm:bg-white sm:rounded-xl flex flex-col sm:justify-center sm:align-baseline gap-4 absolute top-0 left-0 bottom-0 right-0 sm:static w-full h-auto sm:w-auto sm:h-auto overflow-auto sm:overflow-visible'>
+      <div className='text-custom-black p-7 bg-gray-100 sm:rounded-xl flex flex-col sm:justify-center sm:align-baseline gap-4 absolute top-0 left-0 bottom-0 right-0 sm:static w-full h-auto sm:w-auto sm:h-auto overflow-auto sm:overflow-visible'>
         <h3 className='hidden sm:flex  text-xl  items-start sm:mb-0 '>
           Agregar Ítem al inventario
         </h3>
@@ -96,7 +96,7 @@ export const AddProduct = () => {
             </div>
           </div>
           <div className='flex flex-col sm:justify-center lg:justify-normal sm:pt-6 sm:w-1/2'>
-            <label htmlFor='file-img' className='w-full flex  justify-end'>
+            <label htmlFor='file-img' className='w-full flex flex-col justify-center'>
               <img
                 src='/images/media.png'
                 alt='media'
@@ -107,9 +107,9 @@ export const AddProduct = () => {
                 alt='media'
                 className='sm:hidden w-full'
               />
-              {/* <span className='flex items-center justify-center mt-2 sm:mt-4 sm:text-base text-xs font-normal sm: text-custom-gray'>
+              <span className='flex items-center justify-center mt-2 sm:mt-4 sm:text-base text-xs font-normal text-custom-black'>
                 Agrega una imagen
-              </span> */}
+              </span>
               {/* <input id='file-img' className='hidden' type='file' /> */}
             </label>
           </div>
