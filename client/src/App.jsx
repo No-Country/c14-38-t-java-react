@@ -9,6 +9,7 @@ import ProductsPage from './pages/ProductsPage';
 import { AddProduct } from './pages/AddProduct';
 import UserProfilePage from './pages/UserProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
+import BranchesPage from './pages/BranchesPage';
 
 import axios from 'axios';
 import LayoutUser from './layout/LayoutUser';
@@ -32,7 +33,7 @@ function App() {
 
         {/* Protected Routes */}
         <Route path='/' element={<ProtectedRoute component={<LayoutUser />} />}>
-          {/* <Route path='/branches' element={<BranchesPage />} /> */}
+          <Route path='/branches' element={<BranchesPage />} />
           {/* <Route path='/branches/:id' element={<BranchProfilePage />} /> */}
           <Route path='/products' element={<ProductsPage />} />
           <Route path='/addproduct' element={<AddProduct />} />

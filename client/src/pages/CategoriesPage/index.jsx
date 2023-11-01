@@ -4,24 +4,13 @@ import { Button } from '../../components/ui/Button';
 import { ChevronLeft } from 'react-feather';
 import { ChevronRight } from 'react-feather';
 import { Menu, Transition } from '@headlessui/react';
-import { Fragment, useEffect, useState } from 'react';
-import axios from 'axios';
+import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { useCategories } from '../../hooks/useCategories';
 //import Loading from '../../components/Loading';
 
 const CategoriesPage = () => {
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get('/api/family')
-      .then((response) => {
-        setCategories(response.data);
-      })
-      .catch((error) => {
-        console.error('Error al cargar las categorias:', error);
-      });
-  }, []);
+  const { categories } = useCategories();
 
   return (
     <>
