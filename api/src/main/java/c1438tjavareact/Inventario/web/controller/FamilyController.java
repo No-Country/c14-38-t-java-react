@@ -19,6 +19,7 @@ public class FamilyController {
 
     /**
      * Obtiene una lista de todas las familias.
+     *
      * @return ResponseEntity con la lista de FamilyDto si se encuentra, o ResponseEntity con NOT_FOUND si no hay familias.
      */
     @GetMapping
@@ -30,6 +31,7 @@ public class FamilyController {
 
     /**
      * Obtiene una familia por su ID.
+     *
      * @param familyId El ID de la familia a buscar.
      * @return ResponseEntity con la FamilyDto encontrada si existe, o ResponseEntity con NOT_FOUND si no se encuentra.
      */
@@ -42,6 +44,7 @@ public class FamilyController {
 
     /**
      * Crea una nueva familia.
+     *
      * @param familyDto La FamilyDto que se va a crear.
      * @return ResponseEntity con la FamilyDto creada y HttpStatus CREATED si tiene éxito, o ResponseEntity con CONFLICT si hay un error.
      */
@@ -59,6 +62,7 @@ public class FamilyController {
 
     /**
      * Actualiza una familia existente.
+     *
      * @param familyDto La FamilyDto que se va a actualizar.
      * @return ResponseEntity con la FamilyDto actualizada si tiene éxito, o ResponseEntity con NOT_FOUND si no se encuentra.
      */
@@ -71,6 +75,7 @@ public class FamilyController {
 
     /**
      * Elimina una familia por su ID.
+     *
      * @param familyId El ID de la familia a eliminar.
      * @return ResponseEntity con TRUE si la eliminación tiene éxito, o FALSE si no se encuentra la familia.
      */

@@ -18,7 +18,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+
 @ExtendWith(MockitoExtension.class)
 public class SupplierControllerTest {
 
@@ -83,18 +84,13 @@ public class SupplierControllerTest {
         ResponseEntity<List<SupplierDto>> responseEntity = supplierController.getSuppliers();
 
         // Verifica que el servicio fue llamado
-        Mockito.verify(supplierService).SupplierList();
+        verify(supplierService).SupplierList();
 
         // Realiza aserciones en la respuesta
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(supplierDtoList, responseEntity.getBody());
     }
-
-
-
-
-
 
     @Test
     public void testGetSupplier() {
@@ -108,7 +104,7 @@ public class SupplierControllerTest {
         ResponseEntity<SupplierDto> response = supplierController.getSupplier(supplierId);
 
         // Verifica que el servicio fue llamado
-        Mockito.verify(supplierService).SupplierId(supplierId);
+        verify(supplierService).SupplierId(supplierId);
 
         // Realiza aserciones en la respuesta
         assertNotNull(response);
@@ -116,6 +112,46 @@ public class SupplierControllerTest {
         assertEquals(supplierDto, response.getBody());
     }
 
+    @Test
+    public void testDeleteSupplier() throws Exception {
+        Long supplierId = 1L;
+        Optional<SupplierDto> currentSupplier = Optional.of(new SupplierDto()); // Crea un objeto SupplierDto para testing
 
+        when(supplierService.SupplierId(supplierId)).thenReturn(currentSupplier);
 
+        ResponseEntity<String> responseEntity = supplierController.delete(supplierId);
+
+        verify(supplierService, times(1)).SupplierId(supplierId);
+        verify(supplierService, times(1)).delete(supplierId);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals("Se eliminó correctamente", responseEntity.getBody());
+    }
+
+    @Test
+    public void testDeleteSupplierNotFound() throws Exception {
+        Long supplierId = 1L;
+
+        when(supplierService.SupplierId(supplierId)).thenReturn(Optional.empty());
+
+        ResponseEntity<String> responseEntity = supplierController.delete(supplierId);
+
+        verify(supplierService, times(1)).SupplierId(supplierId);
+        verify(supplierService, never()).delete(supplierId);
+
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+        assertEquals("El proveedor ingresado no existe", responseEntity.getBody());
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
