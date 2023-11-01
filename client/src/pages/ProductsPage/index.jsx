@@ -33,14 +33,23 @@ const ProductsPage = () => {
   //contexto (useProducts), obtiene la cantidad total de productos
   const totalProducts = productsLocal.length;
 
-  // Define la cantidad de productos que se desea mostrar por página
-  const itemsPerPage = 10;
 
-  // Calcula la cantidad total de páginas
-  const totalPages = Math.ceil(totalProducts / itemsPerPage);
 
-  //estado que almacena la página actual
+  //*rastrear la página actual - Pagination
   const [currentPage, setCurrentPage] = useState(1);
+  //*Agregar una función para manejar el cambio de página
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+  //*cantidad de productos que se desea mostrar por página
+  const itemsPerPage = 10;
+  //*Calcular el índice del primer y último producto en la página actual
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = currentPage * itemsPerPage;
+  //*Filtrar los productos para mostrar solo los de la página actual
+  const productsToShow = productsLocal.slice(startIndex, endIndex);
+  //*Calcular el total de páginas
+  const totalPages = Math.ceil(productsLocal.length / itemsPerPage);
 
   // Filtros y ordenación
   const [openFilter, setOpenFilter] = useState(false);
@@ -197,15 +206,13 @@ const ProductsPage = () => {
                         onClick={() => {
                           handleOrderFilter({ order: 'Menor cantidad' });
                         }}
-                        className={`${
-                          active
-                            ? 'bg-custom-button-hover text-custom-blue'
-                            : ''
-                        } ${
-                          selected.order === 'Menor cantidad'
+                        className={`${active
+                          ? 'bg-custom-button-hover text-custom-blue'
+                          : ''
+                          } ${selected.order === 'Menor cantidad'
                             ? 'text-custom-blue'
                             : 'text-custom-black'
-                        } group flex w-full justify-center items-center px-2 py-2 text-sm`}
+                          } group flex w-full justify-center items-center px-2 py-2 text-sm`}
                       >
                         Menor cantidad
                       </button>
@@ -217,15 +224,13 @@ const ProductsPage = () => {
                         onClick={() => {
                           handleOrderFilter({ order: 'Mayor cantidad' });
                         }}
-                        className={`${
-                          active
-                            ? 'bg-custom-button-hover text-custom-blue'
-                            : ''
-                        } ${
-                          selected.order === 'Mayor cantidad'
+                        className={`${active
+                          ? 'bg-custom-button-hover text-custom-blue'
+                          : ''
+                          } ${selected.order === 'Mayor cantidad'
                             ? 'text-custom-blue'
                             : 'text-custom-black'
-                        } group flex w-full justify-center items-center px-2 py-2 text-sm`}
+                          } group flex w-full justify-center items-center px-2 py-2 text-sm`}
                       >
                         Mayor cantidad
                       </button>
@@ -262,7 +267,7 @@ const ProductsPage = () => {
           </thead>
 
           <tbody>
-            {productsLocal.map((product) => (
+            {productsToShow.map((product) => (
               <tr
                 key={product.id}
                 className='border-b sm:border-b-4 border-custom-button-hover last:border-b-0'
@@ -309,9 +314,8 @@ const ProductsPage = () => {
                           <Menu.Item>
                             {(active) => (
                               <button
-                                className={`text-left px-4 py-2 ${
-                                  active ? 'hover:text-custom-blue' : ''
-                                }`}
+                                className={`text-left px-4 py-2 ${active ? 'hover:text-custom-blue' : ''
+                                  }`}
                               >
                                 Editar
                               </button>
@@ -320,9 +324,8 @@ const ProductsPage = () => {
                           <Menu.Item>
                             {(active) => (
                               <button
-                                className={`text-left px-4 py-2 ${
-                                  active ? 'hover:text-custom-blue' : ''
-                                }`}
+                                className={`text-left px-4 py-2 ${active ? 'hover:text-custom-blue' : ''
+                                  }`}
                               >
                                 Eliminar
                               </button>
@@ -339,7 +342,7 @@ const ProductsPage = () => {
         </table>
       </div>
 
-      {/* Pagination */}
+      {/* Paginación */}
       <footer className='flex items-center flex-wrap gap-3 justify-center sm:justify-end mt-7'>
         <span className='text-[#1A1A1A]'>{`Total ${totalProducts} Ítems`}</span>
         <nav>
@@ -347,7 +350,7 @@ const ProductsPage = () => {
             <li>
               <Button
                 className='w-8 h-8 sm:p-1 rounded-md bg-[#B4B4B4]'
-                onClick={() => setCurrentPage(currentPage - 1)}
+                onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
               >
                 <ChevronLeft className='text-[#626265]' />
@@ -355,28 +358,22 @@ const ProductsPage = () => {
             </li>
             {Array.from({ length: totalPages }).map((_, index) => {
               const page = index + 1;
-              // Mostrar solo un rango limitado de páginas (por ejemplo, 5)
-              if (
-                page === 1 ||
-                page === totalPages ||
-                (page >= currentPage - 2 && page <= currentPage + 2)
-              ) {
+              if (page === 1 || page === totalPages || (page >= currentPage - 2 && page <= currentPage + 2)) {
                 return (
                   <li key={page}>
                     <Button
-                      className={`w-8 h-8 sm:px-3 sm:py-1.5 rounded-md ${
-                        page === currentPage
+                      className={`w-8 h-8 sm:px-3 sm:py-1.5 rounded-md ${page === currentPage
                           ? 'bg-[#918AC1]'
                           : 'bg-transparent border border-[#918AC1]'
-                      } text-custom-black text-sm`}
-                      onClick={() => setCurrentPage(page)}
+                        } text-custom-black text-sm`}
+                      onClick={() => handlePageChange(page)}
                     >
                       {page}
                     </Button>
                   </li>
                 );
               } else if (page === currentPage - 3 || page === currentPage + 3) {
-                // Agregar puntos suspensivos
+                // Agregar "..." para páginas adicionales
                 return <li key={page}>...</li>;
               }
               return null;
@@ -384,7 +381,7 @@ const ProductsPage = () => {
             <li>
               <Button
                 className='w-8 h-8 sm:p-1 rounded-md'
-                onClick={() => setCurrentPage(currentPage + 1)}
+                onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
               >
                 <ChevronRight />
