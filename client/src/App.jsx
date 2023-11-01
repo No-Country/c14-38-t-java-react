@@ -6,16 +6,18 @@ import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 // import SignUpPageStep from './pages/SignUpPageStep';
 import ProductsPage from './pages/ProductsPage';
-import { AddProduct } from './pages/AddProduct';
-import { EditProduct } from './pages/EditProduct';
+import { AddProduct } from './pages/ProductsPage/AddProduct';
+import { EditProduct } from './pages/ProductsPage/EditProduct';
+import CategoriesPage from './pages/CategoriesPage';
+import { EditCategory } from './pages/EditCategory';
+import SuppliersPage from './pages/SuppliersPage';
 import UserProfilePage from './pages/UserProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 
-import axios from 'axios';
 import LayoutUser from './layout/LayoutUser';
-import CategoriesPage from './pages/CategoriesPage';
-import SuppliersPage from './pages/SuppliersPage';
-import { EditCategory } from './pages/EditCategory';
+
+import axios from 'axios';
+
 // Si no se especifica una dirección de backend en el archivo .env entonces
 // se utilizará localhost con el puerto 3001 de forma predeterminada.
 axios.defaults.baseURL =

@@ -9,7 +9,7 @@ import { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useProducts } from '../../hooks/useProducts';
 import { cn } from '../../utils/cn';
-import axios from 'axios';
+import { serviceDeleteProduct } from '../../services/products/products';
 
 //import Loading from '../../components/Loading';
 
@@ -22,7 +22,7 @@ const ProductsPage = () => {
 
   const handleDeleteProduct = async (id) => {
     try {
-      await axios.delete(`/api/product/${id}`);
+      await serviceDeleteProduct(id);
       setProducts(products.filter((product) => product.id !== id));
     } catch (err) {
       console.log(err);

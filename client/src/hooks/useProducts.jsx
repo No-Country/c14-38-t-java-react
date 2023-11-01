@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 import useAuthContext from './useAuthContext';
+import { serviceGetProducts } from '../services/products/products';
 
 const ProductContext = createContext();
 
@@ -11,8 +11,7 @@ export const ProductsProvider = ({ children }) => {
 
   const fetchProducts = () => {
     if (isAuth) {
-      axios
-        .get('/api/product/all')
+      serviceGetProducts()
         .then((response) => {
           setProducts(response.data);
         })

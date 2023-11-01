@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 import useAuthContext from './useAuthContext';
+import { serviceGetSuppliers } from '../services/suppliers/suppliers';
 
 const SupplierContext = createContext();
 
@@ -11,8 +11,7 @@ export const SuppliersProvider = ({ children }) => {
 
   useEffect(() => {
     if (isAuth) {
-      axios
-        .get('/api/supplier/all')
+      serviceGetSuppliers()
         .then((response) => {
           setSuppliers(response.data);
         })

@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import AddCategory from '../../components/Modals/AddCategory';
-import AddSupplier from '../../components/Modals/AddSupplier';
+import AddCategory from '../../../components/Modals/AddCategory';
+import AddSupplier from '../../../components/Modals/AddSupplier';
 import { Check } from 'react-feather';
 import { Link } from 'react-router-dom';
-import { useProducts } from '../../hooks/useProducts';
-import axios from 'axios';
+import { useProducts } from '../../../hooks/useProducts';
 import { useNavigate } from 'react-router-dom';
+import { serviceCreateProduct } from '../../../services/products/products';
 
 export const AddProduct = () => {
   const { setProducts } = useProducts();
@@ -38,7 +38,7 @@ export const AddProduct = () => {
   const handleAdd = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(`/api/product`, form);
+      const { data } = await serviceCreateProduct(form);
       setProducts((prevProducts) => [...prevProducts, data]);
       navigate('/products');
     } catch (err) {

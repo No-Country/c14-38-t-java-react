@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import { Search, Check, Plus } from 'react-feather';
+import { Search, Check } from 'react-feather';
 import { useFamilies } from '../../hooks/useFamilies';
-import axios from 'axios';
+import { serviceCreateCategory } from '../../services/categories/categories';
 
-const AddCategory = ({ isCategoryModal, setIsCategoryModal, setCategory }) => {
+const AddCategory = ({ setIsCategoryModal, setCategory }) => {
   const { families: categories, setFamilies: setCategories } = useFamilies();
 
   // const [selectCategory, isSelectCategory] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
 
   const [search, setSearch] = useState('');
-  const [inputCategory, setInputCategory] = useState('');
+  // const [inputCategory, setInputCategory] = useState('');
 
   const filteredCategories = categories.filter((category) =>
     category.name.toLowerCase().includes(search.toLowerCase()),
@@ -20,16 +20,16 @@ const AddCategory = ({ isCategoryModal, setIsCategoryModal, setCategory }) => {
     setSelectedCategory(category);
   };
 
-  const handleAddCategory = async () => {
-    try {
-      const { data: newCategory } = await axios.post(`/api/family/create`, {
-        name: inputCategory,
-      });
-      setCategories((prevCat) => [...prevCat, newCategory]);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const handleAddCategory = async () => {
+  //   try {
+  //     const { data: newCategory } = await serviceCreateCategory({
+  //       name: inputCategory,
+  //     });
+  //     setCategories((prevCat) => [...prevCat, newCategory]);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const handleAddClick = () => {
     setCategory(selectedCategory);
@@ -88,7 +88,7 @@ const AddCategory = ({ isCategoryModal, setIsCategoryModal, setCategory }) => {
               placeholder='Buscar categoría'
             />
           </div>
-          <input
+          {/* <input
             placeholder='+ Agrega una categoría nueva'
             type='text'
             className='sm:flex hidden justify-start items-center bg-gray-200  text-custom-black py-2.5 pl-3 pr-6 w-auto lg:w-96 lg:h-10 ml-14 mr-16 border border-solid border-custom-gray rounded'
@@ -98,7 +98,7 @@ const AddCategory = ({ isCategoryModal, setIsCategoryModal, setCategory }) => {
                 handleAddCategory();
               }
             }}
-          />
+          /> */}
           <div className='h-screen sm:h-36 sm:ml-14 sm:mr-16 overflow-auto'>
             <ul className='flex flex-col gap-0.5 bg-white'>
               {filteredCategories.map((item) => (

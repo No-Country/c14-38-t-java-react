@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 import useAuthContext from './useAuthContext';
+import { serviceGetCategories } from '../services/categories/categories';
 
 const FamilyContext = createContext();
 
@@ -11,8 +11,7 @@ export const FamiliesProvider = ({ children }) => {
 
   useEffect(() => {
     if (isAuth) {
-      axios
-        .get('/api/family')
+      serviceGetCategories()
         .then((response) => {
           setFamilies(response.data);
         })

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import AddCategory from '../../components/Modals/AddCategory';
-import AddSupplier from '../../components/Modals/AddSupplier';
+import AddCategory from '../../../components/Modals/AddCategory';
+import AddSupplier from '../../../components/Modals/AddSupplier';
 import { Check } from 'react-feather';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useProducts } from '../../hooks/useProducts';
-import axios from 'axios';
+import { useProducts } from '../../../hooks/useProducts';
+import { serviceEditProduct } from '../../../services/products/products';
 
 export const EditProduct = () => {
   const { id } = useParams();
@@ -55,8 +55,7 @@ export const EditProduct = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      // TODO: cambiar a /api/product/update (version final)
-      const { data: updatedProduct } = await axios.patch(`/api/product/${id}`, {
+      const { data: updatedProduct } = await serviceEditProduct({
         ...form,
         family: {
           id: form.family.id,

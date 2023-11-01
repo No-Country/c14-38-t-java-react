@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { Search, Check, Plus } from 'react-feather';
 import { useSuppliers } from '../../hooks/useSuppliers';
-import axios from 'axios';
+import { serviceCreateSupplier } from '../../services/suppliers/suppliers';
 
-const AddSupplier = ({ isSupplierModal, setIsSupplierModal, setSupplier }) => {
+const AddSupplier = ({ setIsSupplierModal, setSupplier }) => {
   const { suppliers, setSuppliers } = useSuppliers();
 
   // const [selectSupplier, isSelectSupplier] = useState(false);
   const [selectedSupplier, setSelectedSupplier] = useState('');
 
   const [search, setSearch] = useState('');
-  const [inputSupplier, setInputSupplier] = useState('');
+  // const [inputSupplier, setInputSupplier] = useState('');
 
   const filteredSuppliers = suppliers.filter((supplier) =>
     supplier.name.toLowerCase().includes(search.toLowerCase()),
@@ -20,16 +20,16 @@ const AddSupplier = ({ isSupplierModal, setIsSupplierModal, setSupplier }) => {
     setSelectedSupplier(supplier);
   };
 
-  const handleAddSupplier = async () => {
-    try {
-      const { data: newSupplier } = await axios.post(`/api/supplier/create`, {
-        name: inputSupplier,
-      });
-      setSuppliers((prevSuppliers) => [...prevSuppliers, newSupplier]);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const handleAddSupplier = async () => {
+  //   try {
+  //     const { data: newSupplier } = await serviceCreateSupplier({
+  //       name: inputSupplier,
+  //     });
+  //     setSuppliers((prevSuppliers) => [...prevSuppliers, newSupplier]);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const handleAddClick = () => {
     setSupplier(selectedSupplier);
@@ -87,13 +87,13 @@ const AddSupplier = ({ isSupplierModal, setIsSupplierModal, setSupplier }) => {
               className='block flex-1 border-0 bg-transparent py-2.5 pl-3 pr-6 text-custom-black placeholder:text-custom-black focus:ring-0 sm:text-sm sm:leading-6'
               placeholder='Buscar proveedores'
             />
-            {search.length > 0 && (
+            {/* {search.length > 0 && (
               <button onClick={handleAddSupplier} className='mr-3'>
                 <Plus className='w-5 h-5' />
               </button>
-            )}
+            )} */}
           </div>
-          <input
+          {/* <input
             placeholder='+ Agrega un proveedor nuevo'
             type='text'
             className='sm:flex hidden justify-start items-center bg-gray-200  text-custom-black py-2.5 pl-3 pr-6 w-auto lg:w-96 lg:h-10 ml-14 mr-16 border border-solid border-custom-gray rounded'
@@ -103,7 +103,7 @@ const AddSupplier = ({ isSupplierModal, setIsSupplierModal, setSupplier }) => {
                 handleAddSupplier();
               }
             }}
-          />
+          /> */}
           <div className='h-screen sm:h-52 sm:ml-14 sm:mr-16 overflow-auto'>
             <ul className='flex flex-col gap-0.5 bg-white'>
               {filteredSuppliers.map((item) => (

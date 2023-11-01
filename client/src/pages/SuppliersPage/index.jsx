@@ -57,12 +57,7 @@ const SuppliersPage = () => {
                 key={item.id}
                 className='border-b sm:border-b-4 border-custom-button-hover last:border-b-0'
               >
-                <td className='px-5 py-1 flex items-center min-w-[168px]'>
-                  <img
-                    width={50}
-                    className='inline-block mr-2'
-                    src='/images/media.png'
-                  />
+                <td className='px-5 py-3 flex items-center min-w-[168px]'>
                   {item.name}
                 </td>
                 <td className='px-5 py-1'>1</td>
