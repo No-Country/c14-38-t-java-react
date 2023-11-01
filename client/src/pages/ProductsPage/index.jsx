@@ -42,7 +42,7 @@ const ProductsPage = () => {
     setCurrentPage(page);
   };
   //*cantidad de productos que se desea mostrar por página
-  const itemsPerPage = 10;
+  const itemsPerPage = 12;
   //*Calcular el índice del primer y último producto en la página actual
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = currentPage * itemsPerPage;
@@ -363,8 +363,8 @@ const ProductsPage = () => {
                   <li key={page}>
                     <Button
                       className={`w-8 h-8 sm:px-3 sm:py-1.5 rounded-md ${page === currentPage
-                          ? 'bg-[#918AC1]'
-                          : 'bg-transparent border border-[#918AC1]'
+                        ? 'bg-[#918AC1]'
+                        : 'bg-transparent border border-[#918AC1]'
                         } text-custom-black text-sm`}
                       onClick={() => handlePageChange(page)}
                     >
