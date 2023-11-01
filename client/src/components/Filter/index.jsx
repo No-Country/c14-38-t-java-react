@@ -2,17 +2,10 @@ import { useState } from 'react';
 import categoriesData from '../../data/categoriesData';
 import suppliersData from '../../data/suppliersData';
 import { useProducts } from '../../hooks/useProducts';
-import { ChevronDown, ChevronUp, X } from 'react-feather';
+import { ArrowLeft, ChevronDown, ChevronUp, X } from 'react-feather';
+import orderfilter from '../../utils/orderfilter';
 
-function FilterCategory({
-  setOpenFilter,
-  selectedCategory,
-  setSelectedCategory,
-  selectedSupplier,
-  setSelectedSupplier,
-  cancelButtonRef,
-  setProductsLocal,
-}) {
+function Filter({ setOpenFilter, selected, setSelected, setProductsLocal }) {
   const { products } = useProducts();
 
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
@@ -28,45 +21,35 @@ function FilterCategory({
     setIsSupplierOpen(!isSupplierOpen);
   };
 
-  const handleCategory = (filter) => {
-    setSelectedCategory(filter);
-    setSelectedSupplier('');
-    const filterCategory = products.filter((product) => {
-      return filter === '' ? true : product.family.name == filter;
-    });
-    setProductsLocal(filterCategory);
-    setOpenFilter(false);
-  };
-  const handleSupplier = (filter) => {
-    setSelectedSupplier(filter);
-    setSelectedCategory('');
-    const filterCategory = products.filter((product) => {
-      return filter === '' ? true : product.supplier.name == filter;
-    });
-    setProductsLocal(filterCategory);
+  const handleOrderFilter = (opc) => {
+    setSelected({ ...selected, ...opc });
+    orderfilter(products, setProductsLocal, { ...selected, ...opc });
     setOpenFilter(false);
   };
 
-  const clearFilters = () => {
+  const clear = () => {
+    setSelected({ category: '', supplier: '', order: '' });
     setProductsLocal([...products]);
-    setSelectedSupplier('');
-    setSelectedCategory('');
     setOpenFilter(false);
   };
 
   return (
-    <div className='flex items-start bg-custom-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4'>
-      <div className='w-full m-3'>
-        <div className='flex justify-between'>
-          <h3 className='flex text-xl font-medium items-start text-custom-black mb-5'>
-            Filtrar por categorías
-          </h3>
+    <div className='flex items-start bg-custom-bg-light px-4 pb-4 pt-5 sm:p-6 sm:pb-4'>
+      <div className='w-full m-7'>
+        <div className='flex mb-5 sm:justify-between justify-normal items-center'>
           <button
-            className='absolute top-4 right-4'
+            className='hidden sm:block absolute top-4 right-4'
             onClick={() => setOpenFilter(false)}
           >
             <X />
           </button>
+          <h3 className='text-xl font-medium text-custom-black'>Filtrar por</h3>
+          <div
+            className='sm:hidden absolute left-2'
+            onClick={() => setOpenFilter(false)}
+          >
+            <ArrowLeft />
+          </div>
         </div>
         <hr />
         <div>
@@ -74,7 +57,7 @@ function FilterCategory({
             onClick={toggleCatExpansion}
             aria-expanded={isCategoryOpen}
             aria-controls='expandable-content-category'
-            className=' py-2 rounded-md flex justify-between cursor-pointer'
+            className=' py-4 rounded-md flex justify-between cursor-pointer'
           >
             <span>Categoría</span>
             {isCategoryOpen ? <ChevronUp /> : <ChevronDown />}
@@ -89,10 +72,10 @@ function FilterCategory({
               <li
                 key={categ.id}
                 className={`p-2 cursor-pointer ${
-                  selectedCategory === categ.name ? 'text-custom-blue' : ''
+                  selected.category === categ.name ? 'text-custom-blue' : ''
                 }`}
                 onClick={() => {
-                  handleCategory(categ.name);
+                  handleOrderFilter({ category: categ.name });
                 }}
               >
                 {categ.name}
@@ -106,7 +89,7 @@ function FilterCategory({
             onClick={toggleSupExpansion}
             aria-expanded={isSupplierOpen}
             aria-controls='expandable-content-supplier'
-            className=' py-2 rounded-md flex justify-between cursor-pointer'
+            className=' py-4 rounded-md flex justify-between cursor-pointer'
           >
             <span>Proveedor</span>
             {isSupplierOpen ? <ChevronUp /> : <ChevronDown />}
@@ -121,10 +104,10 @@ function FilterCategory({
               <li
                 key={supplier.id}
                 className={`p-2 cursor-pointer ${
-                  selectedSupplier === supplier.name ? 'text-custom-blue' : ''
+                  selected.supplier === supplier.name ? 'text-custom-blue' : ''
                 }`}
                 onClick={() => {
-                  handleSupplier(supplier.name);
+                  handleOrderFilter({ supplier: supplier.name });
                 }}
               >
                 {supplier.name}
@@ -133,16 +116,15 @@ function FilterCategory({
           </ul>
         </div>
         <hr />
-        <div className='gap-7 pt-3 sm:flex sm:flex-row justify-end '>
+        <div className='gap-7 pt-5 flex sm:flex-row justify-end'>
           <button
             onClick={() => setOpenFilter(false)}
-            ref={cancelButtonRef}
-            className='mt-3 bg-none rounded-full py-2.5 px-4 font-normal border border-custom-blue text-custom-blue'
+            className='hidden sm:block mt-3 bg-none rounded-full py-2.5 px-4 font-normal border border-custom-blue text-custom-blue'
           >
             Cancelar
           </button>
           <button
-            onClick={clearFilters}
+            onClick={clear}
             className='mt-3 bg-none rounded-full py-2.5 px-4 font-normal border border-custom-blue text-custom-blue'
           >
             Limpiar filtros
@@ -153,4 +135,4 @@ function FilterCategory({
   );
 }
 
-export default FilterCategory;
+export default Filter;

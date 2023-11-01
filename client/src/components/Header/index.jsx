@@ -29,7 +29,7 @@ function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <>
-      <header className='w-full'>
+      <header className='w-full border-b-2 border-custom-medium-blue sm:border-b-0'>
         <nav
           className='mx-auto flex w-full items-center justify-between flex-row-reverse md:flex-row p-6 lg:px-8'
           aria-label='Global'

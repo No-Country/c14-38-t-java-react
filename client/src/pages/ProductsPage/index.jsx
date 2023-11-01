@@ -8,7 +8,9 @@ import { Menu, Transition, Dialog } from '@headlessui/react';
 import { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useProducts } from '../../hooks/useProducts';
-import FilterCategory from '../../components/Modals/FilterCategory';
+import Filter from '../../components/Filter';
+import Order from '../../components/Order';
+import orderfilter from '../../utils/orderfilter';
 
 //import Loading from '../../components/Loading';
 
@@ -16,8 +18,11 @@ const ProductsPage = () => {
   const { products } = useProducts();
   const [search, setSearch] = useState('');
 
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedSupplier, setSelectedSupplier] = useState('');
+  const [selected, setSelected] = useState({
+    category: '',
+    supplier: '',
+    order: '',
+  });
 
   const [productsLocal, setProductsLocal] = useState([]);
 
@@ -25,6 +30,13 @@ const ProductsPage = () => {
   const clearSearch = () => setSearch('');
 
   const [openFilter, setOpenFilter] = useState(false);
+  const [openOrder, setOpenOrder] = useState(false);
+
+  const handleOrderFilter = (opc) => {
+    setSelected({ ...selected, ...opc });
+    orderfilter(products, setProductsLocal, { ...selected, ...opc });
+    setOpenFilter(false);
+  };
 
   useEffect(() => {
     setProductsLocal([...products]);
@@ -41,7 +53,7 @@ const ProductsPage = () => {
 
       <p className='text-2xl font-[500] text-custom-icon'>Productos</p>
 
-      <div className='flex justify-between gap-2 my-5'>
+      <div className='flex justify-between gap-2 mt-5 mb-2'>
         <SearchBar
           placeholder='Buscar ítem'
           className='w-full sm:w-[424px]'
@@ -65,43 +77,153 @@ const ProductsPage = () => {
           )}
         </SearchBar>
         <Link to='/addproduct'>
-          <Button className='text-xs min-w-[100px]'>Agregar Ítem</Button>
+          <Button className='text-xs min-w-[100px] h-full'>Agregar Ítem</Button>
         </Link>
       </div>
-      <div className='flex flex-auto mb-3 text-custom-dark-gray'>
-        {selectedCategory ? (
-          <div className='bg-custom-gray rounded-full px-2 py-1 text-xs flex items-center'>
-            <span>{selectedCategory} </span>{' '}
-            <div
-              className='cursor-pointer'
-              onClick={() => {
-                setSelectedCategory('');
-                setProductsLocal([...products]);
-              }}
-            >
-              <X size={18} />
-            </div>
-          </div>
-        ) : (
-          ''
-        )}
-        {selectedSupplier ? (
-          <div className='bg-custom-gray rounded-full px-2 py-1 text-xs flex items-center'>
-            <span>{selectedSupplier} </span>{' '}
-            <div
-              className='cursor-pointer'
-              onClick={() => {
-                setSelectedSupplier('');
-                setProductsLocal([...products]);
-              }}
-            >
-              <X size={18} />
-            </div>
-          </div>
-        ) : (
-          ''
-        )}
+
+      <div className='sm:hidden flex mb-1 items-center'>
+        <div
+          onClick={() => setOpenOrder(true)}
+          className='bg-custom-white w-full text-center p-4 cursor-pointer'
+        >
+          Ordenar
+        </div>
+        <div
+          onClick={() => setOpenFilter(true)}
+          className='ml-1 bg-custom-white w-full text-center p-4 cursor-pointer'
+        >
+          Filtrar
+        </div>
       </div>
+
+      <div className='flex mb-2'>
+        <div className='flex flex-auto items-center gap-1 text-custom-dark-gray'>
+          {selected.category ? (
+            <div className='bg-custom-gray rounded-full px-2 h-7 text-xs flex items-center'>
+              <span>{selected.category} </span>{' '}
+              <div
+                className='cursor-pointer'
+                onClick={() => {
+                  setSelected({ ...selected, category: '' });
+                  orderfilter(products, setProductsLocal, {
+                    ...selected,
+                    category: '',
+                  });
+                }}
+              >
+                <X size={18} />
+              </div>
+            </div>
+          ) : (
+            ''
+          )}
+          {selected.supplier ? (
+            <div className='bg-custom-gray rounded-full px-2 h-7 text-xs flex items-center'>
+              <span>{selected.supplier} </span>{' '}
+              <div
+                className='cursor-pointer'
+                onClick={() => {
+                  setSelected({ ...selected, supplier: '' });
+                  orderfilter(products, setProductsLocal, {
+                    ...selected,
+                    supplier: '',
+                  });
+                }}
+              >
+                <X size={18} />
+              </div>
+            </div>
+          ) : (
+            ''
+          )}
+          {selected.order ? (
+            <div className='bg-custom-gray rounded-full px-2 h-7 text-xs flex items-center'>
+              <span>{selected.order} </span>{' '}
+              <div
+                className='cursor-pointer'
+                onClick={() => {
+                  setSelected({ ...selected, order: '' });
+                  orderfilter(products, setProductsLocal, {
+                    ...selected,
+                    order: '',
+                  });
+                }}
+              >
+                <X size={18} />
+              </div>
+            </div>
+          ) : (
+            ''
+          )}
+        </div>
+        <div className='hidden my-2 sm:flex'>
+          <Menu as='div' className='relative'>
+            <span className='mr-2 text-custom-black font-bold'>
+              Ordenar stock por
+            </span>
+            <Menu.Button>
+              <div className='flex font-light text-custom-black  hover:text-custom-blue'>
+                Elige una opción
+              </div>
+            </Menu.Button>
+            <Transition
+              as={Fragment}
+              enter='transition ease-out duration-100'
+              enterFrom='transform opacity-0 scale-95'
+              enterTo='transform opacity-100 scale-100'
+              leave='transition ease-in duration-75'
+              leaveFrom='transform opacity-100 scale-100'
+              leaveTo='transform opacity-0 scale-95'
+            >
+              <Menu.Items className='text-custom-black absolute right-0 top-5 mt-2 w-32 origin-top-right divide-y bg-custom-panel shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                <div>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={() => {
+                          handleOrderFilter({ order: 'Menor cantidad' });
+                        }}
+                        className={`${
+                          active
+                            ? 'bg-custom-button-hover text-custom-blue'
+                            : ''
+                        } ${
+                          selected.order === 'Menor cantidad'
+                            ? 'text-custom-blue'
+                            : 'text-custom-black'
+                        } group flex w-full justify-center items-center px-2 py-2 text-sm`}
+                      >
+                        Menor cantidad
+                      </button>
+                    )}
+                  </Menu.Item>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={() => {
+                          handleOrderFilter({ order: 'Mayor cantidad' });
+                        }}
+                        className={`${
+                          active
+                            ? 'bg-custom-button-hover text-custom-blue'
+                            : ''
+                        } ${
+                          selected.order === 'Mayor cantidad'
+                            ? 'text-custom-blue'
+                            : 'text-custom-black'
+                        } group flex w-full justify-center items-center px-2 py-2 text-sm`}
+                      >
+                        Mayor cantidad
+                      </button>
+                    )}
+                  </Menu.Item>
+                </div>
+              </Menu.Items>
+            </Transition>
+          </Menu>
+        </div>
+      </div>
+
       <div className='border sm:border-4 rounded-xl border-custom-button-hover'>
         <table className='w-full text-[#1A1A1A]'>
           <thead>
@@ -239,7 +361,7 @@ const ProductsPage = () => {
         </nav>
       </footer>
 
-      <Transition.Root show={openFilter} as={Fragment}>
+      <Transition.Root show={openFilter || openOrder} as={Fragment}>
         <Dialog as='div' className='relative z-10' onClose={setOpenFilter}>
           <Transition.Child
             as={Fragment}
@@ -264,15 +386,23 @@ const ProductsPage = () => {
                 leaveFrom='opacity-100 translate-y-0 sm:scale-100'
                 leaveTo='opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95'
               >
-                <Dialog.Panel className='relative h-screen sm:h-auto sm:min-h-full w-full transform overflow-hidden sm:rounded-lg bg-white text-left shadow-xl transition-all sm:w-full sm:max-w-lg'>
-                  <FilterCategory
-                    setOpenFilter={setOpenFilter}
-                    setProductsLocal={setProductsLocal}
-                    selectedCategory={selectedCategory}
-                    setSelectedCategory={setSelectedCategory}
-                    selectedSupplier={selectedSupplier}
-                    setSelectedSupplier={setSelectedSupplier}
-                  />
+                <Dialog.Panel className='relative h-screen sm:h-auto sm:min-h-full w-full transform overflow-hidden sm:rounded-lg bg-custom-bg-light text-left shadow-xl transition-all sm:w-full sm:max-w-lg'>
+                  {openFilter ? (
+                    <Filter
+                      setOpenFilter={setOpenFilter}
+                      setProductsLocal={setProductsLocal}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  ) : null}
+                  {openOrder ? (
+                    <Order
+                      setOpenOrder={setOpenOrder}
+                      selected={selected}
+                      setSelected={setSelected}
+                      setProductsLocal={setProductsLocal}
+                    />
+                  ) : null}
                 </Dialog.Panel>
               </Transition.Child>
             </div>
