@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import c1438tjavareact.Inventario.model.persistence.entity.User;
 
+/**
+ * Repositorio que gestiona las operaciones de acceso a la base de datos para la entidad User.
+ */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 

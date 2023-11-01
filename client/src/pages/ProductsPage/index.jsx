@@ -1,14 +1,23 @@
-import productsData from '../../data/productsData';
+// import productsData from '../../data/productsData';
 import { SearchBar } from '../../components/SearchBar';
 import { EditIcon, FilterIcon, MoreOptionsIcon } from '../../components/Icons';
 import { Button } from '../../components/ui/Button';
-import { ChevronLeft } from 'react-feather';
+import { ChevronLeft, X } from 'react-feather';
 import { ChevronRight } from 'react-feather';
 import { Menu, Transition } from '@headlessui/react';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { useProducts } from '../../hooks/useProducts';
+
 //import Loading from '../../components/Loading';
 
 const ProductsPage = () => {
+  const { products } = useProducts();
+  const [search, setSearch] = useState('');
+
+  const handleSearchChange = (e) => setSearch(e.target.value);
+  const clearSearch = () => setSearch('');
+
   return (
     <>
       <div className='hidden sm:flex flex-row justify-between text-custom-black'>
@@ -21,13 +30,28 @@ const ProductsPage = () => {
       <p className='text-2xl font-[500] text-custom-icon'>Productos</p>
 
       <div className='flex justify-between gap-2 my-5'>
-        <SearchBar placeholder='Buscar ítem' className='w-full sm:w-[424px]'>
-          <button className='hidden sm:flex p-2 hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'>
-            <FilterIcon />
-          </button>
+        <SearchBar
+          placeholder='Buscar ítem'
+          className='w-full sm:w-[424px]'
+          value={search}
+          onChange={handleSearchChange}
+        >
+          {search.length > 0 ? (
+            <button
+              className='hidden sm:flex p-2 items-center hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'
+              onClick={clearSearch}
+            >
+              <X strokeWidth={3} />
+            </button>
+          ) : (
+            <button className='hidden sm:flex p-2 items-center hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'>
+              <FilterIcon />
+            </button>
+          )}
         </SearchBar>
-
-        <Button className='text-xs min-w-[100px]'>Agregar Ítem</Button>
+        <Link to='/addproduct'>
+          <Button className='text-xs min-w-[100px]'>Agregar Ítem</Button>
+        </Link>
       </div>
 
       <div className='border sm:border-4 rounded-xl border-custom-button-hover'>
@@ -37,12 +61,12 @@ const ProductsPage = () => {
               <th className='bg-custom-button-hover min-w-[168px] rounded-tl-lg sm:rounded-tl-md px-5 py-3'>
                 Ítem
               </th>
-              <th className='bg-custom-button-hover hidden md:table-cell px-5 py-3'>
+              {/* <th className='bg-custom-button-hover hidden md:table-cell px-5 py-3'>
                 Código
-              </th>
-              <th className='bg-custom-button-hover hidden md:table-cell px-5 py-3'>
+              </th> */}
+              {/* <th className='bg-custom-button-hover hidden md:table-cell px-5 py-3'>
                 Categoría
-              </th>
+              </th> */}
               <th className='bg-custom-button-hover px-5 py-3'>Stock</th>
               <th className='bg-custom-button-hover rounded-tr-lg sm:rounded-tr-md px-5 py-3 text-center'>
                 Acción
@@ -51,7 +75,7 @@ const ProductsPage = () => {
           </thead>
 
           <tbody>
-            {productsData.map((product) => (
+            {products.map((product) => (
               <tr
                 key={product.id}
                 className='border-b sm:border-b-4 border-custom-button-hover last:border-b-0'
@@ -64,12 +88,12 @@ const ProductsPage = () => {
                   />
                   {product.name}
                 </td>
-                <td className='hidden md:table-cell px-5 py-1'>
+                {/* <td className='hidden md:table-cell px-5 py-1'>
                   {product.code}
-                </td>
-                <td className='hidden md:table-cell px-5 py-1'>
+                </td> */}
+                {/* <td className='hidden md:table-cell px-5 py-1'>
                   {product.family}
-                </td>
+                </td> */}
                 <td className='px-5 py-1'>{product.stock}</td>
                 <td className='px-5 py-1'>
                   <div className='flex items-center justify-center'>
@@ -127,7 +151,7 @@ const ProductsPage = () => {
 
       {/* Pagination */}
       <footer className='flex items-center flex-wrap gap-3 justify-center sm:justify-end mt-7'>
-        <span className='text-[#1A1A1A]'>Total 38 Ítems</span>
+        <span className='text-[#1A1A1A]'>{`Total ${products.length} Ítems`}</span>
         <nav>
           <ul className='flex items-center gap-3'>
             <li>

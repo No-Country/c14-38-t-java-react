@@ -10,6 +10,9 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+/**
+ * Entidad que representa el stock en el sistema.
+ */
 @Entity 
 @Table(name="stocks")
 @Data
