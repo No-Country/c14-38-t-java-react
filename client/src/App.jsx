@@ -15,6 +15,7 @@ import axios from 'axios';
 import LayoutUser from './layout/LayoutUser';
 import CategoriesPage from './pages/CategoriesPage';
 import SuppliersPage from './pages/SuppliersPage';
+import { EditCategory } from './pages/EditCategory';
 // Si no se especifica una dirección de backend en el archivo .env entonces
 // se utilizará localhost con el puerto 3001 de forma predeterminada.
 axios.defaults.baseURL =
@@ -39,6 +40,7 @@ function App() {
           <Route path='/products/edit/:id' element={<EditProduct />} />
           <Route path='/addproduct' element={<AddProduct />} />
           <Route path='/categories' element={<CategoriesPage />} />
+          <Route path='/categories/edit/:id' element={<EditCategory />} />
           <Route path='/suppliers' element={<SuppliersPage />} />
           <Route path='/profile' element={<UserProfilePage />} />
           <Route path='*' element={<NotFoundPage />} />
