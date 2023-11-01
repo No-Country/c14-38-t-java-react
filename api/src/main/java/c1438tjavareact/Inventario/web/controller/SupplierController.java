@@ -43,8 +43,8 @@ public class SupplierController {
      * @return ResponseEntity con el proveedor actualizado o NOT_FOUND si no se encuentra.
      */
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<SupplierDto> update(@PathVariable Long id, @RequestBody SupplierDto supplierDto){
+    @PatchMapping("/update")
+    public ResponseEntity<SupplierDto> update(@RequestBody SupplierDto supplierDto){
         return supplierService.update(supplierDto).map(t-> new ResponseEntity<>(t, HttpStatus.ACCEPTED))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }

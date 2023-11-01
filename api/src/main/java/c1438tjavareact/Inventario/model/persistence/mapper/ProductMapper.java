@@ -32,8 +32,8 @@ public interface ProductMapper {
             @Mapping(source = "stock", target = "stock")
     })
 
-    Product toProduct(ProductDto productDto);
-
+    ProductDto toProductDTO(Product product);
+  
     /**
      * Realiza el mapeo de una lista de entidades Product a una lista de sus respectivos DTOs.
      * @param products La lista de entidades Product a ser mapeada.
@@ -47,7 +47,7 @@ public interface ProductMapper {
      * @return La entidad Product correspondiente al DTO.
      */
     @InheritInverseConfiguration
-    ProductDto toProductDTO(Product product);
+    Product toProduct(ProductDto productDto);
 
     /**
      * Realiza el mapeo de una entidad Family a su correspondiente DTO.
