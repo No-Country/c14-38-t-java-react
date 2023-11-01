@@ -8,6 +8,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
+/**
+ * Entidad que representa un proveedor en el sistema.
+ */
 
 @Entity
 @Table(name="suppliers")

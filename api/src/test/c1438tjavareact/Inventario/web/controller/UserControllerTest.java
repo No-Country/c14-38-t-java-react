@@ -32,9 +32,8 @@ public class UserControllerTest {
     @Test
     public void testEditUser() {
         Long userId = 1L;
-        User userUpdate = new User(); // Create a User object for testing
-        User currentUser = new User(); // Create a User object for testing
-
+        User userUpdate = new User(); // Crea un objeto de usuario para testing
+        User currentUser = new User();
         when(userService.searchById(userId)).thenReturn(currentUser);
         when(userService.update(userId, userUpdate)).thenReturn(userUpdate);
 

@@ -26,6 +26,15 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtServiceImpl jwtServiceImpl;
 
+    /**
+     * Filtra las solicitudes HTTP para autenticar con token JWT.
+     * @param request     El objeto HttpServletRequest.
+     * @param response    El objeto HttpServletResponse.
+     * @param filterChain El objeto FilterChain para continuar con la cadena de filtros.
+     * @throws ServletException Si ocurre una excepción relacionada con Servlet.
+     * @throws IOException      Si ocurre un error de entrada/salida.
+     */
+
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, 
                                     @NonNull HttpServletResponse response, 

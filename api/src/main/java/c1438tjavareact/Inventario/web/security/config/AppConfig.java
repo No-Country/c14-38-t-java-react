@@ -19,13 +19,21 @@ import lombok.RequiredArgsConstructor;
 public class AppConfig {
 
     private final UserRepository userRepo;
-    
+
+    /**
+     * Crea un servicio de detalles de usuario personalizado que busca usuarios por correo electrónico.
+     * @return Un servicio de detalles de usuario personalizado.
+     */
     @Bean
     public UserDetailsService userDetailsService(){
         return username -> userRepo.findUserByEmail(username)
             .orElseThrow(()->new UsernameNotFoundException("El usuario no existe"));
     }
 
+    /**
+     * Crea un proveedor de autenticación que utiliza el servicio de detalles de usuario y un codificador de contraseñas.
+     * @return Un proveedor de autenticación personalizado.
+     */
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
@@ -33,12 +41,22 @@ public class AppConfig {
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }
+    /**
+     * Crea un codificador de contraseñas BCrypt.
+     * @return Un codificador de contraseñas BCrypt.
+     */
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Obtiene el administrador de autenticación para la configuración de seguridad.
+     * @param authConfig La configuración de autenticación.
+     * @return El administrador de autenticación.
+     * @throws Exception Si hay un error al obtener el administrador de autenticación.
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception{
         return authConfig.getAuthenticationManager();
