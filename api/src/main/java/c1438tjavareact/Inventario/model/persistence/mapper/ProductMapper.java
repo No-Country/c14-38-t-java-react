@@ -24,10 +24,10 @@ public interface ProductMapper {
             @Mapping(source = "stock", target = "stock")
     })
 
-    Product toProduct(ProductDto productDto);
+    ProductDto toProductDTO(Product product);
     List<ProductDto> toProductsDTO(List<Product> products);
     @InheritInverseConfiguration
-    ProductDto toProductDTO(Product product);
+    Product toProduct(ProductDto productDto);
 
     FamilyDto toFamilyDto(Family family);
     Family toFamily(FamilyDto familyDto);
