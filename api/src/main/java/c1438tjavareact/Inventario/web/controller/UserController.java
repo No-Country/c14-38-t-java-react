@@ -42,22 +42,26 @@ public class UserController {
      */
 
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable Long id){
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
         User currentUser = userService.searchById(id);
-        if(currentUser!=null){
+        if (currentUser != null) {
             userService.delete(id);
-            return "El usuario fue eliminado";
+            return ResponseEntity.ok("El usuario fue eliminado");
         }
-        return "El usuario ingresado no existe";
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /**
      * Obtiene la lista de todos los usuarios.
-     * @return Una lista de todos los usuarios.
+     * @return Una respuesta con la lista de todos los usuarios si se encuentra, o NOT_FOUND si la lista está vacía.
      */
     @GetMapping("/all")
-    public List<User> searchAll(){
-        return userService.searchAll();
+    public ResponseEntity<List<User>> searchAll(){
+        List<User> allUsers = userService.searchAll();
+        if (allUsers!= null){
+        return ResponseEntity.ok(allUsers);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     /**
