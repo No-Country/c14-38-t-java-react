@@ -2,14 +2,15 @@ import { useEffect, useState } from 'react';
 import AddCategory from '../../components/Modals/AddCategory';
 import AddSupplier from '../../components/Modals/AddSupplier';
 import { Check } from 'react-feather';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useProducts } from '../../hooks/useProducts';
 import axios from 'axios';
 
 export const EditProduct = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  const { products, isLoading } = useProducts();
+  const { products, setProducts, isLoading } = useProducts();
   const product = products.find((product) => product.id == id);
 
   const [isCategoryModal, setIsCategoryModal] = useState(false);
@@ -21,7 +22,7 @@ export const EditProduct = () => {
     description: '',
     family: { id: '', name: '' },
     supplier: { id: '', name: '' },
-    // stock: '',
+    stock: '',
     price: '',
   });
 
@@ -33,7 +34,7 @@ export const EditProduct = () => {
         description: product.description,
         family: product.family,
         supplier: product.supplier,
-        // stock: product.stock ?? '',
+        stock: product.stock ?? '',
         price: product.price,
       });
     }
@@ -55,7 +56,7 @@ export const EditProduct = () => {
     e.preventDefault();
     try {
       // TODO: cambiar a /api/product/update (version final)
-      console.log({
+      const { data: updatedProduct } = await axios.patch(`/api/product/${id}`, {
         ...form,
         family: {
           id: form.family.id,
@@ -65,15 +66,15 @@ export const EditProduct = () => {
         },
       });
 
-      await axios.patch(`/api/product/${id}`, {
-        ...form,
-        family: {
-          id: form.family.id,
-        },
-        supplier: {
-          id: form.supplier.id,
-        },
+      const updatedProducts = products.map((product) => {
+        if (product.id === updatedProduct.id) {
+          return updatedProduct;
+        }
+        return product;
       });
+
+      setProducts(updatedProducts);
+      navigate('/products');
     } catch (err) {
       console.log(err);
     }
