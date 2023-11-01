@@ -2,10 +2,10 @@ import {Fragment} from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { AlertCircle } from 'react-feather'
 
-function DeleteItem({showModal, setShowModal}) {
+function DeleteItem({alertDelete, setAlertDelete, setRemovedmsg}) {
   return (
-    <Transition.Root show={showModal} as={Fragment}>
-        <Dialog as='div' className='relative z-10' initialFocus={setShowModal} onClose={setShowModal}>
+    <Transition.Root show={alertDelete} as={Fragment}>
+        <Dialog as='div' className='relative z-10' initialFocus={setAlertDelete} onClose={setAlertDelete}>
             <Transition.Child as={Fragment} enter='ease-out duration-300' enterFrom='opacity-0' enterTo='opacity-100' leave='ease-in duration-200' leaveFrom='opacity-100' leaveTo='opacity-0'>
                 <div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity'></div>
             </Transition.Child>
@@ -34,8 +34,8 @@ function DeleteItem({showModal, setShowModal}) {
                                 </div>
                             </div>
                             <div className='mx-[1.688rem] mb-8 px-8 py-3 flex flex-row-reverse gap-[1.875rem] '>
-                                <button className='flex items-center justify-center w-24 h-10 py-2.5 text-custom-white bg-blue-gradient text-sm border border-custom-blue rounded-3xl'>Aceptar</button>
-                                <button className='flex items-center justify-center w-24 h-10 py-2.5 text-custom-blue border border-custom-blue rounded-3xl text-sm' onClick={()=> setShowModal(false)}>Cancelar</button>
+                                <button className='flex items-center justify-center w-24 h-10 py-2.5 text-custom-white bg-blue-gradient text-sm border border-custom-blue rounded-3xl' onClick={() => {setAlertDelete(false); setRemovedmsg(true)}}>Aceptar</button>
+                                <button className='flex items-center justify-center w-24 h-10 py-2.5 text-custom-blue border border-custom-blue rounded-3xl text-sm' onClick={()=> setAlertDelete(false)}>Cancelar</button>
                             </div>
                         </Dialog.Panel>
                     </Transition.Child>

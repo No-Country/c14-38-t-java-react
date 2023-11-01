@@ -5,6 +5,8 @@ import { ChevronLeft } from 'react-feather';
 import { ChevronRight } from 'react-feather';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment, useEffect, useState } from 'react';
+import DeleteItem from '../../components/Modals/DeleteItem';
+import RemovedMessage from '../../components/RemovedMessage';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 //import Loading from '../../components/Loading';
@@ -12,6 +14,9 @@ import { Link } from 'react-router-dom';
 const CategoriesPage = () => {
   const [categories, setCategories] = useState([]);
   const [searching, setSearching] = useState('');
+
+  const [alertDelete, setAlertDelete] = useState(false);
+  const [removedmsg, setRemovedmsg] = useState(false);
 
   useEffect(() => {
     axios
@@ -27,6 +32,10 @@ const CategoriesPage = () => {
   const categoryFound = categories.filter((category) => 
     category.name.toLowerCase().includes((searching.toLowerCase()))
   );
+
+  setTimeout(() => {
+    setRemovedmsg(false);
+  }, 2500)
 
   return (
     <>
@@ -128,6 +137,7 @@ const CategoriesPage = () => {
                                   className={`text-left px-4 py-2 ${
                                     active ? 'hover:text-custom-blue' : ''
                                   }`}
+                                  onClick={() => setAlertDelete(true)}
                                 >
                                   Eliminar
                                 </button>
@@ -140,8 +150,8 @@ const CategoriesPage = () => {
                   </td>
                 </tr>
               ))
-            ) : (
-              <tr className='w-full'>
+              ) : (
+                <tr className='w-full'>
                 <td colSpan='4' className=' text-center p-5'>
                   No se encontraron categorias relacionadas
                 </td>
@@ -150,8 +160,10 @@ const CategoriesPage = () => {
             }
           </tbody>
         </table>
+        <DeleteItem alertDelete={alertDelete} setAlertDelete={setAlertDelete} setRemovedmsg={setRemovedmsg} />
       </div>
-
+      {/* message component, has been removed */}
+      {removedmsg && <RemovedMessage />}
       {/* Pagination */}
       <footer className='flex items-center flex-wrap gap-3 justify-center sm:justify-end mt-7'>
         <span className='text-[#1A1A1A]'>{`Total ${categories.length} Ítems`}</span>
