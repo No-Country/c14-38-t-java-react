@@ -15,6 +15,10 @@ import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+
+/**
+ * Entidad que representa una entrada en el sistema.
+ */
 @Entity
 @Table(name = "inputs")
 @Data
@@ -35,5 +39,4 @@ public class Input {
 	@ManyToOne
 	@JoinColumn(name= "product_id")
 	private Product product;
-
 }

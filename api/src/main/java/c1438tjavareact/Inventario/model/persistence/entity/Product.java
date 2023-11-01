@@ -11,6 +11,10 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+
+/**
+ * Entidad que representa un producto en el sistema.
+ */
 @Entity 
 @Table(name="products")
 @Data
@@ -28,6 +32,8 @@ public class Product {
 
 	@NotNull
 	private Double price;
+
+	private Long stock;
     
     @ManyToOne
     @JoinColumn(name = "family_id")

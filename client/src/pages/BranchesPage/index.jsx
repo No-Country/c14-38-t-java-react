@@ -3,9 +3,8 @@ import { Package, LogOut, Truck, User, ArrowRight } from 'react-feather';
 import { Menu, Transition, Popover, Dialog } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { useNavigate } from 'react-router-dom';
 import useAuthContext from '../../hooks/useAuthContext';
-import { logoutUser } from '../../utils/auth';
+//import Loading from '../../components/Loading';
 
 const BranchesPage = () => {
   const products = [
@@ -31,14 +30,8 @@ const BranchesPage = () => {
     },
   ];
 
-  const navigate = useNavigate();
-  const { setToken } = useAuthContext();
+  const { logout: handleLogout } = useAuthContext();
 
-  const handleLogout = () => {
-    setToken(null);
-    logoutUser();
-    navigate('/login');
-  };
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 

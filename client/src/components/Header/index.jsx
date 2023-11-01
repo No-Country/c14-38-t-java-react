@@ -1,22 +1,16 @@
 import { Fragment, useState } from 'react';
 import useAuthContext from '../../hooks/useAuthContext';
-import { useNavigate, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Menu, Transition, Popover, Dialog } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { User } from 'react-feather'; //
-import { logoutUser } from '../../utils/auth';
 import menuData from '../../data/menuData';
 
 function Header() {
   // #### Logout
-  const navigate = useNavigate();
-  const { setToken } = useAuthContext();
-  const handleLogout = () => {
-    setToken(null);
-    logoutUser();
-    navigate('/login');
-  };
+  const { logout: handleLogout } = useAuthContext();
+
   //   ####
 
   const classButton = ({ isActive }) =>
@@ -29,13 +23,14 @@ function Header() {
     <>
       <header className='w-full'>
         <nav
-          className='mx-auto flex w-full items-center justify-between p-6 lg:px-8'
+          className='mx-auto flex w-full items-center justify-between flex-row-reverse md:flex-row p-6 lg:px-8'
           aria-label='Global'
         >
           <div className='flex lg:flex-1'>
             <Link to='/'>
               <h1 className='text-4xl font-semibold bg-blue-gradient text-transparent bg-clip-text'>
-                Stockwise
+                <span className='hidden md:block'>Stockwise</span>
+                <span className='md:hidden'>SM</span>
               </h1>
             </Link>
           </div>
@@ -106,7 +101,7 @@ function Header() {
           onClose={setMobileMenuOpen}
         >
           <div className='fixed inset-0 z-10' />
-          <Dialog.Panel className='text-sm bg-[#F0F0F0] fixed inset-y-0 right-0 z-10 w-1/2 overflow-y-auto  px-3 py-3 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'>
+          <Dialog.Panel className='text-sm bg-[#F0F0F0] fixed inset-y-0 left-0 z-10 w-1/2 overflow-y-auto  px-3 py-3 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'>
             <div className='flex items-center justify-between'>
               <div></div>
               <button

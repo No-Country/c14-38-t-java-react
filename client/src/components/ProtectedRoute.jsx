@@ -1,20 +1,16 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useAuthContext from '../hooks/useAuthContext';
-import { useEffect } from 'react';
 
-export const ProtectedRoute = ({ children }) => {
+export const ProtectedRoute = ({ component }) => {
+  const { isAuth } = useAuthContext();
   const navigate = useNavigate();
-  const { token } = useAuthContext();
 
   useEffect(() => {
-    if (!token) {
+    if (!isAuth) {
       navigate('/login');
     }
-  }, [token, navigate]);
+  }, [isAuth, navigate]);
 
-  if (!token) {
-    return null;
-  }
-
-  return children;
+  return isAuth ? component : null;
 };

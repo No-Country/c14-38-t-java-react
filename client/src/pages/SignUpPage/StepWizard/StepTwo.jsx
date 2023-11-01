@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useState } from 'react';
+//import Loading from '../../components/Loading';
 
 const COUNTRIES_API =
   'https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/countries.json';

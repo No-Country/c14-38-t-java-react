@@ -1,17 +1,16 @@
 import { useState } from 'react';
 // import { Link } from 'react-router-dom';
 import { loginUser } from '../../utils/auth';
-import { useNavigate } from 'react-router-dom';
 import {
   validateEmail,
   validatePassword,
 } from '../../utils/validations/formValidation';
 import useAuthContext from '../../hooks/useAuthContext';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import Loading from '../../components/Loading';
 
 const LoginPage = () => {
-  const navigate = useNavigate();
-
-  const { setToken } = useAuthContext();
+  const { login } = useAuthContext();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,6 +19,9 @@ const LoginPage = () => {
     password: '',
     login: '',
   });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); //componente loading
 
   const handleChangeEmail = (e) => {
     const emailValue = e.target.value;
@@ -59,19 +61,17 @@ const LoginPage = () => {
     }
   };
 
-  const handleOnSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     if (errors.email || errors.password) {
       return;
     }
-
+  setIsLoading(true);
     try {
       const { data } = await loginUser(email, password);
       setErrors((prevErrors) => ({ ...prevErrors, login: '' }));
-      setToken(data.token);
-      localStorage.setItem('token', data.token);
-      navigate('/products');
+      login(data.token);
     } catch (error) {
       // if (error.response && error.response.status === 403) {
       setErrors((prevErrors) => ({
@@ -84,9 +84,10 @@ const LoginPage = () => {
       //     login: 'Error inesperado, intentelo nuevamente.',
       //   }));
       // }
+    }finally{
+      setIsLoading(false);
     }
   };
-
   return (
     <>
       <div className='sm:hidden flex justify-center items-center h-44 bg-blue-gradient rounded-b-[65px] pb-4'>
@@ -107,7 +108,7 @@ const LoginPage = () => {
 
         <div className='flex w-full sm:items-center justify-center'>
           <form
-            onSubmit={handleOnSubmit}
+            onSubmit={handleLogin}
             className='flex flex-col w-full max-w-sm m-4 sm:bg-[white] sm:p-10 rounded sm:shadow-md'
           >
             {/* <h1 className='flex sm:hidden text-3xl bg-clip-text text-transparent bg-blue-gradient font-bold'>
@@ -144,16 +145,16 @@ const LoginPage = () => {
               </div>
               {/* {errors.email && <span className='text-custom-red'>{errors.email}</span>} */}
               <div
-                className={`mb-4 flex rounded-lg shadow-sm ring-1 ring-inset ${
+                className={`mb-4 flex items-center rounded-lg shadow-sm ring-1 ring-inset ${
                   errors.password ? 'ring-custom-red' : 'ring-custom-gray'
                 } focus-within:ring-2 focus-within:ring-inset ${
                   errors.password
                     ? 'focus-within:ring-custom-red'
                     : 'focus-within:ring-custom-blue'
-                } sm:max-w-md`}
+                } sm:max-w-md relative`}
               >
                 <input
-                  type='password'
+                  type={showPassword ? 'text' : 'password'}
                   className='block flex-1 border-0 bg-transparent sm:py-1.5 py-3 px-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6'
                   value={password}
                   onChange={handleChangePassword}
@@ -161,6 +162,21 @@ const LoginPage = () => {
                   placeholder='Contraseña'
                   required
                 />
+                <button
+                  type='button'
+                  className='absolute right-3 text-custom-icon'
+                  aria-label={
+                    showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'
+                  }
+                  onMouseUp={() => setShowPassword(false)}
+                  onMouseDown={() => setShowPassword(true)}
+                >
+                  {showPassword ? (
+                    <EyeIcon className='h-5 w-5' />
+                  ) : (
+                    <EyeSlashIcon className='h-5 w-5' />
+                  )}
+                </button>
               </div>
               {/* {errors.password && (<span className="text-custom-red">{errors.password}</span>)} */}
               {errors.login && (
@@ -174,8 +190,9 @@ const LoginPage = () => {
               type='submit'
               className='mt-3 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white py-2.5 px-4 font-normal border border-custom-blue text-custom-blue'
             >
-              Ingresar
+            Continuar
             </button>
+            {isLoading && <Loading />}
           </form>
         </div>
       </div>

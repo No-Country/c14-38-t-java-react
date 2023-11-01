@@ -5,14 +5,23 @@ import java.util.Date;
 
 import c1438tjavareact.Inventario.model.persistence.entity.Product;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
+@Data
 
 public class DispatchDto {
+    /**
+     * Identificador único del despacho (Dispatch)
+     */
     private Long id;
+    /**
+     * Fecha del despacho ()
+     */
     private Date dispatchDate;
+    /**
+     * Cantidad a despachar ()
+     */
     private Integer quantity;
+    /**
+     * Producto a despachar ()
+     */
     private Product product;
 }

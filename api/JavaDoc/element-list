@@ -1,0 +1,11 @@
+c1438tjavareact.Inventario
+c1438tjavareact.Inventario.model.domain.dto
+c1438tjavareact.Inventario.model.domain.service
+c1438tjavareact.Inventario.model.persistence.entity
+c1438tjavareact.Inventario.model.persistence.mapper
+c1438tjavareact.Inventario.model.persistence.repository
+c1438tjavareact.Inventario.web.controller
+c1438tjavareact.Inventario.web.controller.models
+c1438tjavareact.Inventario.web.security.config
+c1438tjavareact.Inventario.web.security.jwt
+c1438tjavareact.Inventario.web.service

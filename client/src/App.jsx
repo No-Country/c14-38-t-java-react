@@ -1,74 +1,44 @@
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Outlet } from 'react-router-dom';
 import { ProtectedRoute } from './components/ProtectedRoute';
-
+import { GuestRoute } from './components/GuestRoute';
 // import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 // import SignUpPageStep from './pages/SignUpPageStep';
 import ProductsPage from './pages/ProductsPage';
+import { AddProduct } from './pages/AddProduct';
 import UserProfilePage from './pages/UserProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 
 import axios from 'axios';
-import useAuthContext from './hooks/useAuthContext';
 import LayoutUser from './layout/LayoutUser';
-
+import CategoriesPage from './pages/CategoriesPage';
+import SuppliersPage from './pages/SuppliersPage';
 // Si no se especifica una dirección de backend en el archivo .env entonces
 // se utilizará localhost con el puerto 3001 de forma predeterminada.
 axios.defaults.baseURL =
   import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001';
 
 function App() {
-  const { token } = useAuthContext();
-
   return (
     <main>
       <Routes>
-        <Route
-          path='/'
-          element={!token ? <LoginPage /> : <Navigate to='/products' />}
-        />
-        <Route
-          path='/login'
-          element={!token ? <LoginPage /> : <Navigate to='/products' />}
-        />
-        <Route path='/' element={<LayoutUser />}>
-          <Route
-            path='/signup'
-            element={!token ? <SignUpPage /> : <Navigate to='/products' />}
-          />
-          {/* <Route
-            path='/branches'
-            element={
-              <ProtectedRoute>
-                <BranchesPage />
-              </ProtectedRoute>
-            }
-          /> */}
-          {/* <Route
-            path='/branches/:id'
-            element={
-              <ProtectedRoute>
-                <BranchProfilePage />
-              </ProtectedRoute>
-            }
-          /> */}
-          <Route
-            path='/products'
-            element={
-              <ProtectedRoute>
-                <ProductsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path='/profile'
-            element={
-              <ProtectedRoute>
-                <UserProfilePage />
-              </ProtectedRoute>
-            }
-          />
+        {/* Guest Routes */}
+        <Route path='/' element={<GuestRoute component={<Outlet />} />}>
+          <Route path='/' element={<LoginPage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/signup' element={<SignUpPage />} />
+        </Route>
+
+        {/* Protected Routes */}
+        <Route path='/' element={<ProtectedRoute component={<LayoutUser />} />}>
+          {/* <Route path='/branches' element={<BranchesPage />} /> */}
+          {/* <Route path='/branches/:id' element={<BranchProfilePage />} /> */}
+          <Route path='/products' element={<ProductsPage />} />
+          <Route path='/addproduct' element={<AddProduct />} />
+          <Route path='/categories' element={<CategoriesPage />} />
+          <Route path='/suppliers' element={<SuppliersPage />} />
+          <Route path='/profile' element={<UserProfilePage />} />
           <Route path='*' element={<NotFoundPage />} />
         </Route>
       </Routes>
