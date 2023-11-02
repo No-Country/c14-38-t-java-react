@@ -1,13 +1,14 @@
-// import productsData from '../../data/productsData';
 import { SearchBar } from '../../components/SearchBar';
 import { EditIcon, FilterIcon, MoreOptionsIcon } from '../../components/Icons';
-import { Button } from '../../components/ui/Button';
+import { Button, buttonVariants } from '../../components/ui/Button';
 import { ChevronLeft, X } from 'react-feather';
 import { ChevronRight } from 'react-feather';
 import { Menu, Transition, Dialog } from '@headlessui/react';
 import { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useProducts } from '../../hooks/useProducts';
+import { cn } from '../../utils/cn';
+import { serviceDeleteProduct } from '../../services/products/products';
 import Filter from '../../components/Filter';
 import Order from '../../components/Order';
 import orderfilter from '../../utils/orderfilter';
@@ -15,7 +16,7 @@ import orderfilter from '../../utils/orderfilter';
 //import Loading from '../../components/Loading';
 
 const ProductsPage = () => {
-  const { products } = useProducts();
+  const { products, setProducts } = useProducts();
   const [search, setSearch] = useState('');
 
   const [selected, setSelected] = useState({
@@ -29,11 +30,18 @@ const ProductsPage = () => {
   const handleSearchChange = (e) => setSearch(e.target.value);
   const clearSearch = () => setSearch('');
 
+  const handleDeleteProduct = async (id) => {
+    try {
+      await serviceDeleteProduct(id);
+      setProducts(products.filter((product) => product.id !== id));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   //Logica de la paginacion
   //contexto (useProducts), obtiene la cantidad total de productos
   const totalProducts = productsLocal.length;
-
-
 
   //*rastrear la página actual - Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -58,11 +66,21 @@ const ProductsPage = () => {
   const handleOrderFilter = (opc) => {
     setSelected({ ...selected, ...opc });
     orderfilter(products, setProductsLocal, { ...selected, ...opc });
+    //Restablecer la página actual a 1 al aplicar un filtro
+    setCurrentPage(1);
     setOpenFilter(false);
+  };
+
+  const handleFilterChange = (newFilters) => {
+    // Actualizar los filtros seleccionados
+    setSelected({ ...selected, ...newFilters });
+    // Restablecer la página actual a 1 al aplicar un filtro
+    setCurrentPage(1);
   };
 
   useEffect(() => {
     setProductsLocal([...products]);
+    console.log(products);
   }, [products]);
 
   return (
@@ -99,8 +117,11 @@ const ProductsPage = () => {
             </button>
           )}
         </SearchBar>
-        <Link to='/addproduct'>
-          <Button className='text-xs min-w-[100px] h-full'>Agregar Ítem</Button>
+        <Link
+          to='/addproduct'
+          className={cn(buttonVariants(), 'text-xs min-w-[100px]')}
+        >
+          Agregar Ítem
         </Link>
       </div>
 
@@ -206,13 +227,15 @@ const ProductsPage = () => {
                         onClick={() => {
                           handleOrderFilter({ order: 'Menor cantidad' });
                         }}
-                        className={`${active
-                          ? 'bg-custom-button-hover text-custom-blue'
-                          : ''
-                          } ${selected.order === 'Menor cantidad'
+                        className={`${
+                          active
+                            ? 'bg-custom-button-hover text-custom-blue'
+                            : ''
+                        } ${
+                          selected.order === 'Menor cantidad'
                             ? 'text-custom-blue'
                             : 'text-custom-black'
-                          } group flex w-full justify-center items-center px-2 py-2 text-sm`}
+                        } group flex w-full justify-center items-center px-2 py-2 text-sm`}
                       >
                         Menor cantidad
                       </button>
@@ -224,13 +247,15 @@ const ProductsPage = () => {
                         onClick={() => {
                           handleOrderFilter({ order: 'Mayor cantidad' });
                         }}
-                        className={`${active
-                          ? 'bg-custom-button-hover text-custom-blue'
-                          : ''
-                          } ${selected.order === 'Mayor cantidad'
+                        className={`${
+                          active
+                            ? 'bg-custom-button-hover text-custom-blue'
+                            : ''
+                        } ${
+                          selected.order === 'Mayor cantidad'
                             ? 'text-custom-blue'
                             : 'text-custom-black'
-                          } group flex w-full justify-center items-center px-2 py-2 text-sm`}
+                        } group flex w-full justify-center items-center px-2 py-2 text-sm`}
                       >
                         Mayor cantidad
                       </button>
@@ -313,19 +338,25 @@ const ProductsPage = () => {
                         <Menu.Items className='absolute top-full mt-2 right-0 bg-[#E7E7E7] flex flex-col rounded shadow z-10 min-w-[130px]'>
                           <Menu.Item>
                             {(active) => (
-                              <button
-                                className={`text-left px-4 py-2 ${active ? 'hover:text-custom-blue' : ''
-                                  }`}
+                              <Link
+                                to={`/products/edit/${product.id}`}
+                                className={`text-left px-4 py-2 ${
+                                  active ? 'hover:text-custom-blue' : ''
+                                }`}
                               >
                                 Editar
-                              </button>
+                              </Link>
                             )}
                           </Menu.Item>
                           <Menu.Item>
                             {(active) => (
                               <button
-                                className={`text-left px-4 py-2 ${active ? 'hover:text-custom-blue' : ''
-                                  }`}
+                                onClick={async () =>
+                                  handleDeleteProduct(product.id)
+                                }
+                                className={`text-left px-4 py-2 ${
+                                  active ? 'hover:text-custom-blue' : ''
+                                }`}
                               >
                                 Eliminar
                               </button>
@@ -358,14 +389,19 @@ const ProductsPage = () => {
             </li>
             {Array.from({ length: totalPages }).map((_, index) => {
               const page = index + 1;
-              if (page === 1 || page === totalPages || (page >= currentPage - 2 && page <= currentPage + 2)) {
+              if (
+                page === 1 ||
+                page === totalPages ||
+                (page >= currentPage - 2 && page <= currentPage + 2)
+              ) {
                 return (
                   <li key={page}>
                     <Button
-                      className={`w-8 h-8 sm:px-3 sm:py-1.5 rounded-md ${page === currentPage
-                        ? 'bg-[#918AC1]'
-                        : 'bg-transparent border border-[#918AC1]'
-                        } text-custom-black text-sm`}
+                      className={`w-8 h-8 sm:px-3 sm:py-1.5 rounded-md ${
+                        page === currentPage
+                          ? 'bg-[#918AC1]'
+                          : 'bg-transparent border border-[#918AC1]'
+                      } text-custom-black text-sm`}
                       onClick={() => handlePageChange(page)}
                     >
                       {page}
@@ -422,7 +458,7 @@ const ProductsPage = () => {
                       setOpenFilter={setOpenFilter}
                       setProductsLocal={setProductsLocal}
                       selected={selected}
-                      setSelected={setSelected}
+                      setSelected={handleFilterChange} // maneja el cambio de filtro
                     />
                   ) : null}
                   {openOrder ? (

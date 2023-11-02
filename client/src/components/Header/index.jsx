@@ -59,7 +59,8 @@ function Header() {
               <div>
                 <Menu.Button>
                   <div className='flex justify-center items-center h-16 w-16 rounded-full bg-custom-panel'>
-                    <User size={38} />
+                    <img src='/images/user-avatar.png' alt='User avatar' />
+                    {/* <User size={38} /> */}
                   </div>
                 </Menu.Button>
               </div>

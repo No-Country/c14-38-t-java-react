@@ -1,46 +1,48 @@
-import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 import useAuthContext from './useAuthContext';
-import suppliersData from '../data/suppliersData';
+import { serviceGetSuppliers } from '../services/suppliers/suppliers';
+// import suppliersData from '../data/suppliersData';
 
-const SuppliersContext = createContext();
+const SupplierContext = createContext();
 
 export const SuppliersProvider = ({ children }) => {
   const [suppliers, setSuppliers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { isAuth } = useAuthContext();
 
   useEffect(() => {
     if (isAuth) {
-      // axios
-      //   .get('/api/supplier/all')
-      //   .then((response) => {
-      //     setSuppliers(response.data);
-      //   })
-      //   .catch((error) => {
-      //     console.error('Error al cargar los proveedores:', error);
-      //   });
-
-      setSuppliers(suppliersData); // Fake data
+      serviceGetSuppliers()
+        .then((response) => {
+          setSuppliers(response.data);
+        })
+        .catch((error) => {
+          console.error('Error al cargar los proveedores:', error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
   }, [isAuth]);
 
   return (
-    <SuppliersContext.Provider
+    <SupplierContext.Provider
       value={{
-        suppliers,
-        setSuppliers,
+        suppliers: suppliers,
+        setSuppliers: setSuppliers,
+        isLoading,
       }}
     >
       {children}
-    </SuppliersContext.Provider>
+    </SupplierContext.Provider>
   );
 };
 
 export const useSuppliers = () => {
-  const context = useContext(SuppliersContext);
+  const context = useContext(SupplierContext);
 
   if (!context) {
-    throw new Error('useSuppliers must be used within a SuppliersProvider');
+    throw new Error('useSuppliers must be  used within a SuppliersProvider');
   }
 
   return context;
