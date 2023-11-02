@@ -115,7 +115,7 @@ export const EditSupplier = () => {
           </div>
           <div className='flex flex-col sm:justify-center lg:justify-normal sm:pt-6 sm:w-1/2'>
             <label htmlFor='file-img' className='w-full flex  justify-end'>
-              <img
+              {/* <img
                 src='/images/media.png'
                 alt='media'
                 className='hidden sm:block w-full lg:max-w-sm'
@@ -124,7 +124,7 @@ export const EditSupplier = () => {
                 src='/images/media-responsive.png'
                 alt='media'
                 className='sm:hidden w-full'
-              />
+              /> */}
               {/* <span className='flex items-center justify-center mt-2 sm:mt-4 sm:text-base text-xs font-normal sm: text-custom-gray'>
                 Agrega una imagen
               </span> */}
