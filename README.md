@@ -8,8 +8,8 @@
 
 - **Gestión de Productos:** Agrega, actualiza y elimina productos con facilidad.
 - **Seguimiento de Stock:** Mantén un control preciso en tiempo real.
-- **Histórico de Movimientos:** Registra cada cambio para una auditoría completa.
 - **Interfaz Intuitiva:** Diseño amigable para una experiencia de usuario excepcional.
+- **Interfaz Mobile Implementada:** Accede a la plataforma de manera eficiente desde dispositivos móviles.
 
 ## Tecnologías Estelares
 
