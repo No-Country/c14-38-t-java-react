@@ -19,7 +19,6 @@ public class FamilyController {
 
     /**
      * Obtiene una lista de todas las familias.
-     *
      * @return ResponseEntity con la lista de FamilyDto si se encuentra, o ResponseEntity con NOT_FOUND si no hay familias.
      */
     @GetMapping
@@ -31,7 +30,6 @@ public class FamilyController {
 
     /**
      * Obtiene una familia por su ID.
-     *
      * @param familyId El ID de la familia a buscar.
      * @return ResponseEntity con la FamilyDto encontrada si existe, o ResponseEntity con NOT_FOUND si no se encuentra.
      */

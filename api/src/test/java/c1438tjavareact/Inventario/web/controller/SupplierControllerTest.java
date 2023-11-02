@@ -13,10 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
 import java.util.List;
 import java.util.Optional;
-
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -60,15 +58,16 @@ public class SupplierControllerTest {
 
     @Test
     public void testUpdateSupplier() {
-        long supplierId = 1L;
         SupplierDto supplierDto = new SupplierDto();
-        supplierDto.setId(supplierId);
-        supplierDto.setName("Updated Supplier Name");
+        supplierDto.setId(1L); // Establece el ID en el DTO
+        supplierDto.setName("Actualización de nombre");
 
+        // Simula el comportamiento del servicio
         when(supplierService.update(supplierDto)).thenReturn(Optional.of(supplierDto));
 
-        ResponseEntity<SupplierDto> responseEntity = supplierController.update(supplierId, supplierDto);
+        ResponseEntity<SupplierDto> responseEntity = supplierController.update(supplierDto);
 
+        assertNotNull(responseEntity);
         assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
         assertEquals(supplierDto, responseEntity.getBody());
     }
@@ -115,12 +114,10 @@ public class SupplierControllerTest {
     @Test
     public void testDeleteSupplier() throws Exception {
         Long supplierId = 1L;
-        Optional<SupplierDto> currentSupplier = Optional.of(new SupplierDto()); // Crea un objeto SupplierDto para testing
-
+        // Crea un objeto SupplierDto para testing
+        Optional<SupplierDto> currentSupplier = Optional.of(new SupplierDto());
         when(supplierService.SupplierId(supplierId)).thenReturn(currentSupplier);
-
         ResponseEntity<String> responseEntity = supplierController.delete(supplierId);
-
         verify(supplierService, times(1)).SupplierId(supplierId);
         verify(supplierService, times(1)).delete(supplierId);
 
@@ -133,7 +130,6 @@ public class SupplierControllerTest {
         Long supplierId = 1L;
 
         when(supplierService.SupplierId(supplierId)).thenReturn(Optional.empty());
-
         ResponseEntity<String> responseEntity = supplierController.delete(supplierId);
 
         verify(supplierService, times(1)).SupplierId(supplierId);
@@ -143,15 +139,3 @@ public class SupplierControllerTest {
         assertEquals("El proveedor ingresado no existe", responseEntity.getBody());
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

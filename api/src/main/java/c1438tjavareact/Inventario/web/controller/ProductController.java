@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -52,8 +51,12 @@ public class ProductController {
 
 
     /**
-     * Obtiene todos los productos.
-     * @return ResponseEntity con la lista de productos o NOT_FOUND si no hay productos.
+     * Obtiene todos los productos basados en ciertos criterios de búsqueda.
+     * @param keyword (Opcional) Palabra clave para filtrar productos por nombre o descripción.
+     * @param familyId (Opcional) ID de la familia para filtrar productos por familia.
+     * @param supplierId (Opcional) ID del proveedor para filtrar productos por proveedor.
+     * @return ResponseEntity con la lista de productos que cumplen con los criterios de búsqueda,
+     * o NOT_FOUND si no se encuentran productos que coincidan con los criterios.
      */
 
     @GetMapping("/all")
@@ -102,7 +105,6 @@ public class ProductController {
 
      /**
      * Actualiza un producto existente.
-     * @param id        El ID del producto que se desea actualizar.
      * @param productDto Los datos actualizados del producto.
      * @return ResponseEntity con el producto actualizado o NOT_FOUND si no se encuentra.
      */

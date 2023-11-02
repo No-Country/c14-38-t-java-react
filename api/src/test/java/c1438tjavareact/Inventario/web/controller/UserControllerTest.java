@@ -1,11 +1,9 @@
 package c1438tjavareact.Inventario.web.controller;
+
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 import c1438tjavareact.Inventario.model.persistence.entity.User;
 import c1438tjavareact.Inventario.web.service.UserService;
 import org.junit.Before;
