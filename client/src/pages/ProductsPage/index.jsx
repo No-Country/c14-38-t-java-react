@@ -165,7 +165,7 @@ const ProductsPage = () => {
       <div className='flex mb-2'>
         <div className='flex flex-auto items-center gap-1 text-custom-dark-gray'>
           {selected.category ? (
-            <div className='bg-custom-gray rounded-full px-2 h-7 text-xs flex items-center'>
+            <div className='bg-custom-button-hover rounded-full px-2 h-7 text-xs flex items-center'>
               <span>{selected.category} </span>{' '}
               <div
                 className='cursor-pointer'
@@ -184,7 +184,7 @@ const ProductsPage = () => {
             ''
           )}
           {selected.supplier ? (
-            <div className='bg-custom-gray rounded-full px-2 h-7 text-xs flex items-center'>
+            <div className='bg-custom-button-hover rounded-full px-2 h-7 text-xs flex items-center'>
               <span>{selected.supplier} </span>{' '}
               <div
                 className='cursor-pointer'
@@ -203,7 +203,7 @@ const ProductsPage = () => {
             ''
           )}
           {selected.order ? (
-            <div className='bg-custom-gray rounded-full px-2 h-7 text-xs flex items-center'>
+            <div className='bg-custom-button-hover rounded-full px-2 h-7 text-xs flex items-center'>
               <span>{selected.order} </span>{' '}
               <div
                 className='cursor-pointer'
