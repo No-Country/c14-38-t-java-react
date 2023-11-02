@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,9 +23,6 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
-
-    /*return productService.create(productDto)
-        .map(t-> new ResponseEntity<>(t, HttpStatus.CREATED));*/
 
     /**
      * Crea un nuevo producto.
@@ -94,15 +92,13 @@ public class ProductController {
             if (!productList.isEmpty()) {
                 return new ResponseEntity<>(productList, HttpStatus.OK);
             }
+            else{
+                return new ResponseEntity<>(new ArrayList<>(), HttpStatus.NO_CONTENT); // Devuelve una lista vacía
+            }
         }
 
         return ResponseEntity.notFound().build();
     }
-
-    /*@GetMapping("/all")
-    public Optional<ResponseEntity<List<ProductDto>>> getProducts(){
-        return productService.ProductList().map(t-> new ResponseEntity<>(t, HttpStatus.OK));
-    }*/
 
      /**
      * Actualiza un producto existente.
@@ -143,4 +139,3 @@ public class ProductController {
             return new ResponseEntity<>("El producto ingresado no existe", HttpStatus.NOT_FOUND);
     }
 }
-
