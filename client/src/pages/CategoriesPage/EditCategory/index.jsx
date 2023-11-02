@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Check } from 'react-feather';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useFamilies } from '../../../hooks/useFamilies';
+import { useProducts } from '../../../hooks/useProducts';
 import { serviceEditCategory } from '../../../services/categories/categories';
 
 export const EditCategory = () => {
@@ -15,9 +16,12 @@ export const EditCategory = () => {
   } = useFamilies();
   const category = categories.find((category) => category.id == id);
 
+  const { setProducts } = useProducts();
+
   const [form, setForm] = useState({
     id: '',
     name: '',
+    image: '',
   });
 
   useEffect(() => {
@@ -25,6 +29,7 @@ export const EditCategory = () => {
       setForm({
         id: category.id,
         name: category.name,
+        image: category.image,
       });
     }
   }, [category]);
@@ -46,6 +51,16 @@ export const EditCategory = () => {
       });
 
       setCategories(updatedCategories);
+
+      setProducts((prev) =>
+        prev.map((item) => {
+          if (item.family.id === updatedCategory.id) {
+            return { ...item, family: updatedCategory };
+          }
+          return item;
+        }),
+      );
+
       navigate('/categories');
     } catch (err) {
       console.log(err);
