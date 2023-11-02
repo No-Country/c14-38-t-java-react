@@ -19,6 +19,8 @@ const ProductsPage = () => {
   const { products, setProducts } = useProducts();
   const [search, setSearch] = useState('');
 
+  const [searching, setSearching] = useState('');
+
   const [selected, setSelected] = useState({
     category: '',
     supplier: '',
@@ -27,7 +29,6 @@ const ProductsPage = () => {
 
   const [productsLocal, setProductsLocal] = useState([]);
 
-  const handleSearchChange = (e) => setSearch(e.target.value);
   const clearSearch = () => setSearch('');
 
   const handleDeleteProduct = async (id) => {
@@ -55,9 +56,12 @@ const ProductsPage = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = currentPage * itemsPerPage;
   //*Filtrar los productos para mostrar solo los de la página actual
-  const productsToShow = productsLocal.slice(startIndex, endIndex);
+  const productFound = productsLocal.filter((product) =>
+    product.name.toLowerCase().includes(searching.toLowerCase()),
+  );
+  const productsToShow = productFound.slice(startIndex, endIndex);
   //*Calcular el total de páginas
-  const totalPages = Math.ceil(productsLocal.length / itemsPerPage);
+  const totalPages = Math.ceil(productFound.length / itemsPerPage);
 
   // Filtros y ordenación
   const [openFilter, setOpenFilter] = useState(false);
@@ -97,8 +101,10 @@ const ProductsPage = () => {
         <SearchBar
           placeholder='Buscar ítem'
           className='w-full sm:w-[424px]'
-          value={search}
-          onChange={handleSearchChange}
+          searching={searching}
+          setSearching={setSearching}
+          searchTye='products'
+          products={products}
         >
           {search.length > 0 ? (
             <button
