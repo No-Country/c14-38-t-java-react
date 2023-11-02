@@ -52,10 +52,11 @@ const CategoriesPage = () => {
         <SearchBar 
           placeholder='Buscar ítem' 
           className='w-full sm:w-[424px]'
-          searching={searching}
+          value={searching}
           setSearching={setSearching}
           searchTye='categories'
           categories={categories}
+          onChange={(e) => setSearching(e.target.value)}
         >
           <button className='hidden sm:flex p-2 hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'>
             <FilterIcon />

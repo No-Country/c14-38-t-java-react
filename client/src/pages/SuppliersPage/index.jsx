@@ -22,7 +22,7 @@ const SuppliersPage = () => {
     axios
       .get('/api/supplier/all')
       .then((response) => {
-        setSuppliers(response.data.body);
+        setSuppliers(response.data);
       })
       .catch((error) => {
         console.error('Error al cargar los Proveedores:', error);
@@ -49,7 +49,7 @@ const SuppliersPage = () => {
       <p className='text-2xl font-[500] text-custom-icon'>Proveedores</p>
 
       <div className='flex justify-between gap-2 my-5'>
-        <SearchBar placeholder='Buscar ítem' className='w-full sm:w-[424px]' searching={searching} setSearching={setSearching} searchTye='suppliers' suppliers={suppliers}>
+        <SearchBar placeholder='Buscar ítem' className='w-full sm:w-[424px]' value={searching} onChange={(e) => setSearching(e.target.value)} searchTye='suppliers' suppliers={suppliers}>
           <button className='hidden sm:flex p-2 hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'>
             <FilterIcon />
           </button>

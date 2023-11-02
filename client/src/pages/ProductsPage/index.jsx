@@ -1,5 +1,6 @@
 // import productsData from '../../data/productsData';
 import { useState } from 'react';
+import axios from 'axios';
 import { SearchBar } from '../../components/SearchBar';
 import { EditIcon, FilterIcon, MoreOptionsIcon } from '../../components/Icons';
 import { Button } from '../../components/ui/Button';
@@ -7,6 +8,7 @@ import { ChevronLeft } from 'react-feather';
 import { ChevronRight } from 'react-feather';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
+import SearchResults from '../../components/SearchResults';
 import DeleteItem from '../../components/Modals/DeleteItem';
 import RemovedMessage from '../../components/RemovedMessage';
 import { Link } from 'react-router-dom';
@@ -16,14 +18,26 @@ import { useProducts } from '../../hooks/useProducts';
 
 const ProductsPage = () => {
   const { products } = useProducts();
-  const [searching, setSearching] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [results, setResults] = useState(products);
 
   const [alertDelete, setAlertDelete] = useState(false);
   const [removedmsg, setRemovedmsg] = useState(false);
 
-  const productFound = products.filter((product) => 
-    product.name.toLowerCase().includes((searching.toLowerCase()))
-  );
+  const onSearch = () => {
+      axios
+        .get(`/api/product/all?keyword=${searchKeyword}`)
+        .then((response) => {
+          setResults(response.data);
+        })
+        .catch((error) => {
+          if (error.response && error.response.status === 404) {
+            setResults([]);
+          } else {
+            console.error('Error al cargar los productos:', error);
+          }
+        });
+  };
 
   setTimeout(() => {
     setRemovedmsg(false);
@@ -44,10 +58,9 @@ const ProductsPage = () => {
         <SearchBar
           placeholder='Buscar ítem'
           className='w-full sm:w-[424px]'
-          searching={searching}
-          setSearching={setSearching} 
-          searchTye='products' 
-          products={products}
+          value={searchKeyword}
+          onChange={(e) => setSearchKeyword(e.target.value)}
+          onSearch={onSearch}
         >
           <button className='hidden sm:flex p-2 hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'>
             <FilterIcon />
@@ -79,8 +92,8 @@ const ProductsPage = () => {
           </thead>
 
           <tbody>
-            {productFound.length > 0 ? (
-              productFound.map((product) => (
+            {searchKeyword === '' ?
+              products.map((product) => (
                 <tr
                   key={product.id}
                   className='border-b sm:border-b-4 border-custom-button-hover last:border-b-0'
@@ -150,14 +163,18 @@ const ProductsPage = () => {
                     </div>
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr className='w-full'>
-                <td colSpan='4' className=' text-center p-5'>
-                  No se encontraron productos relacionados
-                </td>
-              </tr>
-            )}
+              )) : 
+              results.length > 0
+              ? results.map((product) => (
+                <SearchResults key={product.id} productName={product.name} stock={product.stock} setAlertDelete={setAlertDelete} />
+              )) : (
+                <tr className='w-full'>
+                  <td colSpan='4' className=' text-center p-5'>
+                    No se encontraron resultados
+                  </td>
+                </tr>
+              )
+            }
           </tbody>
         </table>
         <DeleteItem alertDelete={alertDelete} setAlertDelete={setAlertDelete} setRemovedmsg={setRemovedmsg}/>

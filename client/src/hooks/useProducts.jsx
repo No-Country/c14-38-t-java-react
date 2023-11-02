@@ -10,7 +10,7 @@ export const ProductsProvider = ({ children }) => {
     axios
       .get('/api/product/all')
       .then((response) => {
-        setProducts(response.data.body);
+        setProducts(response.data);
       })
       .catch((error) => {
         console.error('Error al cargar los productos:', error);
