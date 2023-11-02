@@ -80,7 +80,7 @@ export const EditCategory = () => {
             <img
               src={form.image ? form.image : '/images/media.png'}
               alt='media'
-              className='hidden sm:block w-full lg:max-w-sm'
+              className='hidden sm:block w-full lg:max-w-[300px]'
             />
             <img
               src={form.image ? form.image : '/images/media-responsive.png'}
@@ -92,7 +92,7 @@ export const EditCategory = () => {
               name='image'
               value={form.image}
               onChange={handleFormChange}
-              className='sm:block w-full lg:max-w-sm block flex-1 border-custom-button-hover rounded bg-transparent py-1.5 pl-3 placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6 '
+              className='sm:block w-full lg:max-w-[300px] block flex-1 border-custom-blue rounded bg-transparent py-1.5 pl-3 placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6 '
               placeholder='URL de la imagen'
             />
           </div>
