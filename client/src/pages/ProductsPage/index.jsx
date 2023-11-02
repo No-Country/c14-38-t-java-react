@@ -33,8 +33,6 @@ const ProductsPage = () => {
   //contexto (useProducts), obtiene la cantidad total de productos
   const totalProducts = productsLocal.length;
 
-
-
   //*rastrear la página actual - Pagination
   const [currentPage, setCurrentPage] = useState(1);
   //*Agregar una función para manejar el cambio de página
@@ -58,7 +56,16 @@ const ProductsPage = () => {
   const handleOrderFilter = (opc) => {
     setSelected({ ...selected, ...opc });
     orderfilter(products, setProductsLocal, { ...selected, ...opc });
+    //Restablecer la página actual a 1 al aplicar un filtro
+    setCurrentPage(1);
     setOpenFilter(false);
+  };
+
+  const handleFilterChange = (newFilters) => {
+    // Actualizar los filtros seleccionados
+    setSelected({ ...selected, ...newFilters });
+    // Restablecer la página actual a 1 al aplicar un filtro
+    setCurrentPage(1);
   };
 
   useEffect(() => {
@@ -422,7 +429,7 @@ const ProductsPage = () => {
                       setOpenFilter={setOpenFilter}
                       setProductsLocal={setProductsLocal}
                       selected={selected}
-                      setSelected={setSelected}
+                      setSelected={handleFilterChange}// maneja el cambio de filtro
                     />
                   ) : null}
                   {openOrder ? (
