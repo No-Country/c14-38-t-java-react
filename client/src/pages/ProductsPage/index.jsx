@@ -141,7 +141,7 @@ const ProductsPage = () => {
         </SearchBar>
         <Link
           to='/addproduct'
-          className={cn(buttonVariants(), 'text-xs min-w-[100px]')}
+          className={cn(buttonVariants(), 'text-xs text-center min-w-[100px]')}
         >
           Agregar Ítem
         </Link>

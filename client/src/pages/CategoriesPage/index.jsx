@@ -72,7 +72,7 @@ const CategoriesPage = () => {
         </SearchBar>
         <Link
           to='/addcategory'
-          className={cn(buttonVariants(), 'text-xs min-w-[100px]')}
+          className={cn(buttonVariants(), 'text-xs text-center min-w-[100px]')}
         >
           Agregar Categoría
         </Link>
