@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import useAuthContext from './useAuthContext';
 import { serviceGetCategories } from '../services/categories/categories';
-import categoriesData from '../data/categoriesData';
+// import categoriesData from '../data/categoriesData';
 
 const FamilyContext = createContext();
 
@@ -14,8 +14,7 @@ export const FamiliesProvider = ({ children }) => {
     if (isAuth) {
       serviceGetCategories()
         .then((response) => {
-          // setFamilies(response.data);
-          setFamilies(categoriesData);
+          setFamilies(response.data);
         })
         .catch((error) => {
           console.error('Error al cargar las categorías:', error);

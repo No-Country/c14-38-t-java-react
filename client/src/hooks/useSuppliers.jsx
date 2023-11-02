@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import useAuthContext from './useAuthContext';
 import { serviceGetSuppliers } from '../services/suppliers/suppliers';
-import suppliersData from '../data/suppliersData';
+// import suppliersData from '../data/suppliersData';
 
 const SupplierContext = createContext();
 
@@ -14,8 +14,7 @@ export const SuppliersProvider = ({ children }) => {
     if (isAuth) {
       serviceGetSuppliers()
         .then((response) => {
-          // setSuppliers(response.data);
-          setSuppliers(suppliersData); // Fake data
+          setSuppliers(response.data);
         })
         .catch((error) => {
           console.error('Error al cargar los proveedores:', error);

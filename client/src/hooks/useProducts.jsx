@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import useAuthContext from './useAuthContext';
 import { serviceGetProducts } from '../services/products/products';
-import productsData from '../data/productsData';
+// import productsData from '../data/productsData';
 
 const ProductContext = createContext();
 
@@ -14,8 +14,7 @@ export const ProductsProvider = ({ children }) => {
     if (isAuth) {
       serviceGetProducts()
         .then((response) => {
-          // setProducts(response.data);
-          setProducts(productsData); // Fake data
+          setProducts(response.data);
         })
         .catch((error) => {
           console.error('Error al cargar los productos:', error);
