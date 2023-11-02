@@ -116,7 +116,7 @@ const ProductsPage = () => {
 
       <div className='flex justify-between gap-2 mt-5 mb-2'>
         <SearchBar
-          placeholder='Buscar ítem'
+          placeholder='Buscar...'
           className='w-full sm:w-[424px]'
           searching={searching}
           setSearching={setSearching}

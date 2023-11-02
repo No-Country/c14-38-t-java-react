@@ -58,7 +58,7 @@ const SuppliersPage = () => {
 
       <div className='flex justify-between gap-2 my-5'>
         <SearchBar
-          placeholder='Buscar ítem'
+          placeholder='Buscar...'
           className='w-full sm:w-[424px]'
           value={search}
           onChange={handleSearchChange}
