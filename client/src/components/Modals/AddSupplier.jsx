@@ -118,12 +118,6 @@ const AddSupplier = ({ setIsSupplierModal, setSupplier }) => {
                   >
                     {item.name}
                   </li>
-                  {selectedSupplier.name === item.name && (
-                    <span className='text-custom-blue text-xs'>
-                      Podrás agregar más información en la sección de
-                      &quot;Proveedores&quot;
-                    </span>
-                  )}
                 </div>
               ))}
 
