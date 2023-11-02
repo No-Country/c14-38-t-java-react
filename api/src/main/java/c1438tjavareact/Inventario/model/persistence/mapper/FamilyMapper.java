@@ -22,6 +22,7 @@ public interface FamilyMapper {
     @Mappings({
             @Mapping(source = "id", target = "id"),
             @Mapping(source = "name", target = "name"),
+            @Mapping(source = "image", target = "image"),
     })
     FamilyDto toFamily(Family family);
 

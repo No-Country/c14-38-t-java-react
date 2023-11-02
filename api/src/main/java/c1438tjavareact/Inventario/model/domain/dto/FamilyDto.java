@@ -12,5 +12,9 @@ public class FamilyDto {
      * Nombre de la familia
      */
     private String name;
+    /**
+     * Campo donde se almacena URL de la imagen
+     */
+    private String image;
 
 }
