@@ -1,7 +1,10 @@
 import { SearchIcon } from './Icons';
 import { cn } from '../utils/cn';
 
+// eslint-disable-next-line no-unused-vars
 export const SearchBar = ({ className, children, ...props }) => {
+
+  
   return (
     <div
       className={cn(

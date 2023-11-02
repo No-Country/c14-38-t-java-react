@@ -6,6 +6,8 @@ import { ChevronRight } from 'react-feather';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
+import DeleteItem from '../../components/Modals/DeleteItem';
+import RemovedMessage from '../../components/RemovedMessage';
 import { useSuppliers } from '../../hooks/useSuppliers';
 import { cn } from '../../utils/cn';
 import { serviceDeleteSupplier } from '../../services/suppliers/suppliers';
@@ -13,10 +15,14 @@ import { serviceDeleteSupplier } from '../../services/suppliers/suppliers';
 
 const SuppliersPage = () => {
   const { suppliers, setSuppliers } = useSuppliers();
-  const [search, setSearch] = useState('');
+  const [searching, setSearching] = useState('');
 
-  const handleSearchChange = (e) => setSearch(e.target.value);
-  const clearSearch = () => setSearch('');
+  const [alertDelete, setAlertDelete] = useState(false);
+  const [removedmsg, setRemovedmsg] = useState(false);
+  const [deleteId, setDeleteId] = useState();
+
+  const handleSearchChange = (e) => setSearching(e.target.value);
+  const clearSearch = () => setSearching('');
 
   const handleDeleteSupplier = async (id) => {
     try {
@@ -26,6 +32,14 @@ const SuppliersPage = () => {
       console.log(err);
     }
   };
+
+  const supplierFound = suppliers.filter((supplier) =>
+    supplier.name.toLowerCase().includes(searching.toLowerCase()),
+  );
+
+  setTimeout(() => {
+    setRemovedmsg(false);
+  }, 2500);
 
   return (
     <>
@@ -42,10 +56,10 @@ const SuppliersPage = () => {
         <SearchBar
           placeholder='Buscar ítem'
           className='w-full sm:w-[424px]'
-          value={search}
+          value={searching}
           onChange={handleSearchChange}
         >
-          {search.length > 0 ? (
+          {searching.length > 0 ? (
             <button
               className='hidden sm:flex p-2 items-center hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'
               onClick={clearSearch}
@@ -84,73 +98,94 @@ const SuppliersPage = () => {
           </thead>
 
           <tbody>
-            {suppliers.map((supplier) => (
-              <tr
-                key={supplier.id}
-                className='border-b sm:border-b-4 border-custom-button-hover last:border-b-0'
-              >
-                <td className='px-5 py-3 flex items-center min-w-[168px]'>
-                  {supplier.name}
-                </td>
-                <td className='px-5 py-1'>1</td>
-                <td className='px-5 py-1'>
-                  <div className='flex items-center justify-center'>
-                    <Menu as='div' className='relative'>
-                      <Menu.Button
-                        aria-label='Mas opciones'
-                        className='text-custom-blue'
-                      >
-                        <EditIcon className='hidden sm:inline-block' />
-                        <MoreOptionsIcon className='sm:hidden' />
-                      </Menu.Button>
+            {supplierFound.length > 0 ? (
+              supplierFound.map((supplier) => (
+                <tr
+                  key={supplier.id}
+                  className='border-b sm:border-b-4 border-custom-button-hover last:border-b-0'
+                >
+                  <td className='px-5 py-3 flex items-center min-w-[168px]'>
+                    {/* <img
+                      width={50}
+                      className='inline-block mr-2'
+                      src='/images/media.png'
+                    /> */}
+                    {supplier.name}
+                  </td>
+                  <td className='px-5 py-1'>1</td>
+                  <td className='px-5 py-1'>
+                    <div className='flex items-center justify-center'>
+                      <Menu as='div' className='relative'>
+                        <Menu.Button
+                          aria-label='Mas opciones'
+                          className='text-custom-blue'
+                        >
+                          <EditIcon className='hidden sm:inline-block' />
+                          <MoreOptionsIcon className='sm:hidden' />
+                        </Menu.Button>
 
-                      <Transition
-                        as={Fragment}
-                        enter='transition ease-out duration-100'
-                        enterFrom='transform opacity-0 scale-95'
-                        enterTo='transform opacity-100 scale-100'
-                        leave='transition ease-in duration-75'
-                        leaveFrom='transform opacity-100 scale-100'
-                        leaveTo='transform opacity-0 scale-95'
-                      >
-                        <Menu.Items className='absolute top-full mt-2 right-0 bg-[#E7E7E7] flex flex-col rounded shadow z-10 min-w-[130px]'>
-                          <Menu.Item>
-                            {(active) => (
-                              <Link
-                                to={`/suppliers/edit/${supplier.id}`}
-                                className={`text-left px-4 py-2 ${
-                                  active ? 'hover:text-custom-blue' : ''
-                                }`}
-                              >
-                                Editar
-                              </Link>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {(active) => (
-                              <button
-                                onClick={async () =>
-                                  handleDeleteSupplier(supplier.id)
-                                }
-                                className={`text-left px-4 py-2 ${
-                                  active ? 'hover:text-custom-blue' : ''
-                                }`}
-                              >
-                                Eliminar
-                              </button>
-                            )}
-                          </Menu.Item>
-                        </Menu.Items>
-                      </Transition>
-                    </Menu>
-                  </div>
+                        <Transition
+                          as={Fragment}
+                          enter='transition ease-out duration-100'
+                          enterFrom='transform opacity-0 scale-95'
+                          enterTo='transform opacity-100 scale-100'
+                          leave='transition ease-in duration-75'
+                          leaveFrom='transform opacity-100 scale-100'
+                          leaveTo='transform opacity-0 scale-95'
+                        >
+                          <Menu.Items className='absolute top-full mt-2 right-0 bg-[#E7E7E7] flex flex-col rounded shadow z-10 min-w-[130px]'>
+                            <Menu.Item>
+                              {(active) => (
+                                <Link
+                                  to={`/suppliers/edit/${supplier.id}`}
+                                  className={`text-left px-4 py-2 ${
+                                    active ? 'hover:text-custom-blue' : ''
+                                  }`}
+                                >
+                                  Editar
+                                </Link>
+                              )}
+                            </Menu.Item>
+                            <Menu.Item>
+                              {(active) => (
+                                <button
+                                  onClick={() => {
+                                    setDeleteId(supplier.id);
+                                    setAlertDelete(true);
+                                  }}
+                                  className={`text-left px-4 py-2 ${
+                                    active ? 'hover:text-custom-blue' : ''
+                                  }`}
+                                >
+                                  Eliminar
+                                </button>
+                              )}
+                            </Menu.Item>
+                          </Menu.Items>
+                        </Transition>
+                      </Menu>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr className='w-full'>
+                <td colSpan='4' className=' text-center p-5'>
+                  No se encontraron proveedores relacionados
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
+        <DeleteItem
+          alertDelete={alertDelete}
+          setAlertDelete={setAlertDelete}
+          setRemovedmsg={setRemovedmsg}
+          onClickCallback={() => handleDeleteSupplier(deleteId)}
+        />
       </div>
-
+      {/* message component, has been removed */}
+      {removedmsg && <RemovedMessage />}
       {/* Pagination */}
       <footer className='flex items-center flex-wrap gap-3 justify-center sm:justify-end mt-7'>
         <span className='text-[#1A1A1A]'>{`Total ${suppliers.length} Ítems`}</span>

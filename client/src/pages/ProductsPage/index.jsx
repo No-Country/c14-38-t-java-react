@@ -1,10 +1,14 @@
+// import productsData from '../../data/productsData';
+import { useEffect, useState } from 'react';
 import { SearchBar } from '../../components/SearchBar';
 import { EditIcon, FilterIcon, MoreOptionsIcon } from '../../components/Icons';
 import { Button, buttonVariants } from '../../components/ui/Button';
 import { ChevronLeft, X } from 'react-feather';
 import { ChevronRight } from 'react-feather';
-import { Menu, Transition, Dialog } from '@headlessui/react';
-import { Fragment, useState, useEffect } from 'react';
+import { Dialog, Menu, Transition } from '@headlessui/react';
+import { Fragment } from 'react';
+import DeleteItem from '../../components/Modals/DeleteItem';
+import RemovedMessage from '../../components/RemovedMessage';
 import { Link } from 'react-router-dom';
 import { useProducts } from '../../hooks/useProducts';
 import { cn } from '../../utils/cn';
@@ -17,7 +21,6 @@ import orderfilter from '../../utils/orderfilter';
 
 const ProductsPage = () => {
   const { products, setProducts } = useProducts();
-  const [search, setSearch] = useState('');
 
   const [selected, setSelected] = useState({
     category: '',
@@ -27,8 +30,8 @@ const ProductsPage = () => {
 
   const [productsLocal, setProductsLocal] = useState([]);
 
-  const handleSearchChange = (e) => setSearch(e.target.value);
-  const clearSearch = () => setSearch('');
+  const handleSearchChange = (e) => setSearching(e.target.value);
+  const clearSearch = () => setSearching('');
 
   const handleDeleteProduct = async (id) => {
     try {
@@ -83,6 +86,26 @@ const ProductsPage = () => {
     console.log(products);
   }, [products]);
 
+  const [searching, setSearching] = useState('');
+
+  const [alertDelete, setAlertDelete] = useState(false);
+  const [removedmsg, setRemovedmsg] = useState(false);
+  const [deleteId, setDeleteId] = useState();
+
+  // const productFound = products.filter((product) =>
+  //   product.name.toLowerCase().includes(searching.toLowerCase()),
+  // );
+
+  useEffect(() => {
+    if (removedmsg) {
+      const timeout = setTimeout(() => {
+        setRemovedmsg(false);
+      }, 2500);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [removedmsg]);
+
   return (
     <>
       <div className='hidden sm:flex flex-row justify-between text-custom-black'>
@@ -98,10 +121,10 @@ const ProductsPage = () => {
         <SearchBar
           placeholder='Buscar ítem'
           className='w-full sm:w-[424px]'
-          value={search}
+          value={searching}
           onChange={handleSearchChange}
         >
-          {search.length > 0 ? (
+          {searching.length > 0 ? (
             <button
               className='hidden sm:flex p-2 items-center hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'
               onClick={clearSearch}
@@ -292,88 +315,104 @@ const ProductsPage = () => {
           </thead>
 
           <tbody>
-            {productsToShow.map((product) => (
-              <tr
-                key={product.id}
-                className='border-b sm:border-b-4 border-custom-button-hover last:border-b-0'
-              >
-                <td className='px-5 py-1 flex items-center min-w-[168px]'>
-                  <img
-                    width={50}
-                    className='inline-block mr-2'
-                    src='/images/media.png'
-                  />
-                  {product.name}
-                </td>
-                {/* <td className='hidden md:table-cell px-5 py-1'>
-                  {product.code}
-                </td> */}
-                <td className='hidden md:table-cell px-5 py-1'>
-                  {product.family.name}
-                </td>
-                <td className='hidden md:table-cell px-5 py-1'>
-                  {product.supplier.name}
-                </td>
-                <td className='px-5 py-1'>{product.stock}</td>
-                <td className='px-5 py-1'>
-                  <div className='flex items-center justify-center'>
-                    <Menu as='div' className='relative'>
-                      <Menu.Button
-                        aria-label='Mas opciones'
-                        className='text-custom-blue'
-                      >
-                        <EditIcon className='hidden sm:inline-block' />
-                        <MoreOptionsIcon className='sm:hidden' />
-                      </Menu.Button>
+            {/* {productFound.length > 0 ? ( */}
+            {productsToShow.length > 0 ? (
+              productsToShow.map((product) => (
+                <tr
+                  key={product.id}
+                  className='border-b sm:border-b-4 border-custom-button-hover last:border-b-0'
+                >
+                  <td className='px-5 py-1 flex items-center min-w-[168px]'>
+                    <img
+                      width={50}
+                      className='inline-block mr-2'
+                      src='/images/media.png'
+                    />
+                    {product.name}
+                  </td>
+                  <td className='hidden md:table-cell px-5 py-1'>
+                    {product.family.name}
+                  </td>
+                  <td className='hidden md:table-cell px-5 py-1'>
+                    {product.supplier.name}
+                  </td>
+                  <td className='px-5 py-1'>{product.stock}</td>
+                  <td className='px-5 py-1'>
+                    <div className='flex items-center justify-center'>
+                      <Menu as='div' className='relative'>
+                        <Menu.Button
+                          aria-label='Mas opciones'
+                          className='text-custom-blue'
+                        >
+                          <EditIcon className='hidden sm:inline-block' />
+                          <MoreOptionsIcon className='sm:hidden' />
+                        </Menu.Button>
 
-                      <Transition
-                        as={Fragment}
-                        enter='transition ease-out duration-100'
-                        enterFrom='transform opacity-0 scale-95'
-                        enterTo='transform opacity-100 scale-100'
-                        leave='transition ease-in duration-75'
-                        leaveFrom='transform opacity-100 scale-100'
-                        leaveTo='transform opacity-0 scale-95'
-                      >
-                        <Menu.Items className='absolute top-full mt-2 right-0 bg-[#E7E7E7] flex flex-col rounded shadow z-10 min-w-[130px]'>
-                          <Menu.Item>
-                            {(active) => (
-                              <Link
-                                to={`/products/edit/${product.id}`}
-                                className={`text-left px-4 py-2 ${
-                                  active ? 'hover:text-custom-blue' : ''
-                                }`}
-                              >
-                                Editar
-                              </Link>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {(active) => (
-                              <button
-                                onClick={async () =>
-                                  handleDeleteProduct(product.id)
-                                }
-                                className={`text-left px-4 py-2 ${
-                                  active ? 'hover:text-custom-blue' : ''
-                                }`}
-                              >
-                                Eliminar
-                              </button>
-                            )}
-                          </Menu.Item>
-                        </Menu.Items>
-                      </Transition>
-                    </Menu>
-                  </div>
+                        <Transition
+                          as={Fragment}
+                          enter='transition ease-out duration-100'
+                          enterFrom='transform opacity-0 scale-95'
+                          enterTo='transform opacity-100 scale-100'
+                          leave='transition ease-in duration-75'
+                          leaveFrom='transform opacity-100 scale-100'
+                          leaveTo='transform opacity-0 scale-95'
+                        >
+                          <Menu.Items className='absolute top-full mt-2 right-0 bg-[#E7E7E7] flex flex-col rounded shadow z-10 min-w-[130px]'>
+                            <Menu.Item>
+                              {(active) => (
+                                <Link
+                                  to={`/products/edit/${product.id}`}
+                                  className={`text-left px-4 py-2 ${
+                                    active ? 'hover:text-custom-blue' : ''
+                                  }`}
+                                >
+                                  Editar
+                                </Link>
+                              )}
+                            </Menu.Item>
+                            <Menu.Item>
+                              {(active) => (
+                                <button
+                                  onClick={() => {
+                                    setDeleteId(product.id);
+                                    setAlertDelete(true);
+                                  }}
+                                  className={`text-left px-4 py-2 ${
+                                    active ? 'hover:text-custom-blue' : ''
+                                  }`}
+                                >
+                                  Eliminar
+                                </button>
+                              )}
+                            </Menu.Item>
+                          </Menu.Items>
+                        </Transition>
+                      </Menu>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr className='w-full'>
+                <td colSpan='5' className=' text-center p-5'>
+                  No se encontraron productos relacionados
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
+        <DeleteItem
+          alertDelete={alertDelete}
+          setAlertDelete={setAlertDelete}
+          setRemovedmsg={setRemovedmsg}
+          onClickCallback={() => handleDeleteProduct(deleteId)}
+        />
       </div>
 
       {/* Paginación */}
+      {/* message component, has been removed */}
+      {removedmsg && <RemovedMessage />}
+      {/* Pagination */}
       <footer className='flex items-center flex-wrap gap-3 justify-center sm:justify-end mt-7'>
         <span className='text-[#1A1A1A]'>{`Total ${totalProducts} Ítems`}</span>
         <nav>
