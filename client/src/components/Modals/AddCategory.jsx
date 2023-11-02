@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Search, Check } from 'react-feather';
 import { useFamilies } from '../../hooks/useFamilies';
-import { serviceCreateCategory } from '../../services/categories/categories';
+// import { serviceCreateCategory } from '../../services/categories/categories';
 
 const AddCategory = ({ setIsCategoryModal, setCategory }) => {
   const { families: categories, setFamilies: setCategories } = useFamilies();

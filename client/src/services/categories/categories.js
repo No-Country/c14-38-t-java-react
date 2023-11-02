@@ -13,7 +13,5 @@ export const serviceEditCategory = async (payload) => {
 };
 
 export const serviceDeleteCategory = async (id) => {
-  return await axios.delete(`/api/family/delete`, {
-    id,
-  });
+  return await axios.delete(`/api/family/delete/${id}`);
 };

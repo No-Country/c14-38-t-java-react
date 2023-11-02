@@ -1,13 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Check } from 'react-feather';
-import { Link, useParams } from 'react-router-dom';
-import { useFamilies } from '../../hooks/useFamilies';
-import axios from 'axios';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useFamilies } from '../../../hooks/useFamilies';
+import { serviceEditCategory } from '../../../services/categories/categories';
 
 export const EditCategory = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
 
-  const { families: categories, isLoading } = useFamilies();
+  const {
+    families: categories,
+    setFamilies: setCategories,
+    isLoading,
+  } = useFamilies();
   const category = categories.find((category) => category.id == id);
 
   const [form, setForm] = useState({
@@ -31,7 +36,17 @@ export const EditCategory = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(`/api/families/update`, form);
+      const { data: updatedCategory } = await serviceEditCategory(form);
+
+      const updatedCategories = categories.map((category) => {
+        if (category.id === updatedCategory.id) {
+          return updatedCategory;
+        }
+        return category;
+      });
+
+      setCategories(updatedCategories);
+      navigate('/categories');
     } catch (err) {
       console.log(err);
     }

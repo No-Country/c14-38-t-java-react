@@ -1,28 +1,26 @@
 import { SearchBar } from '../../components/SearchBar';
 import { EditIcon, FilterIcon, MoreOptionsIcon } from '../../components/Icons';
-import { Button } from '../../components/ui/Button';
+import { Button, buttonVariants } from '../../components/ui/Button';
 import { ChevronLeft, X } from 'react-feather';
 import { ChevronRight } from 'react-feather';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { useFamilies } from '../../hooks/useFamilies';
-import axios from 'axios';
-import AddCategory from '../../components/Modals/AddCategory';
 import { Link } from 'react-router-dom';
+import { serviceDeleteCategory } from '../../services/categories/categories';
+import { cn } from '../../utils/cn';
 //import Loading from '../../components/Loading';
 
 const CategoriesPage = () => {
   const { families: categories, setFamilies: setCategories } = useFamilies();
   const [search, setSearch] = useState('');
 
-  const [isCategoryModal, setIsCategoryModal] = useState(false);
-
   const handleSearchChange = (e) => setSearch(e.target.value);
   const clearSearch = () => setSearch('');
 
   const handleDeleteCategory = async (id) => {
     try {
-      await axios.delete(`/api/family/${id}`);
+      await serviceDeleteCategory(id);
       setCategories(categories.filter((category) => category.id !== id));
     } catch (err) {
       console.log(err);
@@ -60,19 +58,12 @@ const CategoriesPage = () => {
             </button>
           )}
         </SearchBar>
-        <Button
-          onClick={() => setIsCategoryModal(true)}
-          className='text-xs min-w-[100px]'
+        <Link
+          to='/addcategory'
+          className={cn(buttonVariants(), 'text-xs min-w-[100px]')}
         >
-          Agregar Ítem
-        </Button>
-        {isCategoryModal && (
-          <AddCategory
-            isCategoryModal={isCategoryModal}
-            setIsCategoryModal={setIsCategoryModal}
-            setCategory={() => {}}
-          />
-        )}
+          Agregar Categoría
+        </Link>
       </div>
 
       <div className='border sm:border-4 rounded-xl border-custom-button-hover'>
