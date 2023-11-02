@@ -1,12 +1,16 @@
 import { useState } from 'react';
-import categoriesData from '../../data/categoriesData';
-import suppliersData from '../../data/suppliersData';
 import { useProducts } from '../../hooks/useProducts';
 import { ArrowLeft, ChevronDown, ChevronUp, X } from 'react-feather';
 import orderfilter from '../../utils/orderfilter';
+import { useSuppliers } from '../../hooks/useSuppliers';
+import { useFamilies } from '../../hooks/useFamilies';
+// import categoriesData from '../../data/categoriesData';
+// import suppliersData from '../../data/suppliersData';
 
 function Filter({ setOpenFilter, selected, setSelected, setProductsLocal }) {
   const { products } = useProducts();
+  const { suppliers } = useSuppliers();
+  const { families: categories } = useFamilies();
 
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isSupplierOpen, setIsSupplierOpen] = useState(false);
@@ -68,7 +72,7 @@ function Filter({ setOpenFilter, selected, setSelected, setProductsLocal }) {
             aria-hidden={!isCategoryOpen}
             className='p-2'
           >
-            {categoriesData.map((categ) => (
+            {categories.map((categ) => (
               <li
                 key={categ.id}
                 className={`p-2 cursor-pointer ${
@@ -100,7 +104,7 @@ function Filter({ setOpenFilter, selected, setSelected, setProductsLocal }) {
             aria-hidden={!isSupplierOpen}
             className='p-2'
           >
-            {suppliersData.map((supplier) => (
+            {suppliers.map((supplier) => (
               <li
                 key={supplier.id}
                 className={`p-2 cursor-pointer ${

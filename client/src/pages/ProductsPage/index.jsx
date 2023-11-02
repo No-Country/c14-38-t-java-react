@@ -80,7 +80,6 @@ const ProductsPage = () => {
 
   useEffect(() => {
     setProductsLocal([...products]);
-    console.log(products);
   }, [products]);
 
   return (
