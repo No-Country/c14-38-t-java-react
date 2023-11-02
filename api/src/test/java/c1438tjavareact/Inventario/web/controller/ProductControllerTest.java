@@ -78,56 +78,6 @@ public class ProductControllerTest {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(productDto, responseEntity.getBody());
     }
-
-    @Test
-    public void testGetAllProducts() {
-        // Arrange
-        List<ProductDto> productDtoList = createProductList();
-        when(productService.ProductList()).thenReturn(Optional.of(productDtoList));
-
-        // Act
-        ResponseEntity<List<ProductDto>> responseEntity = productController.getProducts();
-
-        // Assert
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        assertEquals(productDtoList, responseEntity.getBody());
-    }
-
-    // Método de utilidad para crear una lista de productos ficticia
-    private List<ProductDto> createProductList() {
-        List<ProductDto> productList = new ArrayList<>();
-
-        productList.add(createProduct(1L, "Product1", "Description1", 19.99, 15000L, "Family 1", "Supplier 1"));
-        productList.add(createProduct(2L, "Product2", "Description2", 29.99, 56000L, "Family 2", "Supplier 2"));
-
-        return productList;
-    }
-
-
-    // Método de utilidad para crear un objeto ProductDto
-    private ProductDto createProduct(Long id, String name, String description, double price, long stock, String familyName, String supplierName) {
-        // Crear un objeto FamilyDto
-        FamilyDto family = new FamilyDto();
-        family.setId(id);
-        family.setName(familyName);
-
-//      //Crear un objeto SupplierDto
-        SupplierDto supplier = new SupplierDto();
-        supplier.setId(id);
-        supplier.setName(supplierName);
-
-        ProductDto product = new ProductDto();
-        product.setId(id);
-        product.setName(name);
-        product.setDescription(description);
-        product.setPrice(price);
-        product.setStock(stock);
-        product.setFamily(family);
-        product.setSupplier(supplier);
-
-        return product;
-    }
-
     @Test
     public void testUpdateProduct() {
         long productId = 1L;
@@ -173,4 +123,96 @@ public class ProductControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, responseNotFound.getStatusCode());
         assertEquals("El producto ingresado no existe", responseNotFound.getBody());
     }
+
+    @Test
+    public void testGetAllProducts() {
+        // Arrange
+        List<ProductDto> productDtoList = createProductList();
+        when(productService.ProductList()).thenReturn(Optional.of(productDtoList));
+
+        // Act
+        ResponseEntity<List<ProductDto>> responseEntity = productController.getProducts(null, null, null);
+
+        // Assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(productDtoList, responseEntity.getBody());
+    }
+
+    // Método de utilidad para crear una lista de productos ficticia
+    private List<ProductDto> createProductList() {
+        List<ProductDto> productList = new ArrayList<>();
+        productList.add(createProduct(1L, "Product1", "Description1", 19.99, 15000L, 1L, 1L));
+        productList.add(createProduct(2L, "Product2", "Description2", 29.99, 56000L, 2L, 2L));
+        return productList;
+    }
+
+    // Método de utilidad para crear un objeto ProductDto
+    private ProductDto createProduct(Long id, String name, String description, double price, long stock, long familyId, long supplierid) {
+        ProductDto product = new ProductDto();
+        product.setId(id);
+        product.setName(name);
+        product.setDescription(description);
+        product.setPrice(price);
+        product.setStock(stock);
+        FamilyDto family = new FamilyDto();
+        family.setId(id);
+        product.setFamily(family);
+        SupplierDto supplier = new SupplierDto();
+        supplier.setId(id);
+        product.setSupplier(supplier);
+        return product;
+    }
+
+    @Test
+    public void testGetProductsWithKeywordFilter() {
+        // Arrange
+        List<ProductDto> productDtoList = createProductList();
+        when(productService.ProductList()).thenReturn(Optional.of(productDtoList));
+
+        // Act: Filtra por la palabra clave "Product1"
+        ResponseEntity<List<ProductDto>> responseEntity = productController.getProducts("Product1", null, null);
+
+        // Assert: Debe devolver solo los productos que contienen "Product1" en su nombre o descripción
+        List<ProductDto> filteredList = productDtoList.stream()
+                .filter(product -> product.getName().contains("Product1") || product.getDescription().contains("Product1"))
+                .toList();
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(filteredList, responseEntity.getBody());
+    }
+
+    @Test
+    public void testGetProductsWithFamilyFilter() {
+        // Arrange
+        List<ProductDto> productDtoList = createProductList();
+        when(productService.ProductList()).thenReturn(Optional.of(productDtoList));
+
+        // Act: Filtra por family_id igual a 1
+        ResponseEntity<List<ProductDto>> responseEntity = productController.getProducts(null, 1L, null);
+
+        // Assert: Debe devolver solo los productos con family_id igual a 1
+        List<ProductDto> filteredList = productDtoList.stream()
+                .filter(product -> product.getFamily() != null && product.getFamily().getId().equals(1L))
+                .toList();
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(filteredList, responseEntity.getBody());
+    }
+
+    @Test
+    public void testGetProductsWithSupplierFilter() {
+        // Arrange
+        List<ProductDto> productDtoList = createProductList();
+        when(productService.ProductList()).thenReturn(Optional.of(productDtoList));
+
+        // Act: Filtra por supplier_id igual a 2
+        ResponseEntity<List<ProductDto>> responseEntity = productController.getProducts(null, null, 2L);
+
+        // Assert: Debe devolver solo los productos con supplier_id igual a 2
+        List<ProductDto> filteredList = productDtoList.stream()
+                .filter(product -> product.getSupplier() != null && product.getSupplier().getId().equals(2L))
+                .toList();
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(filteredList, responseEntity.getBody());
+    }
+
+
 }

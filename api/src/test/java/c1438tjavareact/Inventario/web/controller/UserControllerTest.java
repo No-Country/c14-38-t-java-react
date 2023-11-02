@@ -68,7 +68,8 @@ public class UserControllerTest {
 
         when(userService.searchById(userId)).thenReturn(currentUser);
 
-        String result = userController.deleteUser(userId);
+        ResponseEntity<String> responseEntity = userController.deleteUser(userId);
+        String result = responseEntity.getBody();
 
         verify(userService, times(1)).searchById(userId);
         verify(userService, times(1)).delete(userId);
@@ -82,7 +83,8 @@ public class UserControllerTest {
 
         when(userService.searchById(userId)).thenReturn(null);
 
-        String result = userController.deleteUser(userId);
+        ResponseEntity<String> responseEntity = userController.deleteUser(userId);
+        String result = responseEntity.getBody();
 
         verify(userService, times(1)).searchById(userId);
         verify(userService, never()).delete(userId);
@@ -98,7 +100,9 @@ public class UserControllerTest {
 
         when(userService.searchAll()).thenReturn(userList);
 
-        List<User> result = userController.searchAll();
+        ResponseEntity<List<User>> responseEntity = userController.searchAll();
+        List<User> result = responseEntity.getBody();
+
 
         verify(userService, times(1)).searchAll();
 
