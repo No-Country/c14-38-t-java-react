@@ -18,7 +18,7 @@ import java.util.List;
 public interface ProductMapper {
     /**
      * Realiza el mapeo de una entidad Product a su correspondiente DTO.
-     * @param productDto La entidad Product a ser mapeada.
+     * @param product La entidad Product a ser mapeada.
      * @return El DTO correspondiente a la entidad Product.
      */
 
@@ -43,7 +43,7 @@ public interface ProductMapper {
 
     /**
      * Realiza la operación inversa de mapeo, convirtiendo un DTO de Product a su entidad correspondiente.
-     * @param product El DTO de Product a ser mapeado inversamente.
+     * @param productDto El DTO de Product a ser mapeado inversamente.
      * @return La entidad Product correspondiente al DTO.
      */
     @InheritInverseConfiguration

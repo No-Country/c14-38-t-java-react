@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -36,8 +35,8 @@ public class ProductControllerTest {
     public void testCreateProduct() {
         ProductDto productDto = new ProductDto();
         productDto.setId(1L);
-        productDto.setName("Product Name");
-        productDto.setDescription("Product Description");
+        productDto.setName("Nombre del producto");
+        productDto.setDescription("Descripción del producto");
         productDto.setPrice(99.99);
         productDto.setStock(100L);
 
@@ -55,7 +54,7 @@ public class ProductControllerTest {
         productDto.setSupplier(supplierDto);
 
         // Configura el servicio para simular una actualización exitosa
-        when(productService.create(productDto)).thenReturn(Optional.of(productDto)); // Cambio aquí
+        when(productService.create(productDto)).thenReturn(Optional.of(productDto));
 
         ResponseEntity<ProductDto> responseEntity = productController.create(productDto);
 
@@ -74,7 +73,6 @@ public class ProductControllerTest {
 
         ResponseEntity<ProductDto> responseEntity = productController.getProduct(productId);
 
-        // Corrección: Verificar el código de estado en lugar de la respuesta completa
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(productDto, responseEntity.getBody());
     }
@@ -83,20 +81,17 @@ public class ProductControllerTest {
         long productId = 1L;
         ProductDto productDto = new ProductDto();
         productDto.setId(productId);
-        productDto.setName("Updated Product Name");
-
-        // Supongamos que también has actualizado otros campos en productDto
+        productDto.setName("Actualización del nombre del producto");
 
         when(productService.ProductId(productId)).thenReturn(Optional.of(productDto));
         when(productService.update(productDto)).thenReturn(Optional.of(productDto));
 
-        ResponseEntity<ProductDto> responseEntity = productController.update(productId, productDto);
+        ResponseEntity<ProductDto> responseEntity = productController.update(productDto);
 
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
         assertEquals(productDto, responseEntity.getBody());
     }
-
 
     @Test
     public void testDeleteProduct() {
@@ -126,14 +121,11 @@ public class ProductControllerTest {
 
     @Test
     public void testGetAllProducts() {
-        // Arrange
+
         List<ProductDto> productDtoList = createProductList();
         when(productService.ProductList()).thenReturn(Optional.of(productDtoList));
-
-        // Act
-        ResponseEntity<List<ProductDto>> responseEntity = productController.getProducts(null, null, null);
-
-        // Assert
+        ResponseEntity<List<ProductDto>> responseEntity = productController.getProducts(null,
+                null, null);
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(productDtoList, responseEntity.getBody());
     }
@@ -141,8 +133,10 @@ public class ProductControllerTest {
     // Método de utilidad para crear una lista de productos ficticia
     private List<ProductDto> createProductList() {
         List<ProductDto> productList = new ArrayList<>();
-        productList.add(createProduct(1L, "Product1", "Description1", 19.99, 15000L, 1L, 1L));
-        productList.add(createProduct(2L, "Product2", "Description2", 29.99, 56000L, 2L, 2L));
+        productList.add(createProduct(1L, "Product1", "Description1",
+                19.99, 15000L, 1L, 1L));
+        productList.add(createProduct(2L, "Product2", "Description2",
+                29.99, 56000L, 2L, 2L));
         return productList;
     }
 
@@ -165,14 +159,14 @@ public class ProductControllerTest {
 
     @Test
     public void testGetProductsWithKeywordFilter() {
-        // Arrange
+
         List<ProductDto> productDtoList = createProductList();
         when(productService.ProductList()).thenReturn(Optional.of(productDtoList));
 
-        // Act: Filtra por la palabra clave "Product1"
+        //Filtra por la palabra clave "Product1"
         ResponseEntity<List<ProductDto>> responseEntity = productController.getProducts("Product1", null, null);
 
-        // Assert: Debe devolver solo los productos que contienen "Product1" en su nombre o descripción
+        // Debe devolver solo los productos que contienen "Product1" en su nombre o descripción
         List<ProductDto> filteredList = productDtoList.stream()
                 .filter(product -> product.getName().contains("Product1") || product.getDescription().contains("Product1"))
                 .toList();
@@ -186,10 +180,10 @@ public class ProductControllerTest {
         List<ProductDto> productDtoList = createProductList();
         when(productService.ProductList()).thenReturn(Optional.of(productDtoList));
 
-        // Act: Filtra por family_id igual a 1
+        // Filtra por family_id igual a 1
         ResponseEntity<List<ProductDto>> responseEntity = productController.getProducts(null, 1L, null);
 
-        // Assert: Debe devolver solo los productos con family_id igual a 1
+        // Debe devolver solo los productos con family_id igual a 1
         List<ProductDto> filteredList = productDtoList.stream()
                 .filter(product -> product.getFamily() != null && product.getFamily().getId().equals(1L))
                 .toList();
@@ -199,14 +193,13 @@ public class ProductControllerTest {
 
     @Test
     public void testGetProductsWithSupplierFilter() {
-        // Arrange
+
         List<ProductDto> productDtoList = createProductList();
         when(productService.ProductList()).thenReturn(Optional.of(productDtoList));
-
-        // Act: Filtra por supplier_id igual a 2
+       // Filtra por supplier_id igual a 2
         ResponseEntity<List<ProductDto>> responseEntity = productController.getProducts(null, null, 2L);
 
-        // Assert: Debe devolver solo los productos con supplier_id igual a 2
+        // Debe devolver solo los productos con supplier_id igual a 2
         List<ProductDto> filteredList = productDtoList.stream()
                 .filter(product -> product.getSupplier() != null && product.getSupplier().getId().equals(2L))
                 .toList();

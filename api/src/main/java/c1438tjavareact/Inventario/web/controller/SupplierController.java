@@ -38,7 +38,6 @@ public class SupplierController {
 
     /**
      * Actualiza un proveedor existente.
-     * @param id          El ID del proveedor que se va a actualizar.
      * @param supplierDto Los datos actualizados del proveedor.
      * @return ResponseEntity con el proveedor actualizado o NOT_FOUND si no se encuentra.
      */

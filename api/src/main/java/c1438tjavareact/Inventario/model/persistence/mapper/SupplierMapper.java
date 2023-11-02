@@ -17,7 +17,7 @@ import java.util.List;
 public interface SupplierMapper {
     /**
      * Realiza el mapeo de una entidad Supplier a su correspondiente DTO.
-     * @param "supplier" La entidad Supplier a ser mapeada.
+     * @param supplierDto La entidad SupplierDto a ser mapeada.
      * @return El DTO correspondiente a la entidad Supplier.
      */
     @Mappings({
@@ -40,7 +40,7 @@ public interface SupplierMapper {
 
     /**
      * Realiza la operación inversa de mapeo, convirtiendo un DTO de Supplier a su entidad correspondiente.
-     * @param "supplierDto" El DTO de Supplier a ser mapeado inversamente.
+     * @param supplier Supplier a ser mapeado inversamente.
      * @return La entidad Supplier correspondiente al DTO.
      */
     @InheritInverseConfiguration
