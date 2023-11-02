@@ -1,8 +1,7 @@
 import { SearchBar } from '../../components/SearchBar';
 import { EditIcon, FilterIcon, MoreOptionsIcon } from '../../components/Icons';
-import { Button, buttonVariants } from '../../components/ui/Button';
-import { ChevronLeft, X } from 'react-feather';
-import { ChevronRight } from 'react-feather';
+import { buttonVariants } from '../../components/ui/Button';
+import { X } from 'react-feather';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
 import { useFamilies } from '../../hooks/useFamilies';
@@ -150,42 +149,6 @@ const CategoriesPage = () => {
           </tbody>
         </table>
       </div>
-
-      {/* Pagination */}
-      <footer className='flex items-center flex-wrap gap-3 justify-center sm:justify-end mt-7'>
-        <span className='text-[#1A1A1A]'>{`Total ${categories.length} Ítems`}</span>
-        <nav>
-          <ul className='flex items-center gap-3'>
-            <li>
-              <Button className='w-8 h-8 sm:p-1 rounded-md bg-[#B4B4B4]'>
-                <ChevronLeft className='text-[#626265]' />
-              </Button>
-            </li>
-            <li>
-              <Button className='w-8 h-8 sm:px-3 sm:py-1.5 rounded-md border border-transparent bg-[#918AC1] text-sm'>
-                1
-              </Button>
-            </li>
-            {Array(5)
-              .fill(0)
-              .map((_, index) => {
-                const page = index + 2;
-                return (
-                  <li key={page}>
-                    <Button className='w-8 h-8 sm:px-3 sm:py-1.5 rounded-md bg-transparent border border-[#918AC1] text-custom-black text-sm'>
-                      {page}
-                    </Button>
-                  </li>
-                );
-              })}
-            <li>
-              <Button className='w-8 h-8 sm:p-1 rounded-md'>
-                <ChevronRight />
-              </Button>
-            </li>
-          </ul>
-        </nav>
-      </footer>
     </>
   );
 };
