@@ -1,15 +1,15 @@
 # c14-38-t-java-react
 
-# Control de Inventarios
+# [StockWise](https://stockwise.pulsowebs.com/): Control de Inventarios - Gestor Orientado a Emprendedores
 
-¡Bienvenido a nuestro proyecto de Control de Inventarios! 🚀 Este esfuerzo colaborativo ha sido posible gracias al arduo trabajo y la dedicación de un equipo de mentes creativas y apasionadas.
+¡Bienvenido a nuestro proyecto StockWise de Control de Inventarios! 🚀 Este gestor de inventario está diseñado específicamente para ayudar a pequeñas empresas y emprendedores a gestionar eficientemente su inventario de productos. 📊
 
 ## Características Destacadas
 
 - **Gestión de Productos:** Agrega, actualiza y elimina productos con facilidad.
 - **Seguimiento de Stock:** Mantén un control preciso en tiempo real.
-- **Histórico de Movimientos:** Registra cada cambio para una auditoría completa.
 - **Interfaz Intuitiva:** Diseño amigable para una experiencia de usuario excepcional.
+- **Interfaz Mobile Implementada:** Accede a la plataforma de manera eficiente desde dispositivos móviles.
 
 ## Tecnologías Estelares
 
@@ -24,23 +24,16 @@
   - [Luca Terzariol (GitHub)](https://github.com/Teradriel) - [@Teradriel](https://github.com/Teradriel)
   - [Luis Reyes (GitHub)](https://github.com/LuisGReyesM) - [@LuisGReyesM](https://github.com/LuisGReyesM)
 
-- **UxUi:** Diseñado con maestría por [Sofía Krause (Behance)](https://www.behance.net/sofiakrause) - [@sofiakrause](https://www.behance.net/sofiakrause).
+- **UxUi:** El diseño excepcional es obra de [Sofía Krause (Behance)](https://www.behance.net/sofiakrause) - [@sofiakrause](https://www.behance.net/sofiakrause).
+  - [Enlace a Diseño en Figma](https://www.figma.com/file/pLQfa73YuPvjlTsXhSjmSc/Stockwise)
 
 ## Cómo Empezar
 
-1. Clona el repositorio: `git clone https://github.com/tu_usuario/tu_proyecto.git`
-2. Instala las dependencias: `npm install`
-3. Configura la base de datos y las variables de entorno.
+Este esfuerzo colaborativo ha sido posible gracias al arduo trabajo y dedicación de un equipo de mentes creativas y apasionadas. Te damos la bienvenida a nuestra aventura de Control de Inventarios.
 
-## Contribución
+Para comenzar a utilizar nuestro Gestor de Inventarios, simplemente visita nuestra plataforma en [https://stockwise.pulsowebs.com/](https://stockwise.pulsowebs.com/).
 
-¿Quieres unirte a nosotros? ¡Nos encantaría!
-
-1. Haz un fork del proyecto.
-2. Crea una rama para tu contribución: `git checkout -b feature/nueva-funcionalidad`
-3. Realiza tus cambios y haz commit: `git commit -m "Añade nueva funcionalidad"`
-4. Sube los cambios a tu repositorio: `git push origin feature/nueva-funcionalidad`
-5. Abre un Pull Request para revisión.
+¡Gracias por ser parte de nuestro proyecto! 🌟
 
 ## Contacto
 
@@ -48,5 +41,3 @@ Si tienes preguntas, sugerencias o simplemente quieres decir ¡Hola!, puedes con
 
 - [Ricardo Huallpayunca (GitHub)](https://github.com/rickhufer) - [@rickhufer](https://github.com/rickhufer) - Project Manager
 - [¡Toda la tripulación!](#desarrollo)
-
-¡Gracias por ser parte de nuestra aventura! 🌟

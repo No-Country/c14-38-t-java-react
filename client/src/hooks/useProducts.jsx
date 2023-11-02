@@ -1,31 +1,39 @@
-import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 import useAuthContext from './useAuthContext';
+import { serviceGetProducts } from '../services/products/products';
+// import productsData from '../data/productsData';
 
 const ProductContext = createContext();
 
 export const ProductsProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const { isAuth } = useAuthContext();
 
-  useEffect(() => {
+  const fetchProducts = () => {
     if (isAuth) {
-      axios
-        .get('/api/product/all')
+      serviceGetProducts()
         .then((response) => {
-          setProducts(response.data.body);
+          setProducts(response.data);
         })
         .catch((error) => {
           console.error('Error al cargar los productos:', error);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     }
-  }, [isAuth]);
+  };
+
+  useEffect(fetchProducts, [isAuth]);
 
   return (
     <ProductContext.Provider
       value={{
         products,
         setProducts,
+        isLoading,
+        fetchProducts,
       }}
     >
       {children}

@@ -25,12 +25,6 @@ public class SupplierServiceImpl implements SupplierService {
     private final SupplierMapper supplierMapper;
 
 
-    /*if(supplierRepository.existsById(supplierDto.getId())){
-            return Optional.of(supplierMapper.toSupplierDTO(supplierRepository
-                    .save(supplierMapper.toSupplier(supplierDto))));
-        }
-            return Optional.of(new supplierDto());*/
-
     /**
      * Crea un nuevo proveedor en la base de datos.
      * @param supplierDto Los datos del proveedor que se creará.

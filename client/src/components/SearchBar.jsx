@@ -1,11 +1,12 @@
 import { SearchIcon } from './Icons';
 import { cn } from '../utils/cn';
 
-export const SearchBar = ({ className, children, ...props }) => {
+// eslint-disable-next-line no-unused-vars
+export const SearchBar = ({ className, children, searching, setSearching }) => {
   return (
     <div
       className={cn(
-        'focus-within:border-custom-blue focus-within:text-[#1A1A1A] flex items-center rounded-full bg-[#E5E5E5] px-2.5 py-1 border border-[#C8C8C8] text-custom-dark-gray',
+        'focus-within:border-custom-blue flex items-center rounded-full bg-[#E5E5E5] px-2.5 border border-[#C8C8C8] text-custom-dark-gray',
         className,
       )}
     >
@@ -21,7 +22,8 @@ export const SearchBar = ({ className, children, ...props }) => {
         name='search'
         type='search'
         className='w-full border-0 ring-0 focus-visible:border-0 focus-visible:ring-0 bg-transparent px-0'
-        {...props}
+        value={searching}
+        onChange={(e) => setSearching(e.target.value)}
       />
 
       {children}

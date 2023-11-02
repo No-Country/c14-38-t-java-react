@@ -16,9 +16,7 @@ import lombok.Data;
 @Table(name="suppliers")
 @Data
 public class  Supplier {
-	//proveedores
-	/*TODO
-	*  hacer CRUD de esto, si es posible agregar DTO*/
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
