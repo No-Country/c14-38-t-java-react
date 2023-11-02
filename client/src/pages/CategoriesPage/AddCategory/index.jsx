@@ -10,6 +10,7 @@ export const AddCategory = () => {
 
   const [form, setForm] = useState({
     name: '',
+    image: '',
   });
 
   const handleFormChange = (e) => {
@@ -50,6 +51,26 @@ export const AddCategory = () => {
                 required
               />
             </div>
+          </div>
+          <div className='flex flex-col items-center lg:items-end gap-3 sm:pt-6 sm:w-1/2'>
+            <img
+              src={form.image ? form.image : '/images/media.png'}
+              alt='media'
+              className='hidden sm:block w-full lg:max-w-[300px]'
+            />
+            <img
+              src={form.image ? form.image : '/images/media-responsive.png'}
+              alt='media'
+              className='sm:hidden w-full'
+            />
+            <input
+              type='text'
+              name='image'
+              value={form.image}
+              onChange={handleFormChange}
+              className='sm:block w-full lg:max-w-[300px] block flex-1 border-custom-blue rounded bg-transparent py-1.5 pl-3 placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6 '
+              placeholder='URL de la imagen'
+            />
           </div>
         </div>
         <div className='flex justify-end gap-11 '>

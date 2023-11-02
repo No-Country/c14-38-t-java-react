@@ -323,7 +323,11 @@ const ProductsPage = () => {
                   <img
                     width={50}
                     className='inline-block mr-2'
-                    src='/images/media.png'
+                    src={
+                      product.family.image
+                        ? product.family.image
+                        : '/images/media.png'
+                    }
                   />
                   {product.name}
                 </td>
