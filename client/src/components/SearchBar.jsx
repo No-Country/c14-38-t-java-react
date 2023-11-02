@@ -2,13 +2,7 @@ import { SearchIcon } from './Icons';
 import { cn } from '../utils/cn';
 
 // eslint-disable-next-line no-unused-vars
-export const SearchBar = ({
-  className,
-  children,
-  searching,
-  setSearching,
-  ...props
-}) => {
+export const SearchBar = ({ className, children, searching, setSearching }) => {
   return (
     <div
       className={cn(
@@ -30,7 +24,6 @@ export const SearchBar = ({
         className='w-full border-0 ring-0 focus-visible:border-0 focus-visible:ring-0 bg-transparent px-0'
         value={searching}
         onChange={(e) => setSearching(e.target.value)}
-        {...props}
       />
 
       {children}

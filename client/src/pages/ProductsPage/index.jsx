@@ -13,6 +13,9 @@ import Filter from '../../components/Filter';
 import Order from '../../components/Order';
 import orderfilter from '../../utils/orderfilter';
 
+import DeleteItem from '../../components/Modals/DeleteItem';
+import RemovedMessage from '../../components/RemovedMessage';
+
 //import Loading from '../../components/Loading';
 
 const ProductsPage = () => {
@@ -20,6 +23,10 @@ const ProductsPage = () => {
   const [search, setSearch] = useState('');
 
   const [searching, setSearching] = useState('');
+
+  const [alertDelete, setAlertDelete] = useState(false);
+  const [removedmsg, setRemovedmsg] = useState(false);
+  const [deleteId, setDeleteId] = useState();
 
   const [selected, setSelected] = useState({
     category: '',
@@ -85,6 +92,16 @@ const ProductsPage = () => {
   useEffect(() => {
     setProductsLocal([...products]);
   }, [products]);
+
+  useEffect(() => {
+    if (removedmsg) {
+      const timeout = setTimeout(() => {
+        setRemovedmsg(false);
+      }, 2500);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [removedmsg]);
 
   return (
     <>
@@ -356,9 +373,10 @@ const ProductsPage = () => {
                           <Menu.Item>
                             {(active) => (
                               <button
-                                onClick={async () =>
-                                  handleDeleteProduct(product.id)
-                                }
+                                onClick={() => {
+                                  setDeleteId(product.id);
+                                  setAlertDelete(true);
+                                }}
                                 className={`text-left px-4 py-2 ${
                                   active ? 'hover:text-custom-blue' : ''
                                 }`}
@@ -376,7 +394,14 @@ const ProductsPage = () => {
             ))}
           </tbody>
         </table>
+        <DeleteItem
+          alertDelete={alertDelete}
+          setAlertDelete={setAlertDelete}
+          setRemovedmsg={setRemovedmsg}
+          onClickCallback={() => handleDeleteProduct(deleteId)}
+        />
       </div>
+      {removedmsg && <RemovedMessage />}
 
       {/* Paginación */}
       <footer className='flex items-center flex-wrap gap-3 justify-center sm:justify-end mt-7'>

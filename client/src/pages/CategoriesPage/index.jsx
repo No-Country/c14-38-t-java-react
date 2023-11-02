@@ -1,18 +1,27 @@
 import { SearchBar } from '../../components/SearchBar';
-import { EditIcon, FilterIcon, MoreOptionsIcon } from '../../components/Icons';
+import { EditIcon, MoreOptionsIcon } from '../../components/Icons';
+// import { FilterIcon } from '../../components/Icons';
+// import { X } from 'react-feather';
 import { buttonVariants } from '../../components/ui/Button';
-import { X } from 'react-feather';
 import { Menu, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useFamilies } from '../../hooks/useFamilies';
 import { Link } from 'react-router-dom';
 import { serviceDeleteCategory } from '../../services/categories/categories';
 import { cn } from '../../utils/cn';
+
+import DeleteItem from '../../components/Modals/DeleteItem';
+import RemovedMessage from '../../components/RemovedMessage';
+
 //import Loading from '../../components/Loading';
 
 const CategoriesPage = () => {
   const { families: categories, setFamilies: setCategories } = useFamilies();
   const [search, setSearch] = useState('');
+
+  const [alertDelete, setAlertDelete] = useState(false);
+  const [removedmsg, setRemovedmsg] = useState(false);
+  const [deleteId, setDeleteId] = useState();
 
   const handleSearchChange = (e) => setSearch(e.target.value);
   const clearSearch = () => setSearch('');
@@ -25,6 +34,16 @@ const CategoriesPage = () => {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    if (removedmsg) {
+      const timeout = setTimeout(() => {
+        setRemovedmsg(false);
+      }, 2500);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [removedmsg]);
 
   return (
     <>
@@ -44,18 +63,12 @@ const CategoriesPage = () => {
           value={search}
           onChange={handleSearchChange}
         >
-          {search.length > 0 ? (
-            <button
-              className='hidden sm:flex p-2 items-center hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'
-              onClick={clearSearch}
-            >
-              <X strokeWidth={3} />
-            </button>
-          ) : (
-            <button className='hidden sm:flex p-2 items-center hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'>
-              <FilterIcon />
-            </button>
-          )}
+          <button
+            className='hidden sm:flex p-2 items-center hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'
+            onClick={clearSearch}
+          >
+            {/* <X strokeWidth={3} /> */}
+          </button>
         </SearchBar>
         <Link
           to='/addcategory'
@@ -128,9 +141,10 @@ const CategoriesPage = () => {
                           <Menu.Item>
                             {(active) => (
                               <button
-                                onClick={async () =>
-                                  handleDeleteCategory(category.id)
-                                }
+                                onClick={() => {
+                                  setDeleteId(category.id);
+                                  setAlertDelete(true);
+                                }}
                                 className={`text-left px-4 py-2 ${
                                   active ? 'hover:text-custom-blue' : ''
                                 }`}
@@ -148,7 +162,14 @@ const CategoriesPage = () => {
             ))}
           </tbody>
         </table>
+        <DeleteItem
+          alertDelete={alertDelete}
+          setAlertDelete={setAlertDelete}
+          setRemovedmsg={setRemovedmsg}
+          onClickCallback={() => handleDeleteCategory(deleteId)}
+        />
       </div>
+      {removedmsg && <RemovedMessage />}
     </>
   );
 };
