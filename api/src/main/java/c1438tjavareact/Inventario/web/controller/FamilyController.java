@@ -44,7 +44,6 @@ public class FamilyController {
 
     /**
      * Crea una nueva familia.
-     *
      * @param familyDto La FamilyDto que se va a crear.
      * @return ResponseEntity con la FamilyDto creada y HttpStatus CREATED si tiene éxito, o ResponseEntity con CONFLICT si hay un error.
      */

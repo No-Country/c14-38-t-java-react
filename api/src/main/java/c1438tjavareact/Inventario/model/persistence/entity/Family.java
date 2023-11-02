@@ -18,9 +18,9 @@ public class Family {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	@NotEmpty
 	private String name;
+	private String image;
 	@JsonIgnore
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "family", cascade = CascadeType.ALL)
     private List<Product> products = new ArrayList<>();
