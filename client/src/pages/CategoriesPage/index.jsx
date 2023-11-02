@@ -104,7 +104,7 @@ const CategoriesPage = () => {
                 <td className='px-5 py-3 flex items-center min-w-[168px]'>
                   {category.name}
                 </td>
-                <td className='px-5 py-1'>1</td>
+                <td className='px-5 py-1'>{category.count}</td>
                 <td className='px-5 py-1'>
                   <div className='flex items-center justify-center'>
                     <Menu as='div' className='relative'>

@@ -104,7 +104,7 @@ const SuppliersPage = () => {
                 <td className='px-5 py-3 flex items-center min-w-[168px]'>
                   {supplier.name}
                 </td>
-                <td className='px-5 py-1'>1</td>
+                <td className='px-5 py-1'>{supplier.count}</td>
                 <td className='px-5 py-1'>
                   <div className='flex items-center justify-center'>
                     <Menu as='div' className='relative'>
