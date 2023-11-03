@@ -1,6 +1,7 @@
 ### GENERAL ###
 database
 .env
+.env.prod
 .idea
 
 
