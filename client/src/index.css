@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .bg-blue-gradient {
+      background-image: linear-gradient(to bottom, #3058BF, #6F30B3D9);
+    }
+    .bg-blue-card {
+      background-image: linear-gradient(to right, #7072A6, #9698CFD9);
+    }
+  }
+
+@layer base {
+    html {
+      font-family: "Roboto", sans-serif;
+      background-color: #F4F4F4;
+      color: #1A1A1A;
+    }
+  }
