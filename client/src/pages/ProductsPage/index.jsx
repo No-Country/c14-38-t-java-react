@@ -49,7 +49,7 @@ const ProductsPage = () => {
 
   //Logica de la paginacion
   //contexto (useProducts), obtiene la cantidad total de productos
-  const totalProducts = productsLocal.length;
+  // const totalProducts = productsLocal.length;
 
   //*rastrear la página actual - Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -409,9 +409,17 @@ const ProductsPage = () => {
       </div>
       {removedmsg && <RemovedMessage />}
 
+      {productsToShow.length > 0 ? null : (
+        <tr className='flex justify-center text-center w-full'>
+          <td className='my-7 text-center flex justify-center w-full'>
+            No se encontraron productos
+          </td>
+        </tr>
+      )}
+
       {/* Paginación */}
       <footer className='flex items-center flex-wrap gap-3 justify-center sm:justify-end mt-7'>
-        <span className='text-[#1A1A1A]'>{`Total ${totalProducts} Ítems`}</span>
+        <span className='text-[#1A1A1A]'>{`Total ${productsToShow.length} Ítems`}</span>
         <nav>
           <ul className='flex items-center gap-3'>
             <li>

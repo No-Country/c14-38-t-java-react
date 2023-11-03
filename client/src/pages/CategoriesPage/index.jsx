@@ -178,6 +178,17 @@ const CategoriesPage = () => {
         />
       </div>
       {removedmsg && <RemovedMessage />}
+
+      {categoriesFound.length > 0 ? null : (
+        <tr className='flex justify-center text-center w-full'>
+          <td
+            colSpan={3}
+            className='my-7 text-center flex justify-center w-full'
+          >
+            No se encontraron Categorias
+          </td>
+        </tr>
+      )}
     </>
   );
 };

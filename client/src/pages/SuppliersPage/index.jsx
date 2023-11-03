@@ -12,7 +12,7 @@ import { serviceDeleteSupplier } from '../../services/suppliers/suppliers';
 
 import DeleteItem from '../../components/Modals/DeleteItem';
 import RemovedMessage from '../../components/RemovedMessage';
-import { X } from 'react-feather';
+// import { X } from 'react-feather';
 
 //import Loading from '../../components/Loading';
 
@@ -24,7 +24,7 @@ const SuppliersPage = () => {
   const [removedmsg, setRemovedmsg] = useState(false);
   const [deleteId, setDeleteId] = useState();
 
-  const handleSearchChange = (e) => setSearch(e.target.value);
+  // const handleSearchChange = (e) => setSearch(e.target.value);
   const clearSearch = () => setSearch('');
 
   const [searching, setSearching] = useState('');
@@ -179,6 +179,14 @@ const SuppliersPage = () => {
         />
       </div>
       {removedmsg && <RemovedMessage />}
+
+      {supplierFound.length > 0 ? null : (
+        <tr className='flex justify-center text-center w-full'>
+          <td className='my-7 text-center flex justify-center w-full'>
+            No se encontraron Proveedores
+          </td>
+        </tr>
+      )}
     </>
   );
 };
