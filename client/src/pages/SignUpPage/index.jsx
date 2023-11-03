@@ -1,13 +1,11 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import ProgressBar from '../../components/ProgressBar';
+import { Link } from 'react-router-dom';
 import {
   validateEmail,
   validatePassword,
 } from '../../utils/validations/formValidation';
 
 import StepOne from './StepWizard/StepOne';
-import StepTwo from './StepWizard/StepTwo';
 //import Loading from '../../components/Loading';
 
 const SignUpPage = () => {
@@ -25,7 +23,7 @@ const SignUpPage = () => {
 
   const totalSteps = 2;
   const [step, setStep] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);//componente loading
+  const [isLoading, setIsLoading] = useState(false); //componente loading
   const nextStep = () => {
     if (step === totalSteps) return;
     setStep(step + 1);
@@ -96,64 +94,53 @@ const SignUpPage = () => {
     }
   };
 
-  const submitForm = async (e) => {
-    e.preventDefault();
-    try {
-      // Realiza solicitud de la API para crear el usuario
-      alert(
-        "Simulando que pasó todas las valicaciones, se redirige a '/branch'\n\n" +
-          'Estos datos se van a enviar en el formulario\n' +
-          JSON.stringify(signupValues, null, 2),
-      );
-      // navigate('/branches');
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  function renderStep(step) {
-    switch (step) {
-      case 1:
-        return (
-          <StepOne
-            handleChange={handleSignUpChange}
-            signupValues={signupValues}
-            errors={errors}
-            nextStep={nextStep}
-          />
-        );
-      case 2:
-        return <StepTwo submitForm={submitForm} />;
-      default:
-        return null;
-    }
-  }
-
   return (
     <>
-      <div className="flex w-full h-screen">
-        <div className="hidden px-2 sm:flex w-full bg-blue-gradient items-center justify-center flex-col">
+      <div className='sm:hidden flex justify-center items-center h-44 bg-blue-gradient rounded-b-[65px] pb-4'>
+        <h1 className="text-center font-['Poppins'] text-3xl font-bold text-custom-white mt-3">
+          Stockwise
+        </h1>
+      </div>
+      <div className='flex w-full h-screen'>
+        <div className='hidden px-2 sm:flex w-full bg-blue-gradient items-center justify-center flex-col'>
           <h1 className="text-center font-['Poppins'] text-5xl font-bold text-custom-white mt-3">
             Bienvenido a Stockwise
           </h1>
-          <p className="text-2xl text-center text-custom-white mt-4 w-80 font-medium">
+          <p className='text-2xl text-center text-custom-white mt-4 w-80 font-medium'>
             Una plataforma creada para optimizar tu negocio
           </p>
-          <img className="mt-4" src="/images/login-image.svg" alt="Imagen" />
+          <img className='mt-4' src='/images/login-image.svg' alt='Imagen' />
         </div>
 
-        <div className="flex w-full items-center justify-center">
-          <div className="w-full max-w-sm m-4 sm:bg-custom-white px-10 py-10 rounded sm:shadow-md">
-            <ProgressBar step={step} totalSteps={totalSteps} />
-            <p className="text-xs mt-3">Paso {step}/2</p>
-            <h1 className="text-3xl font-normal">Crea tu cuenta</h1>
-            <p className="text-xs mt-2 mb-4">
-              ¿Ya sos usuario?{' '}
-              <span className="text-custom-blue text-left mb-2 cursor-pointer underline">
-                <Link to="/login">Inicia Sesión</Link>
+        <div className='flex w-full sm:items-center justify-center'>
+          <div className='flex flex-col w-full max-w-sm m-4 sm:bg-[white] sm:p-10 rounded sm:shadow-md'>
+            {/* <h1 className='text-4xl font-semibold bg-blue-gradient text-transparent bg-clip-text mb-4'>
+              <span>Stockwise</span>
+            </h1> */}
+            <h1 className='text-2xl font-normal'>Crea tu cuenta</h1>
+            <p className='text-xs mt-3 mb-2'>
+              <span>¿Ya eres usuario?</span>
+              <span className='ml-1 text-custom-blue text-left mb-2 cursor-pointer underline'>
+                <Link to='/login'>Inicia Sesión</Link>
               </span>
             </p>
-            {renderStep(step)}
+            {/* <p className='sm:hidden text-xs mt-2 mb-5'>
+              <span>Registrate y comienza a crear tu inventario</span>
+            </p> */}
+            {/* <p className='text-xs mt-2 mb-3'>
+              ¿Ya tienes una cuenta?{' '}
+              <span className='text-custom-blue text-left mb-2 cursor-pointer underline'>
+                <Link to='/signin'>Inicia sesión</Link>
+              </span>
+            </p> */}
+            <StepOne
+              handleChange={handleSignUpChange}
+              signupValues={signupValues}
+              errors={errors}
+              nextStep={nextStep}
+              setErrors={setErrors}
+              setSignupValues={setSignupValues}
+            />
           </div>
         </div>
       </div>

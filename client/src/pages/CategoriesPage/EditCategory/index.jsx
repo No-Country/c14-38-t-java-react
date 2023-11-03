@@ -73,10 +73,10 @@ export const EditCategory = () => {
     <>
       <div className='text-custom-black p-7 bg-gray-100 sm:bg-white sm:rounded-xl flex flex-col sm:justify-center sm:align-baseline gap-4 absolute top-0 left-0 bottom-0 right-0 sm:static w-full h-auto sm:w-auto sm:h-auto overflow-auto sm:overflow-visible'>
         <h3 className='hidden sm:flex  text-xl  items-start sm:mb-0 '>
-          Editar Ítem
+          Editar Categoría
         </h3>
         <div className='flex sm:hidden mb-0 justify-normal items-center'>
-          <h3 className='text-xl  items-start ml-2'>Editar Ítem</h3>
+          <h3 className='text-xl  items-start ml-2'>Editar Categoría</h3>
           <Link className='absolute left-2 ' to='/categories'>
             <ArrowLeft />
           </Link>

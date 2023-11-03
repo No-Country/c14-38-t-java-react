@@ -1,12 +1,28 @@
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import axios from 'axios';
 import { useState } from 'react';
-//import Loading from '../../components/Loading';
+import { useNavigate } from 'react-router-dom';
+import Loading from '../../../components/Loading';
 
-const StepOne = ({ handleChange, signupValues, errors, nextStep }) => {
+const StepOne = ({
+  handleChange,
+  signupValues,
+  setSignupValues,
+  setErrors,
+  errors,
+}) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleNextStep = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const navigate = useNavigate();
+
+  const handleNextStep = (e) => {
+    e.preventDefault();
+    setErrorMessage('');
     if (
       !signupValues.email ||
       !signupValues.password ||
@@ -18,8 +34,33 @@ const StepOne = ({ handleChange, signupValues, errors, nextStep }) => {
     if (errors.email || errors.password || errors.confirmPassword) {
       return;
     }
+    // setIsLoading(true);
 
-    nextStep();
+    axios
+      .post('/api/signup', {
+        email: signupValues.email,
+        password: signupValues.password,
+      })
+      .then(() => {
+        // setIsLoading(false);
+        navigate('/signin');
+      })
+      .catch(() => {
+        setSignupValues({
+          email: '',
+          password: '',
+          confirmPassword: '',
+        });
+        setErrors({
+          email: '',
+          password: '',
+          confirmPassword: '',
+        });
+        setErrorMessage('El correo ya existe.');
+        setTimeout(() => {
+          setErrorMessage('');
+        }, 3000);
+      });
   };
 
   return (
@@ -36,11 +77,13 @@ const StepOne = ({ handleChange, signupValues, errors, nextStep }) => {
         <input
           type='email'
           name='email'
-          className='block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6'
+          className='block flex-1 border-0 bg-transparent p-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6'
           value={signupValues.email}
           onChange={handleChange}
           onBlur={handleChange}
           placeholder='Correo electrónico'
+          tabIndex='1'
+          autoComplete='new-email'
           required
         />
       </div>
@@ -57,16 +100,18 @@ const StepOne = ({ handleChange, signupValues, errors, nextStep }) => {
         <input
           type={showPassword ? 'text' : 'password'}
           name='password'
-          className='block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6 relative'
+          className='block flex-1 border-0 bg-transparent p-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6 relative'
           value={signupValues.password}
           onChange={handleChange}
           onBlur={handleChange}
           placeholder='Contraseña'
+          tabIndex='2'
+          autoComplete='new-password'
           required
         />
         <button
           type='button'
-          className='absolute right-3 text-custom-icon'
+          className='hidden sm:block absolute right-3 text-custom-icon'
           aria-label={
             showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'
           }
@@ -93,16 +138,18 @@ const StepOne = ({ handleChange, signupValues, errors, nextStep }) => {
         <input
           type={showConfirmPassword ? 'text' : 'password'}
           name='confirmPassword'
-          className='block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6 relative'
+          className='block flex-1 border-0 bg-transparent p-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6 relative'
           value={signupValues.confirmPassword}
           onChange={handleChange}
           onBlur={handleChange}
           placeholder='Confirma la contraseña'
+          tabIndex='3'
+          autoComplete='new-password'
           required
         />
         <button
           type='button'
-          className='absolute right-3 text-custom-icon'
+          className='hidden sm:block absolute right-3 text-custom-icon'
           aria-label={
             showConfirmPassword
               ? 'Ocultar confirmar contraseña'
@@ -125,13 +172,19 @@ const StepOne = ({ handleChange, signupValues, errors, nextStep }) => {
             {value}
           </p>
         ))}
+      {errorMessage && <p className='text-custom-red'>{errorMessage}</p>}
 
       <button
         onClick={handleNextStep}
-        className='mt-3 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white text-sm py-2 px-4 font-normal border border-custom-blue text-custom-blue flex justify-center'
+        className={`${
+          Object.values(errors).every((value) => value === '')
+            ? 'bg-blue-gradient text-custom-white'
+            : 'text-custom-blue border border-custom-blue'
+        } mt-5 w-full bg-none rounded-full text-sm py-3 px-4 font-normal border flex justify-center`}
       >
         Continuar
       </button>
+      {isLoading && <Loading />}
     </form>
   );
 };
