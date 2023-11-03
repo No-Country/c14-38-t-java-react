@@ -58,7 +58,7 @@ const SuppliersPage = () => {
 
       <div className='flex justify-between gap-2 my-5'>
         <SearchBar
-          placeholder='Buscar ítem'
+          placeholder='Buscar...'
           className='w-full sm:w-[424px]'
           value={search}
           onChange={handleSearchChange}
@@ -72,7 +72,7 @@ const SuppliersPage = () => {
         </SearchBar>
         <Link
           to='/addsupplier'
-          className={cn(buttonVariants(), 'text-xs min-w-[100px]')}
+          className={cn(buttonVariants(), 'text-xs text-center min-w-[100px]')}
         >
           Agregar Proveedor
         </Link>

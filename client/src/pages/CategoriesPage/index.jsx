@@ -54,11 +54,11 @@ const CategoriesPage = () => {
 
       <hr className='hidden sm:flex border-t-1 border-[#898AA3] mb-3' />
 
-      <p className='text-2xl font-[500] text-custom-icon'>Categorias</p>
+      <p className='text-2xl font-[500] text-custom-icon'>Categorías</p>
 
       <div className='flex justify-between gap-2 my-5'>
         <SearchBar
-          placeholder='Buscar ítem'
+          placeholder='Buscar...'
           className='w-full sm:w-[424px]'
           value={search}
           onChange={handleSearchChange}
@@ -72,7 +72,7 @@ const CategoriesPage = () => {
         </SearchBar>
         <Link
           to='/addcategory'
-          className={cn(buttonVariants(), 'text-xs min-w-[100px]')}
+          className={cn(buttonVariants(), 'text-xs text-center min-w-[100px]')}
         >
           Agregar Categoría
         </Link>
