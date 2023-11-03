@@ -115,30 +115,32 @@ const ProductsPage = () => {
       <p className='text-2xl font-[500] text-custom-icon'>Productos</p>
 
       <div className='flex justify-between gap-2 mt-5 mb-2'>
-        <SearchBar
-          placeholder='Buscar...'
-          className='w-full sm:w-[424px]'
-          searching={searching}
-          setSearching={setSearching}
-          searchTye='products'
-          products={products}
-        >
-          {search.length > 0 ? (
-            <button
-              className='hidden sm:flex p-2 items-center hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'
-              onClick={clearSearch}
-            >
-              <X strokeWidth={3} />
-            </button>
-          ) : (
-            <button
-              onClick={() => setOpenFilter(true)}
-              className='hidden sm:flex p-2 items-center hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'
-            >
-              <FilterIcon />
-            </button>
-          )}
-        </SearchBar>
+        <div className='flex justify-between items-center gap-2'>
+          <SearchBar
+            placeholder='Buscar...'
+            className='w-full sm:w-[424px]'
+            searching={searching}
+            setSearching={setSearching}
+            searchTye='products'
+            products={products}
+          >
+            {search.length > 0 ? (
+              <button
+                className='hidden sm:flex p-2 items-center hover:bg-[#B8B9CF] rounded-full transition w-8'
+                onClick={clearSearch}
+              >
+                <X strokeWidth={3} />
+              </button>
+            ) : null}
+          </SearchBar>
+          <div
+            onClick={() => setOpenFilter(true)}
+            className='hidden cursor-pointer sm:flex gap-2 p-2 items-center hover:bg-[#B8B9CF] transition rounded-full bg-[#E5E5E5] px-2.5 border border-[#C8C8C8] text-custom-dark-gray'
+          >
+            <span>Filtros</span>
+            <FilterIcon />
+          </div>
+        </div>
         <Link
           to='/addproduct'
           className={cn(buttonVariants(), 'text-xs text-center min-w-[100px]')}

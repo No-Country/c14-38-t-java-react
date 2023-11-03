@@ -78,17 +78,6 @@ function Header() {
                     <Menu.Item>
                       {({ active }) => (
                         <button
-                          className={`${
-                            active ? 'bg-custom-button-hover' : ''
-                          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                        >
-                          Cuenta
-                        </button>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <button
                           onClick={handleLogout}
                           className={`${
                             active ? 'bg-custom-button-hover' : ''
@@ -131,6 +120,7 @@ function Header() {
                       key={item.id}
                       to={item.navigate}
                       className={classButton}
+                      onClick={() => setMobileMenuOpen(false)}
                     >
                       {item.icon === 'Package' && (
                         <Package color={item.iconColor} />
@@ -146,10 +136,7 @@ function Header() {
                     </NavLink>
                   ))}
                   <hr className='mb-1' />
-                  <NavLink to='/profile' className={classButton}>
-                    <Settings color='#3E43C7' />
-                    <span className='ml-1'>Cuenta</span>
-                  </NavLink>
+
                   <button
                     onClick={handleLogout}
                     className='w-full p-3 flex flex-row hover:bg-custom-button-hover rounded-lg mb-1'

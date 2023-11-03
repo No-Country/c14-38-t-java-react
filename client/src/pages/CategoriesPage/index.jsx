@@ -23,6 +23,12 @@ const CategoriesPage = () => {
   const [removedmsg, setRemovedmsg] = useState(false);
   const [deleteId, setDeleteId] = useState();
 
+  const [searching, setSearching] = useState('');
+
+  const categoriesFound = categories.filter((category) =>
+    category.name.toLowerCase().includes(searching.toLowerCase()),
+  );
+
   const handleSearchChange = (e) => setSearch(e.target.value);
   const clearSearch = () => setSearch('');
 
@@ -60,8 +66,10 @@ const CategoriesPage = () => {
         <SearchBar
           placeholder='Buscar...'
           className='w-full sm:w-[424px]'
-          value={search}
-          onChange={handleSearchChange}
+          searching={searching}
+          setSearching={setSearching}
+          searchTye='categories'
+          products={categories}
         >
           <button
             className='hidden sm:flex p-2 items-center hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'
@@ -96,7 +104,7 @@ const CategoriesPage = () => {
           </thead>
 
           <tbody>
-            {categories.map((category) => (
+            {categoriesFound.map((category) => (
               <tr
                 key={category.id}
                 className='border-b sm:border-b-4 border-custom-button-hover last:border-b-0'

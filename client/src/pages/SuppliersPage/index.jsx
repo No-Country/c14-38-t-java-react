@@ -12,6 +12,7 @@ import { serviceDeleteSupplier } from '../../services/suppliers/suppliers';
 
 import DeleteItem from '../../components/Modals/DeleteItem';
 import RemovedMessage from '../../components/RemovedMessage';
+import { X } from 'react-feather';
 
 //import Loading from '../../components/Loading';
 
@@ -25,6 +26,12 @@ const SuppliersPage = () => {
 
   const handleSearchChange = (e) => setSearch(e.target.value);
   const clearSearch = () => setSearch('');
+
+  const [searching, setSearching] = useState('');
+
+  const supplierFound = suppliers.filter((supplier) =>
+    supplier.name.toLowerCase().includes(searching.toLowerCase()),
+  );
 
   const handleDeleteSupplier = async (id) => {
     try {
@@ -60,8 +67,10 @@ const SuppliersPage = () => {
         <SearchBar
           placeholder='Buscar...'
           className='w-full sm:w-[424px]'
-          value={search}
-          onChange={handleSearchChange}
+          searching={searching}
+          setSearching={setSearching}
+          searchTye='suppliers'
+          products={suppliers}
         >
           <button
             className='hidden sm:flex p-2 items-center hover:bg-[#B8B9CF] rounded-full transition w-8 h-8'
@@ -96,7 +105,7 @@ const SuppliersPage = () => {
           </thead>
 
           <tbody>
-            {suppliers.map((supplier) => (
+            {supplierFound.map((supplier) => (
               <tr
                 key={supplier.id}
                 className='border-b sm:border-b-4 border-custom-button-hover last:border-b-0'

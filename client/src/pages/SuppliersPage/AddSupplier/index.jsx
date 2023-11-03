@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Check } from 'react-feather';
+import { ArrowLeft, Check } from 'react-feather';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSuppliers } from '../../../hooks/useSuppliers';
 import { serviceCreateSupplier } from '../../../services/suppliers/suppliers';
@@ -36,9 +36,18 @@ export const AddSupplier = () => {
         <h3 className='hidden sm:flex  text-xl  items-start sm:mb-0 '>
           Agregar Proveedor
         </h3>
-        <h3 className='sm:hidden  text-xl  items-start mt-8 '>
-          Agregar Proveedor
-        </h3>
+        <div className='flex sm:hidden mb-0 justify-normal items-center'>
+          <h3 className='text-xl  items-start ml-2'>Agregar Proveedor</h3>
+          <Link className='absolute left-2 ' to='/suppliers'>
+            <ArrowLeft />
+          </Link>
+          <button
+            onClick={handleUpdate}
+            className='absolute right-7 rounded-3xl'
+          >
+            <Check size={30} color='#3E43C7' />
+          </button>
+        </div>
         <div className='flex flex-col-reverse gap-3 lg:gap-28 sm:flex-row'>
           <div className='flex flex-col sm:w-1/2 '>
             <p className=' font-sans text-base '>Nombre</p>
@@ -101,7 +110,6 @@ export const AddSupplier = () => {
             onClick={handleUpdate}
             className='flex items-center justify-center w-8 h-8 sm:w-36 sm:h-11 absolute sm:static top-8 text-custom-blue sm:text-custom-white sm:bg-blue-gradient sm:text-xs sm:border sm:border-custom-blue rounded-3xl'
           >
-            <Check className='w-8 h-8 sm:hidden' />
             <span className='hidden sm:block'>Guardar</span>
           </button>
         </div>
