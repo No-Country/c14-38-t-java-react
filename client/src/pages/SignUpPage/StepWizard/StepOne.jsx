@@ -77,7 +77,7 @@ const StepOne = ({
         <input
           type='email'
           name='email'
-          className='block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6'
+          className='block flex-1 border-0 bg-transparent p-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6'
           value={signupValues.email}
           onChange={handleChange}
           onBlur={handleChange}
@@ -100,7 +100,7 @@ const StepOne = ({
         <input
           type={showPassword ? 'text' : 'password'}
           name='password'
-          className='block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6 relative'
+          className='block flex-1 border-0 bg-transparent p-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6 relative'
           value={signupValues.password}
           onChange={handleChange}
           onBlur={handleChange}
@@ -138,7 +138,7 @@ const StepOne = ({
         <input
           type={showConfirmPassword ? 'text' : 'password'}
           name='confirmPassword'
-          className='block flex-1 border-0 bg-transparent py-1.5 pl-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6 relative'
+          className='block flex-1 border-0 bg-transparent p-3 text-custom-black placeholder:text-custom-gray focus:ring-0 sm:text-sm sm:leading-6 relative'
           value={signupValues.confirmPassword}
           onChange={handleChange}
           onBlur={handleChange}
