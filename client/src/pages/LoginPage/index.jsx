@@ -8,6 +8,7 @@ import {
 import useAuthContext from '../../hooks/useAuthContext';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import Loading from '../../components/Loading';
+import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
   const { login } = useAuthContext();
@@ -67,7 +68,7 @@ const LoginPage = () => {
     if (errors.email || errors.password) {
       return;
     }
-  setIsLoading(true);
+    setIsLoading(true);
     try {
       const { data } = await loginUser(email, password);
       setErrors((prevErrors) => ({ ...prevErrors, login: '' }));
@@ -84,7 +85,7 @@ const LoginPage = () => {
       //     login: 'Error inesperado, intentelo nuevamente.',
       //   }));
       // }
-    }finally{
+    } finally {
       setIsLoading(false);
     }
   };
@@ -114,15 +115,16 @@ const LoginPage = () => {
             {/* <h1 className='flex sm:hidden text-3xl bg-clip-text text-transparent bg-blue-gradient font-bold'>
               Stockwise
             </h1> */}
-            <h1 className='sm:text-3xl text-lg font-normal mb-8 mt-3'>
+            {/* <h1 className='sm:text-3xl text-lg font-normal mb-5 mt-3'>
               <span className='sm:hidden'>Bienvenido. </span>Inicia Sesión
-            </h1>
-            {/* <p className="text-xs mt-2 mb-3">
+            </h1> */}
+            <h1 className='text-2xl font-normal'>Inicia sesión</h1>
+            <p className='text-xs mt-2 mb-3'>
               ¿Eres un usuario nuevo?{' '}
-              <span className="text-custom-blue text-left mb-2 cursor-pointer underline">
-                <Link to="/signup">Crear una cuenta</Link>
+              <span className='text-custom-blue text-left mb-2 cursor-pointer underline'>
+                <Link to='/signup'>Crear una cuenta</Link>
               </span>
-            </p> */}
+            </p>
             <div>
               <div
                 className={`mb-4 flex rounded-lg shadow-sm ring-1 ring-inset ${
@@ -140,6 +142,7 @@ const LoginPage = () => {
                   onChange={handleChangeEmail}
                   onBlur={handleChangeEmail}
                   placeholder='usuario@mail.com'
+                  tabIndex='1'
                   required
                 />
               </div>
@@ -160,11 +163,12 @@ const LoginPage = () => {
                   onChange={handleChangePassword}
                   onBlur={handleChangePassword}
                   placeholder='Contraseña'
+                  tabIndex='2'
                   required
                 />
                 <button
                   type='button'
-                  className='absolute right-3 text-custom-icon'
+                  className='hidden sm:block absolute right-3 text-custom-icon'
                   aria-label={
                     showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'
                   }
@@ -188,9 +192,13 @@ const LoginPage = () => {
             </p> */}
             <button
               type='submit'
-              className='mt-3 w-full sm:bg-blue-gradient bg-none rounded-full sm:text-custom-white py-2.5 px-4 font-normal border border-custom-blue text-custom-blue'
+              className={`${
+                Object.values(errors).every((value) => value === '')
+                  ? 'bg-blue-gradient text-custom-white'
+                  : 'text-custom-blue border border-custom-blue'
+              } mt-5 w-full bg-none rounded-full text-sm py-3 px-4 font-normal border flex justify-center`}
             >
-            Continuar
+              Continuar
             </button>
             {isLoading && <Loading />}
           </form>
