@@ -410,16 +410,16 @@ const ProductsPage = () => {
       {removedmsg && <RemovedMessage />}
 
       {productsToShow.length > 0 ? null : (
-        <tr className='flex justify-center text-center w-full'>
-          <td className='my-7 text-center flex justify-center w-full'>
+        <div className='flex justify-center text-center w-full'>
+          <div className='my-7 text-center flex justify-center w-full'>
             No se encontraron productos
-          </td>
-        </tr>
+          </div>
+        </div>
       )}
 
       {/* Paginación */}
       <footer className='flex items-center flex-wrap gap-3 justify-center sm:justify-end mt-7'>
-        <span className='text-[#1A1A1A]'>{`Total ${productsToShow.length} Ítems`}</span>
+        <span className='text-[#1A1A1A]'>{`Total ${productFound.length} Ítems`}</span>
         <nav>
           <ul className='flex items-center gap-3'>
             <li>
