@@ -29,7 +29,7 @@ function Sidebar() {
 
         <button
           onClick={handleLogout}
-          className='p-3 flex flex-row hover:bg-custom-button-hover rounded-lg mt-auto'
+          className='p-3 flex flex-row hover:bg-custom-button-hover rounded-lg mt-auto sticky bottom-3'
         >
           <LogOut color='#3E43C7' />
           <span className='ml-1'>Cerrar Sesión</span>
